@@ -12,10 +12,11 @@ namespace Final_Project.Models
         [StringLength(50)]
         public string Title { get; set; } = null!;
 
-        public string? Stop_SelfFeedback { get; set; }
-        public string? Start_SelfFeedback { get; set; }
-        public string? Continue_SelfFeedback { get; set; }
-        public string? Comments_SelfFeedback { get; set; }
+        public string? StopSelfFeedback { get; set; }
+        public string? StartSelfFeedback { get; set; }
+        public string? ContinueSelfFeedback { get; set; }
+        public string? CommentsSelfFeedback { get; set; }
+        public string? TrainerComments { get; set; }
 
         public SkillLevel TechnicalSkills = SkillLevel.Unskilled;
         public SkillLevel ConsultantSkills = SkillLevel.Unskilled;
