@@ -16,11 +16,12 @@ namespace Final_Project.Controllers.ApiControllers
             PictureURL = profile.PictureURL
         };
 
-
-
-
-
-
-
+        public static SpartanDTO SpartanToDTO(Spartan spartan) => new SpartanDTO()
+        {
+            Id = spartan.Id,
+            NormalizedUserName = spartan.NormalizedUserName,
+            NormalizedEmail = spartan.NormalizedEmail,
+            PhoneNumber = spartan.PhoneNumber
+        };
     }
 }

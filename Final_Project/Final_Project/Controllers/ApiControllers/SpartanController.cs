@@ -1,5 +1,6 @@
 ﻿using Final_Project.ApiServices;
 using Final_Project.Models;
+using Final_Project.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Final_Project.Controllers.ApiControllers
@@ -16,16 +17,24 @@ namespace Final_Project.Controllers.ApiControllers
         }
 
         // GET: api/Spartan
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Spartan>>> GetSpartans()
+        [HttpGet(Name = nameof(GetSpartans))]
+        public async Task<ActionResult<IEnumerable<SpartanDTO>>> GetSpartans()
         {
-            return (await _spartaService.GetAllAsync())
-            .ToList();
+            var spartans = await _spartaService.GetAllAsync();
+            
+            if (spartans == null)
+            {
+                return NotFound();
+            }
+            
+            var spartansDtos = spartans.Select(s => CreateSpartanLinks(Utils.SpartanToDTO(s))).ToList();
+
+            return spartansDtos;
         }
 
         // GET: api/Spartan/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Spartan>> GetSpartan(string id)
+        [HttpGet("{id}", Name = nameof(GetSpartan))]
+        public async Task<ActionResult<SpartanDTO>> GetSpartan(string id)
         {
             var spartan = await _spartaService.GetAsync(id);
 
@@ -34,11 +43,14 @@ namespace Final_Project.Controllers.ApiControllers
                 return NotFound();
             }
 
-            return spartan;
+            var spartanDto = CreateSpartanLinks(Utils.SpartanToDTO(spartan));
+
+            return spartanDto;
         }
 
         // PUT: api/Suppliers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPut("{id}", Name = nameof(PutSpartan))]
         public async Task<IActionResult> PutSpartan(string id, Spartan spartan)
         {
             if (id != spartan.Id)
@@ -57,7 +69,7 @@ namespace Final_Project.Controllers.ApiControllers
 
         // POST: api/Suppliers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
+        [HttpPost(Name = nameof(PostSpartan))]
         public async Task<ActionResult<Spartan>> PostSpartan(Spartan spartan)
         {
             bool created = await _spartaService.CreateAsync(spartan);
@@ -67,11 +79,11 @@ namespace Final_Project.Controllers.ApiControllers
                 return Problem("Entity set 'NorthwindContext.Suppliers'  is null.");
             }
 
-            return CreatedAtAction("GetSupplier", new { id = spartan.Id }, spartan);
+            return CreatedAtAction("GetSupplier", new { id = spartan.Id }, CreateSpartanLinks(Utils.SpartanToDTO(spartan)));
         }
 
         // DELETE: api/Suppliers/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}", Name = nameof(DeleteSpartan))]
         public async Task<IActionResult> DeleteSpartan(string id)
         {
             var deleted = await _spartaService.DeleteAsync(id);
@@ -82,6 +94,31 @@ namespace Final_Project.Controllers.ApiControllers
             }
 
             return NoContent();
+        }
+
+
+        private SpartanDTO CreateSpartanLinks(SpartanDTO spartan)
+        {
+            if (Url == null) return spartan;
+
+            var idObj = new { id = spartan.Id };
+            
+            spartan.Links.Add(
+                new LinkDTO(Url.Link(nameof(this.GetSpartan), idObj),
+                "self",
+                "GET"));
+
+            spartan.Links.Add(
+                new LinkDTO(Url.Link(nameof(this.PostSpartan), idObj),
+                "post_spartan",
+                "POST"));
+
+            spartan.Links.Add(
+                new LinkDTO(Url.Link(nameof(this.PutSpartan), idObj),
+                "delete_spartan",
+                "DELETE"));
+
+            return spartan;
         }
     }
 }

@@ -3,6 +3,7 @@ using Final_Project.Data.Repositories;
 using Final_Project.Models;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
 
 namespace Final_Project.ApiServices;
 
@@ -108,6 +109,7 @@ public class SpartanApiService : ISpartanApiService<Spartan>
         }
         return true;
     }
+
     private async Task<bool> EntityExists(string id)
     {
         return (await _repository.FindAsync(id)) != null;
