@@ -34,13 +34,13 @@ namespace Final_Project.Data
             };
 
             roleStore
-            .CreateAsync(trainer)
-            .GetAwaiter()
-            .GetResult();
+                .CreateAsync(trainer)
+                .GetAwaiter()
+                .GetResult();
             roleStore
-            .CreateAsync(trainee)
-            .GetAwaiter()
-            .GetResult();
+                .CreateAsync(trainee)
+                .GetAwaiter()
+                .GetResult();
 
             var phil = new Spartan
             {
@@ -62,19 +62,18 @@ namespace Final_Project.Data
             };
 
 
-
             userManager
-            .CreateAsync(phil, "Password1!")
-            .GetAwaiter()
-            .GetResult();
+                .CreateAsync(phil, "Password1!")
+                .GetAwaiter()
+                .GetResult();
             userManager
-            .CreateAsync(laura, "Password1!")
-            .GetAwaiter()
-            .GetResult();
+                .CreateAsync(laura, "Password1!")
+                .GetAwaiter()
+                .GetResult();
             userManager
-            .CreateAsync(cathy, "Password1!")
-            .GetAwaiter()
-            .GetResult();
+                .CreateAsync(cathy, "Password1!")
+                .GetAwaiter()
+                .GetResult();
 
 
 
