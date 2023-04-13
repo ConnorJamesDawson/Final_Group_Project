@@ -1,4 +1,5 @@
 using Final_Project.Data;
+using Final_Project.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,18 +15,23 @@ namespace Final_Project
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<SpartaDbContext>(options =>
                 options.UseSqlServer(connectionString));
+
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-            builder.Services.AddDefaultIdentity<IdentityUser>
+            builder.Services.AddDefaultIdentity<Spartan>
                 (options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<SpartaDbContext>();
 
             builder.Services.AddControllersWithViews();
 
-            var app = builder.Build();
-
             builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
+            var app = builder.Build();
+            using (var scope = app.Services.CreateScope())
+            {
+                SeedData.Initialise(scope.ServiceProvider);
+            }
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
