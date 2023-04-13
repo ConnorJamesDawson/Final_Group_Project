@@ -10,11 +10,11 @@ using Final_Project.Models;
 
 namespace Final_Project.Controllers
 {
-    public class Personal_TrackerController : Controller
+    public partial class PersonalTrackerController : Controller
     {
         private readonly SpartaDbContext _context;
 
-        public Personal_TrackerController(SpartaDbContext context)
+        public PersonalTrackerController(SpartaDbContext context)
         {
             _context = context;
         }
