@@ -1,7 +1,9 @@
 using Final_Project.ApiServices;
 using Final_Project.Data;
 using Final_Project.Data.ApiRepositories;
+using Final_Project.Data.Repositories;
 using Final_Project.Models;
+using Final_Project.Models.DTO;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NorthwindAPI_MiniProject.Data.Repository;
@@ -40,7 +42,8 @@ namespace Final_Project
             builder.Services.AddEndpointsApiExplorer();
 
             builder.Services.AddAutoMapper(typeof(Program).Assembly);
-
+            builder.Services.AddScoped<ISpartaApiRepository<TraineeProfile>, SpartaApiRepository<TraineeProfile>>();
+            builder.Services.AddScoped<ISpartaApiService<TraineeProfile>, SpartaApiService<TraineeProfile>>();
             var app = builder.Build();
             using (var scope = app.Services.CreateScope())
             {
