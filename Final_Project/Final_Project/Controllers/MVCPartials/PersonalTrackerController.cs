@@ -35,7 +35,7 @@ namespace Final_Project.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[Authorize (Roles = "Trainer")]
-        public async Task<IActionResult> EditTrainer(int id, [Bind("TrainerComments","Id")] PersonalTrackerVM personalTrackerVM)
+        public async Task<IActionResult> EditTrainer(int id, [Bind("Title","TrainerComments","Id")] PersonalTrackerVM personalTrackerVM)
         {
             if (id != personalTrackerVM.Id)
             {
@@ -43,7 +43,10 @@ namespace Final_Project.Controllers
             }
 
             var personalTracker = _mapper.Map<PersonalTracker>(personalTrackerVM);
-            personalTracker.SpartanId = (await _context.Personal_Tracker.FindAsync(id)).SpartanId;
+            personalTracker.SpartanId = (await _context.Personal_Tracker
+                .AsNoTracking()
+                .FirstOrDefaultAsync(pt => pt.Id == id))
+                .SpartanId;
 
             if (ModelState.IsValid)
             {

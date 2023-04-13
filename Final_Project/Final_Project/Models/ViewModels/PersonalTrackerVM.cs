@@ -8,9 +8,7 @@ namespace Final_Project.Models.ViewModels
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Title is Required")]
-        [StringLength(50)]
-        public string Title { get; set; } = null!;
+        public string? Title { get; set; }
 
         public string? StopSelfFeedback { get; set; }
         public string? StartSelfFeedback { get; set; }
