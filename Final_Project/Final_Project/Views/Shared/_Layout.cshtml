@@ -28,25 +28,25 @@
                         @if (User.IsInRole("Trainee"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="TraineeProfiles" asp-action="Index">ToDoList</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="TraineeProfiles" asp-action="Index">My Profile</a>
                             </li>
                         }
                         @if (User.IsInRole("Trainer"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="TraineeProfiles" asp-action="IndexTrainer">TraineesToDoLists</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="TraineeProfiles" asp-action="IndexTrainer">Trainees Profiles</a>
                             </li>
                         }
                         @if (User.IsInRole("Trainee"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="PersonalTracker" asp-action="Index">ToDoList</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="PersonalTracker" asp-action="Index">My Personal Tracker</a>
                             </li>
                         }
                         @if (User.IsInRole("Trainer"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="PersonalTracker" asp-action="IndexTrainer">TraineesToDoLists</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="PersonalTracker" asp-action="IndexTrainer">Trainee Trackers</a>
                             </li>
                         }
                     </ul>
