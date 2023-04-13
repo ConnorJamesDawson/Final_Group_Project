@@ -11,7 +11,9 @@ namespace Final_Project.Controllers.ApiControllers
             Title = profile.Title,
             AboutMe = profile.AboutMe,
             Complete = profile.Complete,
-            
+            SpartanId = profile.SpartanId,
+            WorkExperience = profile.WorkExperience,
+            PictureURL = profile.PictureURL
         };
 
 
