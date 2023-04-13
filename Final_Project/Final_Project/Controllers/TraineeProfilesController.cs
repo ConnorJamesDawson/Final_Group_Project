@@ -27,8 +27,16 @@ namespace Final_Project.Controllers
         {
             var currentUser = await _userManager.GetUserAsync(HttpContext.User);
             var applicationDbContext = _context.TraineeProfile
+                    .Include(t => t.Spartan);
+            if (User.IsInRole("Trainee")) { 
+             applicationDbContext = _context.TraineeProfile
                 .Where(t => t.SpartanId == currentUser.Id)
                 .Include(t => t.Spartan);
+            } else
+            {
+                 applicationDbContext = _context.TraineeProfile
+                    .Include(t => t.Spartan);
+            }
             return View(await applicationDbContext.ToListAsync());
         }
 

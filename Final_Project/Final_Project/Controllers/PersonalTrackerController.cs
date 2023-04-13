@@ -58,6 +58,7 @@ namespace Final_Project.Controllers
         {
             ViewData["SpartanId"] = new SelectList(_context.Set<Spartan>(), "Id", "Id");
             return View();
+            
         }
 
         // POST: Personal_Tracker/Create
@@ -65,10 +66,13 @@ namespace Final_Project.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Stop_SelfFeedback,Start_SelfFeedback,Continue_SelfFeedback,Comments_SelfFeedback,SpartanId")] PersonalTracker personal_Tracker)
+        public async Task<IActionResult> Create([Bind("Title,StopSelfFeedback,StartSelfFeedback,ContinueSelfFeedback,CommentsSelfFeedback,SpartanId")] PersonalTracker personal_Tracker)
+        //public async Task<IActionResult> Create([Bind("Id,Title,StopSelfFeedback,StartSelfFeedback,ContinueSelfFeedback,CommentsSelfFeedback,SpartanId")] PersonalTracker personal_Tracker)
         {
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
             if (ModelState.IsValid)
             {
+                personal_Tracker.SpartanId = currentUser.Id;
                 _context.Add(personal_Tracker);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -99,7 +103,7 @@ namespace Final_Project.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Stop_SelfFeedback,Start_SelfFeedback,Continue_SelfFeedback,Comments_SelfFeedback,SpartanId")] PersonalTracker personal_Tracker)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,StopSelfFeedback,StartSelfFeedback,ContinueSelfFeedback,CommentsSelfFeedback,SpartanId")] PersonalTracker personal_Tracker)
         {
             if (id != personal_Tracker.Id)
             {

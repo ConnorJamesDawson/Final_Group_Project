@@ -103,6 +103,7 @@ namespace Final_Project.Data
                 new PersonalTracker
                 {
                     Title = "Week1",
+                    StopSelfFeedback = "Week1",
                     Spartan = phil
                 },
                 new PersonalTracker
@@ -115,7 +116,7 @@ namespace Final_Project.Data
                     Title = "Week1",
                     Spartan = laura
                 }
-            );
+            ) ;
             context.TraineeProfile.AddRange(
                 new TraineeProfile
                 {

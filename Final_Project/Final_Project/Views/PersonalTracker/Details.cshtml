@@ -40,12 +40,26 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.CommentsSelfFeedback)
         </dd>
+
+         @if (User.IsInRole("Admin")){
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Spartan)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Spartan.Id)
         </dd>
+        }
+
+        @if (User.IsInRole("Trainee")){
+         <div style="display: none">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Spartan)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Spartan.Id)
+        </dd>
+        </div>
+        }
     </dl>
 </div>
 <div>

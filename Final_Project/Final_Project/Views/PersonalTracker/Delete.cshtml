@@ -1,4 +1,7 @@
-﻿@model Final_Project.Models.PersonalTracker
+﻿
+
+
+@model Final_Project.Models.PersonalTracker
 
 @{
     ViewData["Title"] = "Delete";
@@ -41,12 +44,25 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.CommentsSelfFeedback)
         </dd>
+        @if (User.IsInRole("Admin")){
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Spartan)
         </dt>
+
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Spartan.Id)
         </dd>
+        }
+
+        @if (User.IsInRole("Trainee")){
+        <dt class = "col-sm-2" style="display:none">
+            @Html.DisplayNameFor(model => model.Spartan)
+        </dt>
+
+        <dd class = "col-sm-10" style="display:none">
+            @Html.DisplayFor(model => model.Spartan.Id)
+        </dd>
+        }
     </dl>
     
     <form asp-action="Delete">
