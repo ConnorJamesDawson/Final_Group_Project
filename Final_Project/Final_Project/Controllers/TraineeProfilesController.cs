@@ -10,90 +10,90 @@ using Final_Project.Models;
 
 namespace Final_Project.Controllers
 {
-    public class Personal_TrackerController : Controller
+    public class TraineeProfilesController : Controller
     {
         private readonly SpartaDbContext _context;
 
-        public Personal_TrackerController(SpartaDbContext context)
+        public TraineeProfilesController(SpartaDbContext context)
         {
             _context = context;
         }
 
-        // GET: Personal_Tracker
+        // GET: TraineeProfiles
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Personal_Tracker.Include(p => p.Spartan);
+            var applicationDbContext = _context.TraineeProfile.Include(t => t.Spartan);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Personal_Tracker/Details/5
+        // GET: TraineeProfiles/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Personal_Tracker == null)
+            if (id == null || _context.TraineeProfile == null)
             {
                 return NotFound();
             }
 
-            var personal_Tracker = await _context.Personal_Tracker
-                .Include(p => p.Spartan)
+            var traineeProfile = await _context.TraineeProfile
+                .Include(t => t.Spartan)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (personal_Tracker == null)
+            if (traineeProfile == null)
             {
                 return NotFound();
             }
 
-            return View(personal_Tracker);
+            return View(traineeProfile);
         }
 
-        // GET: Personal_Tracker/Create
+        // GET: TraineeProfiles/Create
         public IActionResult Create()
         {
             ViewData["SpartanId"] = new SelectList(_context.Set<Spartan>(), "Id", "Id");
             return View();
         }
 
-        // POST: Personal_Tracker/Create
+        // POST: TraineeProfiles/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Stop_SelfFeedback,Start_SelfFeedback,Continue_SelfFeedback,Comments_SelfFeedback,SpartanId")] PersonalTracker personal_Tracker)
+        public async Task<IActionResult> Create([Bind("Id,Title,AboutMe,WorkExperience,Complete,SpartanId")] TraineeProfile traineeProfile)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(personal_Tracker);
+                _context.Add(traineeProfile);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SpartanId"] = new SelectList(_context.Set<Spartan>(), "Id", "Id", personal_Tracker.SpartanId);
-            return View(personal_Tracker);
+            ViewData["SpartanId"] = new SelectList(_context.Set<Spartan>(), "Id", "Id", traineeProfile.SpartanId);
+            return View(traineeProfile);
         }
 
-        // GET: Personal_Tracker/Edit/5
+        // GET: TraineeProfiles/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Personal_Tracker == null)
+            if (id == null || _context.TraineeProfile == null)
             {
                 return NotFound();
             }
 
-            var personal_Tracker = await _context.Personal_Tracker.FindAsync(id);
-            if (personal_Tracker == null)
+            var traineeProfile = await _context.TraineeProfile.FindAsync(id);
+            if (traineeProfile == null)
             {
                 return NotFound();
             }
-            ViewData["SpartanId"] = new SelectList(_context.Set<Spartan>(), "Id", "Id", personal_Tracker.SpartanId);
-            return View(personal_Tracker);
+            ViewData["SpartanId"] = new SelectList(_context.Set<Spartan>(), "Id", "Id", traineeProfile.SpartanId);
+            return View(traineeProfile);
         }
 
-        // POST: Personal_Tracker/Edit/5
+        // POST: TraineeProfiles/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Stop_SelfFeedback,Start_SelfFeedback,Continue_SelfFeedback,Comments_SelfFeedback,SpartanId")] PersonalTracker personal_Tracker)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,AboutMe,WorkExperience,Complete,SpartanId")] TraineeProfile traineeProfile)
         {
-            if (id != personal_Tracker.Id)
+            if (id != traineeProfile.Id)
             {
                 return NotFound();
             }
@@ -102,12 +102,12 @@ namespace Final_Project.Controllers
             {
                 try
                 {
-                    _context.Update(personal_Tracker);
+                    _context.Update(traineeProfile);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!Personal_TrackerExists(personal_Tracker.Id))
+                    if (!TraineeProfileExists(traineeProfile.Id))
                     {
                         return NotFound();
                     }
@@ -118,51 +118,51 @@ namespace Final_Project.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SpartanId"] = new SelectList(_context.Set<Spartan>(), "Id", "Id", personal_Tracker.SpartanId);
-            return View(personal_Tracker);
+            ViewData["SpartanId"] = new SelectList(_context.Set<Spartan>(), "Id", "Id", traineeProfile.SpartanId);
+            return View(traineeProfile);
         }
 
-        // GET: Personal_Tracker/Delete/5
+        // GET: TraineeProfiles/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Personal_Tracker == null)
+            if (id == null || _context.TraineeProfile == null)
             {
                 return NotFound();
             }
 
-            var personal_Tracker = await _context.Personal_Tracker
-                .Include(p => p.Spartan)
+            var traineeProfile = await _context.TraineeProfile
+                .Include(t => t.Spartan)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (personal_Tracker == null)
+            if (traineeProfile == null)
             {
                 return NotFound();
             }
 
-            return View(personal_Tracker);
+            return View(traineeProfile);
         }
 
-        // POST: Personal_Tracker/Delete/5
+        // POST: TraineeProfiles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Personal_Tracker == null)
+            if (_context.TraineeProfile == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Personal_Tracker'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.TraineeProfile'  is null.");
             }
-            var personal_Tracker = await _context.Personal_Tracker.FindAsync(id);
-            if (personal_Tracker != null)
+            var traineeProfile = await _context.TraineeProfile.FindAsync(id);
+            if (traineeProfile != null)
             {
-                _context.Personal_Tracker.Remove(personal_Tracker);
+                _context.TraineeProfile.Remove(traineeProfile);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool Personal_TrackerExists(int id)
+        private bool TraineeProfileExists(int id)
         {
-          return (_context.Personal_Tracker?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.TraineeProfile?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

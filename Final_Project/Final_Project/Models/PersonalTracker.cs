@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Final_Project.Models
 {
-    public class Personal_Tracker
+    public class PersonalTracker
     {
         public int Id { get; set; }
 
@@ -18,7 +18,6 @@ namespace Final_Project.Models
         public string? Comments_SelfFeedback { get; set; }
 
         public SkillLevel TechnicalSkills = SkillLevel.Unskilled;
-
         public SkillLevel ConsultantSkills = SkillLevel.Unskilled;
 
         [ValidateNever]

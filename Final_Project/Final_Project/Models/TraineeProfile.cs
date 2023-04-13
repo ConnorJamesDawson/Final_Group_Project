@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Final_Project.Models;
 
-public class Profile
+public class TraineeProfile
 {
     public int Id { get; set; }
 
@@ -12,14 +12,15 @@ public class Profile
     [StringLength(50)]
     public string Title { get; set; } = null!;
 
-    public string? Description { get; set; }
+    public string PictureURL;
+
+    [StringLength(2000)]
+    public string? AboutMe { get; set; }
+    [StringLength(2000)]
+    public string? WorkExperience { get; set; }
 
     [Display(Name = "Complete?")]
     public bool Complete { get; set; }
-
-    [DataType(DataType.Date)]
-    [Display(Name = "Created")]
-    public DateTime DateCreated { get; init; } = DateTime.Now;
 
     [ValidateNever]
     [ForeignKey("Spartan")]

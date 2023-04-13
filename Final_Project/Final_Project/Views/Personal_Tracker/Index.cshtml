@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Final_Project.Models.PersonalTracker>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Stop_SelfFeedback)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Start_SelfFeedback)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Continue_SelfFeedback)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comments_SelfFeedback)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Spartan)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Stop_SelfFeedback)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Start_SelfFeedback)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Continue_SelfFeedback)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comments_SelfFeedback)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Spartan.Id)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
