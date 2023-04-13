@@ -7,48 +7,70 @@
 <h1>Add Comments</h1>
 
 <h4>PersonalTracker</h4>
+<table class="table table-striped table-hover">
+    <tr>
+        <td>
+            @Html.DisplayNameFor(model => model.Title)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.Title)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.DisplayNameFor(model => model.StopSelfFeedback)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.StopSelfFeedback)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.DisplayNameFor(model => model.StartSelfFeedback)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.StartSelfFeedback)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.DisplayNameFor(model => model.ContinueSelfFeedback)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.ContinueSelfFeedback)
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @Html.DisplayNameFor(model => model.CommentsSelfFeedback)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => modelItem.CommentsSelfFeedback)
+        </td>
+    </tr>
+</table>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="EditTrainer">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="TrainerComments" class="control-label"></label>
-                <input asp-for="TrainerComments" class="form-control" />
-                <span asp-validation-for="TrainerComments" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="StopSelfFeedback" class="control-label"></label>
-                <input asp-for="StopSelfFeedback" class="form-control" />
-                <span asp-validation-for="StopSelfFeedback" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="StartSelfFeedback" class="control-label"></label>
-                <input asp-for="StartSelfFeedback" class="form-control" />
-                <span asp-validation-for="StartSelfFeedback" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ContinueSelfFeedback" class="control-label"></label>
-                <input asp-for="ContinueSelfFeedback" class="form-control" />
-                <span asp-validation-for="ContinueSelfFeedback" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CommentsSelfFeedback" class="control-label"></label>
-                <input asp-for="CommentsSelfFeedback" class="form-control" />
-                <span asp-validation-for="CommentsSelfFeedback" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="EditTrainer">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="TrainerComments" class="control-label"></label>
+                    <input asp-for="TrainerComments" class="form-control" />
+                    <span asp-validation-for="TrainerComments" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
 <div>
     <a asp-action="IndexTrainer">Back to List</a>
