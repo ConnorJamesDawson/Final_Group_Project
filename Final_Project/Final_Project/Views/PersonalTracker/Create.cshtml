@@ -47,8 +47,7 @@
 
              @if (User.IsInRole("Trainee")){
 
-            @*<div class="form-group" style="display:none">*@
-                <div class="form-group">
+                <div class="form-group" style="display:none">>
                 <label asp-for="SpartanId" class="control-label"></label>
                 <select asp-for="SpartanId" class ="form-control" asp-items="ViewBag.SpartanId"></select>
             </div>
