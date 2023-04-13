@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Final_Project.Models.ViewModels
 {
-    public class Personal_TrackerVM
+    public class PersonalTrackerVM
     {
         public int Id { get; set; }
 
@@ -12,19 +12,15 @@ namespace Final_Project.Models.ViewModels
         [StringLength(50)]
         public string Title { get; set; } = null!;
 
-        public string? Stop_SelfFeedback { get; set; }
-        public string? Start_SelfFeedback { get; set; }
-        public string? Continue_SelfFeedback { get; set; }
-        public string? Comments_SelfFeedback { get; set; }
+        public string? StopSelfFeedback { get; set; }
+        public string? StartSelfFeedback { get; set; }
+        public string? ContinueSelfFeedback { get; set; }
+        public string? CommentsSelfFeedback { get; set; }
+        public string? TrainerComments { get; set; }
 
         public SkillLevel TechnicalSkills = SkillLevel.Unskilled;
 
         public SkillLevel ConsultantSkills = SkillLevel.Unskilled;
 
-        [ValidateNever]
-        [ForeignKey("Spartan")]
-        public string SpartanId { get; set; } = null!;
-
-        public Spartan? Spartan { get; set; }
     }
 }

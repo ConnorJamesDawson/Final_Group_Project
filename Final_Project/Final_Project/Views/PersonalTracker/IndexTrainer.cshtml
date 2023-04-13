@@ -28,6 +28,9 @@
                 @Html.DisplayNameFor(model => model.CommentsSelfFeedback)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.TrainerComments)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Spartan)
             </th>
             <th></th>
@@ -52,10 +55,13 @@
                 @Html.DisplayFor(modelItem => item.CommentsSelfFeedback)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.TrainerComments)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Spartan.Id)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="EditTrainer" asp-route-id="@item.Id">Add Comments</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
