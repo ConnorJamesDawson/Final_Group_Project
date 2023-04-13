@@ -2,6 +2,9 @@ using Final_Project.Data;
 using Final_Project.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Final_Project.Data.Repositories;
+using Final_Project.Data.ApiRepositories;
+using Final_Project.ApiServices;
 
 namespace Final_Project
 {
@@ -15,6 +18,15 @@ namespace Final_Project
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<SpartaDbContext>(options =>
                 options.UseSqlServer(connectionString));
+
+
+            builder.Services.AddScoped(
+                 typeof(ISpartaApiRepository<>),
+                 typeof(SpartaApiRepository<>));
+
+            builder.Services.AddScoped(
+                 typeof(ISpartaApiService<>),
+                 typeof(SpartaApiService<>));
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

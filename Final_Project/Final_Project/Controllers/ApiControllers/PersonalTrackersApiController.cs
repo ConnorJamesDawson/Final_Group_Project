@@ -26,11 +26,11 @@ namespace Final_Project.Controllers.ApiControllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PersonalTracker>>> GetPersonal_Tracker()
         {
-          if (_service.GetAllAsync() == null)
-          {
-              return NotFound();
+          //if (_service.GetAllAsync() == null)
+          //{
+          //    return NotFound();
 
-          }
+          //}
             var result = await _service.GetAllAsync();
 
             return result.ToList();
