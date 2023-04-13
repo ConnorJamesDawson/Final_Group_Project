@@ -7,7 +7,7 @@ namespace Final_Project.Data.ApiRepositories;
 public class SpartaApiRepository<T> : ISpartaApiRepository<T> where T : class
 {
     private readonly SpartaDbContext _context;
-    private readonly DbSet<T> _dbSet;
+    protected readonly DbSet<T> _dbSet;
 
     public SpartaApiRepository(SpartaDbContext context)
     {
@@ -31,7 +31,6 @@ public class SpartaApiRepository<T> : ISpartaApiRepository<T> where T : class
     {
         return await _dbSet.FindAsync(id);
     }
-
 
     public virtual async Task<IEnumerable<T>> GetAllAsync()
     {

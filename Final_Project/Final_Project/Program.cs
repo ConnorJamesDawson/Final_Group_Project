@@ -1,7 +1,10 @@
+using Final_Project.ApiServices;
 using Final_Project.Data;
+using Final_Project.Data.ApiRepositories;
 using Final_Project.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using NorthwindAPI_MiniProject.Data.Repository;
 
 namespace Final_Project
 {
@@ -23,7 +26,18 @@ namespace Final_Project
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<SpartaDbContext>();
 
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped(
+                typeof(ISpartanApiRepository<Spartan>),
+                typeof(SpartanApiRepository));
+
+            builder.Services.AddScoped(
+                typeof(ISpartanApiService<Spartan>),
+                typeof(SpartanApiService));
+
+            builder.Services.AddControllers()
+                .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+            builder.Services.AddEndpointsApiExplorer();
 
             builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
