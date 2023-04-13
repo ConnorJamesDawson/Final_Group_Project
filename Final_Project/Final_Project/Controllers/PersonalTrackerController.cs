@@ -7,21 +7,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Final_Project.Data;
 using Final_Project.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Final_Project.Controllers
 {
     public partial class PersonalTrackerController : Controller
     {
         private readonly SpartaDbContext _context;
+        private readonly UserManager<Spartan> _userManager;
 
-        public PersonalTrackerController(SpartaDbContext context)
+        public PersonalTrackerController(SpartaDbContext context,
+            UserManager<Spartan> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Personal_Tracker
         public async Task<IActionResult> Index()
         {
+
+
             var applicationDbContext = _context.Personal_Tracker.Include(p => p.Spartan);
             return View(await applicationDbContext.ToListAsync());
         }
