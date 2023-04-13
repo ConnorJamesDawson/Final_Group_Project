@@ -30,9 +30,11 @@
             <th>
                 @Html.DisplayNameFor(model => model.TrainerComments)
             </th>
+            @if (User.IsInRole("Admin")){
             <th>
                 @Html.DisplayNameFor(model => model.Spartan)
             </th>
+            }
             <th></th>
         </tr>
     </thead>
@@ -55,11 +57,13 @@
                 @Html.DisplayFor(modelItem => item.CommentsSelfFeedback)
             </td>
             <th>
-                    @Html.DisplayFor(modelItem => item.TrainerComments)
+                @Html.DisplayFor(modelItem => item.TrainerComments)
             </th>
+            @if (User.IsInRole("Admin")){
             <td>
                 @Html.DisplayFor(modelItem => item.Spartan.Id)
             </td>
+            }
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |

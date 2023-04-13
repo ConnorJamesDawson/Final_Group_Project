@@ -11,11 +11,15 @@ namespace Final_Project.Models
         [Required(ErrorMessage = "Title is Required")]
         [StringLength(50)]
         public string Title { get; set; } = null!;
-
+        [Display(Name = "Stop")]
         public string? StopSelfFeedback { get; set; }
+        [Display(Name = "Start")]
         public string? StartSelfFeedback { get; set; }
+        [Display(Name = "Continue")]
         public string? ContinueSelfFeedback { get; set; }
+        [Display(Name = "Comments")]
         public string? CommentsSelfFeedback { get; set; }
+        [Display(Name = "Trainer Comments")]
         public string? TrainerComments { get; set; }
 
         public SkillLevel TechnicalSkills = SkillLevel.Unskilled;

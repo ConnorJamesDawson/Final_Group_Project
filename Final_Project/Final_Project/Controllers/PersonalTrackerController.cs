@@ -27,8 +27,10 @@ namespace Final_Project.Controllers
         public async Task<IActionResult> Index()
         {
 
-
-            var applicationDbContext = _context.Personal_Tracker.Include(p => p.Spartan);
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+            var applicationDbContext = _context.Personal_Tracker
+                .Where(t => t.SpartanId == currentUser.Id)
+                .Include(p => p.Spartan);
             return View(await applicationDbContext.ToListAsync());
         }
 

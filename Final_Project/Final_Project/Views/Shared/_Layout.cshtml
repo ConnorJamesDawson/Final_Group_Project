@@ -28,7 +28,7 @@
                         @if (User.IsInRole("Trainee"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="TraineeProfiles" asp-action="Index">ToDoList</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="TraineeProfiles" asp-action="Index">Trainee Profiles</a>
                             </li>
                         }
                         @if (User.IsInRole("Trainer"))
@@ -40,7 +40,7 @@
                         @if (User.IsInRole("Trainee"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="PersonalTracker" asp-action="Index">ToDoList</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="PersonalTracker" asp-action="Index">Personal Tracker</a>
                             </li>
                         }
                         @if (User.IsInRole("Trainer"))
