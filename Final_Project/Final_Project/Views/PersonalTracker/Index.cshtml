@@ -30,6 +30,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.TrainerComments)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TechnicalSkills)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ConsultantSkills)
+            </th>
             @if (User.IsInRole("Admin")){
             <th>
                 @Html.DisplayNameFor(model => model.Spartan)
@@ -56,9 +62,15 @@
             <td>
                 @Html.DisplayFor(modelItem => item.CommentsSelfFeedback)
             </td>
-            <th>
+            <td>
                 @Html.DisplayFor(modelItem => item.TrainerComments)
-            </th>
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TechnicalSkills)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ConsultantSkills)
+                </td>
             @if (User.IsInRole("Admin")){
             <td>
                 @Html.DisplayFor(modelItem => item.Spartan.Id)

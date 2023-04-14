@@ -37,7 +37,12 @@
                 <input asp-for="CommentsSelfFeedback" class="form-control" />
                 <span asp-validation-for="CommentsSelfFeedback" class="text-danger"></span>
             </div>
+           @* @Html.DropDownListFor(m => item.TechnicalSkills, new SelectList(item.SkillLevelOptions))*@
 
+            <div class="form-group">
+                <select asp-for="TechnicalSkills" asp-items="Model.SkillLevelOptions">
+                </select>
+            </div>
             @if (User.IsInRole("Admin")){
             <div class="form-group">
                 <label asp-for="SpartanId" class="control-label"></label>
@@ -46,7 +51,6 @@
             }
 
              @if (User.IsInRole("Trainee")){
-
                 <div class="form-group" style="display:none">>
                 <label asp-for="SpartanId" class="control-label"></label>
                 <select asp-for="SpartanId" class ="form-control" asp-items="ViewBag.SpartanId"></select>

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -22,8 +23,16 @@ namespace Final_Project.Models
         [Display(Name = "Trainer Comments")]
         public string? TrainerComments { get; set; }
 
-        public SkillLevel TechnicalSkills = SkillLevel.Unskilled;
-        public SkillLevel ConsultantSkills = SkillLevel.Unskilled;
+        public static string[] SkillLevelOptionsArray { get; } = new string[] { "Unskilled", "Low Skilled", "Partially Skilled", "Skilled" };
+
+        public SelectList? SkillLevelOptions = new SelectList(SkillLevelOptionsArray);
+
+
+        [Display(Name = "Technical Skills")]
+        public string TechnicalSkills { get; set; } = "Unskilled";
+        [Display(Name = "Consultant Skills")]
+        public string ConsultantSkills { get; set; } = "Unskilled";
+
 
         [ValidateNever]
         [ForeignKey("Spartan")]
