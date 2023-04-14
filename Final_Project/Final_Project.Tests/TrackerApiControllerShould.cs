@@ -152,6 +152,7 @@ internal class TrackerApiControllerShould
         var result = await _sut.PostPersonalTracker(tracker);
 
         Assert.That(result.Result, Is.InstanceOf<CreatedAtActionResult>());
-        Assert.That(result.Result., Is.InstanceOf<PersonalTracker>());
     }
+
+   
 }
