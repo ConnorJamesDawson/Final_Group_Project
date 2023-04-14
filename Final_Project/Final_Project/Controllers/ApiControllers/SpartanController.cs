@@ -12,10 +12,14 @@ namespace Final_Project.Controllers.ApiControllers
     public class SpartanController : ControllerBase
     {
         private readonly ISpartanApiService<Spartan> _spartaService;
+        private readonly ISpartaApiService<PersonalTracker> _personalTrackerService;
+        private readonly ISpartaApiService<TraineeProfile> _traineeProfileService;
 
-        public SpartanController(ISpartanApiService<Spartan> spartaService)
+        public SpartanController(ISpartanApiService<Spartan> spartaService, ISpartaApiService<PersonalTracker> personalTrackerService, ISpartaApiService<TraineeProfile> traineeProfileService)
         {
             _spartaService = spartaService;
+            _personalTrackerService = personalTrackerService;
+            _traineeProfileService = traineeProfileService;
         }
 
         // GET: api/Spartan
@@ -72,34 +76,19 @@ namespace Final_Project.Controllers.ApiControllers
         // POST: api/Suppliers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost(Name = nameof(PostSpartan))]
-        /*public async Task<ActionResult<Spartan>> PostSpartan(Spartan spartan)
-        {
-            bool created = await _spartaService.CreateAsync(spartan);
-
-            if (created == false)
-            {
-                return Problem("Entity set 'NorthwindContext.Suppliers'  is null.");
-            }
-
-            return CreatedAtAction("GetSupplier", new { id = spartan.Id }, CreateSpartanLinks(Utils.SpartanToDTO(spartan)));
-        }*/
         public async Task<ActionResult<SpartanDTO>> PostSpartan(SpartanDTO spartanDto)
         {
-            // Create a new entity instance and map the DTO properties to the entity
             var spartan = new Spartan();
             spartan.UserName = spartanDto.UserName;
             spartan.Email = spartanDto.Email;
             spartan.EmailConfirmed = spartanDto.EmailConfirmed;
 
-            // Hash the password using the default password hasher provided by ASP.NET Identity
             var passwordHasher = new PasswordHasher<Spartan>();
             spartan.PasswordHash = passwordHasher.HashPassword(spartan, spartanDto.PasswordHash);
 
-            // Add the entity to the context and save changes
             _spartaService.CreateAsync(spartan);
             await _spartaService.SaveAsync();
 
-            // Map the entity back to a DTO and return it in the response
             var createdSpartanDto = new SpartanDTO
             {
                 Id = spartan.Id,
@@ -116,6 +105,21 @@ namespace Final_Project.Controllers.ApiControllers
         [HttpDelete("{id}", Name = nameof(DeleteSpartan))]
         public async Task<IActionResult> DeleteSpartan(string id)
         {
+            var spartan = await _spartaService.GetAsync(id);
+            var trackers = spartan.Personal_Trackers;
+            if(trackers != null)
+            {
+                foreach (var tracker in trackers)
+                {
+                    await _personalTrackerService.DeleteAsync(tracker.Id);
+                }
+            }
+
+            if(spartan.UserProfile != null)
+            {
+                await _traineeProfileService.DeleteAsync(spartan.UserProfile.Id);
+            }
+            
             var deleted = await _spartaService.DeleteAsync(id);
 
             if (deleted == false)
