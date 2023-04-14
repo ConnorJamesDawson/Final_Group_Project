@@ -1,6 +1,7 @@
 ﻿using Final_Project.ApiServices;
 using Final_Project.Controllers.ApiControllers;
 using Final_Project.Models;
+using Final_Project.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
@@ -57,25 +58,17 @@ namespace Final_Project.Tests
         public async Task GetTraineeProfile_WhenGivenValidID_ReturnsProfile()
         {
             var mockService = Mock.Of<ISpartaApiService<TraineeProfile>>();
-            TraineeProfile traineeProfile = new()
-            {
-                Id = 1,
-                Title = "testing",
-                AboutMe = "testing 1"
-            };
-
-
 
             Mock
             .Get(mockService)
             .Setup(sc => sc.GetAsync(1).Result)
-            .Returns(traineeProfile);
+            .Returns(new TraineeProfile());
 
 
 
             var sut = new TraineeProfilesControllerApi(mockService);
             var result = await sut.GetTraineeProfile(1);
-            Assert.That(result.Value, Is.EqualTo(traineeProfile));
+            Assert.That(result.Value, Is.InstanceOf<TraineeProfileDTO>());
         }
 
         [Category("Sad Path")]

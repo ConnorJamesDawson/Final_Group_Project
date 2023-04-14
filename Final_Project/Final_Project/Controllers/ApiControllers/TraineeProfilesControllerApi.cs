@@ -32,7 +32,7 @@ namespace Final_Project.Controllers.ApiControllers
             {
                 return NotFound();
             }
-            return result.Select(pr => CreateProfileLinks(Utils.ProfileToDTO(pr))).ToList();
+            return result.Select(pr => CreateProfileLinks(pr)).ToList();
         }
 
         // GET: api/TraineeProfiles/5
@@ -44,7 +44,7 @@ namespace Final_Project.Controllers.ApiControllers
             {
                 return NotFound();
             }
-            return CreateProfileLinks(Utils.ProfileToDTO(result));
+            return CreateProfileLinks(result);
         }
 
         // PUT: api/TraineeProfiles/5
@@ -86,30 +86,31 @@ namespace Final_Project.Controllers.ApiControllers
             return NoContent();
         }
 
-        private TraineeProfileDTO CreateProfileLinks(TraineeProfileDTO profile)
+        private TraineeProfileDTO CreateProfileLinks(TraineeProfile profile)
         {
-            if (Url is null) return profile;
+            TraineeProfileDTO output = Utils.ProfileToDTO(profile);
+            if (Url is null) return output;
 
             var idObj = new { id = profile.Id };
 
-            profile.Spartan = Url.Link("GetSpartan", new { id = profile.SpartanId });
+            output.Spartan = Url.Link("GetSpartan", new { id = output.SpartanId });
 
-            profile.Links.Add(
+            output.Links.Add(
                 new LinkDTO(Url.Link(nameof(GetTraineeProfile), idObj),
                 "self",
                 "GET"));
 
-            profile.Links.Add(
+            output.Links.Add(
                 new LinkDTO(Url.Link(nameof(PostTraineeProfile), null),
                 "post_profile",
                 "POST"));
 
-            profile.Links.Add(
+            output.Links.Add(
                 new LinkDTO(Url.Link(nameof(DeleteTraineeProfile), idObj),
                 "delete_profile",
                 "DELETE"));
 
-            return profile;
+            return output;
         }
     }
 }
