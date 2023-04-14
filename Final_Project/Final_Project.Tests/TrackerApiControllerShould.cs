@@ -149,10 +149,54 @@ internal class TrackerApiControllerShould
             .Setup(s => s.CreateAsync(tracker).Result)
             .Returns(true);
 
-        var result = await _sut.PostPersonalTracker(tracker);
-
-        Assert.That(result.Result, Is.InstanceOf<CreatedAtActionResult>());
+        var actionResult = await _sut.PostPersonalTracker(tracker);
+        Assert.That(actionResult.Result, Is.InstanceOf<CreatedAtActionResult>());
+        var result = actionResult.Result as CreatedAtActionResult;
+        Assert.That(result.Value, Is.InstanceOf<PersonalTracker>());
     }
 
-   
+    [Test]
+    [Category("Sad Path")]
+    public async Task PostPersonalTracker_ReturnsProblemWhenTrackerExists()
+    {
+        var tracker = new PersonalTracker
+        {
+            SpartanId = It.IsAny<string>(),
+            Title = It.IsAny<string>(),
+        };
+
+        Mock.Get(_service)
+            .Setup(s => s.CreateAsync(tracker).Result)
+            .Returns(false) ;
+
+        var actionResult = await _sut.PostPersonalTracker(tracker);
+
+        var result = actionResult.Result as ObjectResult;
+        Assert.That(result.Value, Is.InstanceOf<ProblemDetails>());
+    }
+
+    [Test]
+    [Category("Happy Path")]
+    public async Task DeletePersonalTracker_ReturnsNoContentWhenSuccessful()
+    {
+        Mock.Get(_service)
+            .Setup(s=> s.DeleteAsync(It.IsAny<int>()).Result)
+            .Returns(true);
+
+        var result = await _sut.DeletePersonalTracker(It.IsAny<int>());
+
+        Assert.That(result, Is.InstanceOf<NoContentResult>());
+    }
+    [Test]
+    [Category("Sad Path")]
+    public async Task DeletePersonalTracker_ReturnsNotFoundWhenUnsuccessful()
+    {
+        Mock.Get(_service)
+            .Setup(s => s.DeleteAsync(It.IsAny<int>()).Result)
+            .Returns(false);
+
+        var result = await _sut.DeletePersonalTracker(It.IsAny<int>());
+
+        Assert.That(result, Is.InstanceOf<NotFoundResult>());
+    }
 }
