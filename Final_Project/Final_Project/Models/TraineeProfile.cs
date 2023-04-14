@@ -7,15 +7,16 @@ namespace Final_Project.Models;
 public class TraineeProfile
 {
     public int Id { get; set; }
-
     [Required(ErrorMessage = "Title is Required")]
     [StringLength(50)]
     public string Title { get; set; } = null!;
 
     public string? PictureURL { get; set; }
-
+    [Display(Name = "About Me")]
     [StringLength(2000)]
     public string? AboutMe { get; set; }
+
+    [Display(Name = "Work Experience")]
     [StringLength(2000)]
     public string? WorkExperience { get; set; }
 
