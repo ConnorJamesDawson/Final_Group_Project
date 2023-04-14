@@ -25,6 +25,7 @@ public class SpartanApiService : ISpartanApiService<Spartan>
         else
         {
             _repository.Add(entity);
+            await _repository.SaveAsync();
             return true;
         }
     }
@@ -86,10 +87,6 @@ public class SpartanApiService : ISpartanApiService<Spartan>
 
     public async Task<bool> UpdateAsync(string id, Spartan entity)
     {
-        if (!await EntityExists(id))
-        {
-            return false;
-        }
         _repository.Update(entity);
 
         try
@@ -97,21 +94,9 @@ public class SpartanApiService : ISpartanApiService<Spartan>
             await _repository.SaveAsync();
         }
         catch (DbUpdateConcurrencyException)
-        {
-            if (!await EntityExists(id))
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+        {           
+                return false;           
         }
         return true;
-    }
-
-    private async Task<bool> EntityExists(string id)
-    {
-        return (await _repository.FindAsync(id)) != null;
     }
 }

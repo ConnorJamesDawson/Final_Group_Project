@@ -11,10 +11,11 @@ namespace Final_Project.Models
         [Required(ErrorMessage = "Title is Required")]
         [StringLength(50)]
         public string Title { get; set; } = null!;
-
+        
         public string? StopSelfFeedback { get; set; }
         public string? StartSelfFeedback { get; set; }
         public string? ContinueSelfFeedback { get; set; }
+        
         public string? CommentsSelfFeedback { get; set; }
         public string? TrainerComments { get; set; }
 
