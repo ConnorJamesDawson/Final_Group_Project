@@ -10,7 +10,7 @@ namespace Final_Project.Models.DTO
 
         public string Title { get; set; } = null!;
 
-        public string PictureURL;
+        public string? PictureURL { get; set; }
 
         public string? AboutMe { get; set; }
 

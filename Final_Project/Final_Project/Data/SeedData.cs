@@ -12,8 +12,6 @@ namespace Final_Project.Data
             var userManager = serviceProvider.GetRequiredService<UserManager<Spartan>>();
             var roleStore = new RoleStore<IdentityRole>(context);
 
-
-
             if (context.Spartans.Any())
             {
                 context.Spartans.RemoveRange(context.Spartans);
