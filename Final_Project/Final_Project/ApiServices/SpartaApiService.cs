@@ -21,7 +21,8 @@ public class SpartaApiService<T> : ISpartaApiService<T> where T : class
         }
         else
         {
-            _repository.Add(entity);
+             _repository.Add(entity);
+            await _repository.SaveAsync();
             return true;
         }
     }
