@@ -33,13 +33,6 @@ namespace Final_Project
                  typeof(ISpartaApiService<>),
                  typeof(SpartaApiService<>));
 
-            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
-            builder.Services.AddDefaultIdentity<Spartan>
-                (options => options.SignIn.RequireConfirmedAccount = true)
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<SpartaDbContext>();
-
             builder.Services.AddScoped(
                 typeof(ISpartanApiRepository<Spartan>),
                 typeof(SpartanApiRepository));
@@ -48,6 +41,19 @@ namespace Final_Project
                 typeof(ISpartanApiService<Spartan>),
                 typeof(SpartanApiService));
 
+            builder.Services.AddScoped<ISpartaApiRepository<TraineeProfile>, 
+                SpartaApiRepository<TraineeProfile>>();
+            
+            builder.Services.AddScoped<ISpartaApiService<TraineeProfile>, 
+                SpartaApiService<TraineeProfile>>();
+
+            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+            builder.Services.AddDefaultIdentity<Spartan>
+                (options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<SpartaDbContext>();
+
             builder.Services.AddControllers()
                 .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
@@ -55,8 +61,6 @@ namespace Final_Project
 
             builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
-            builder.Services.AddScoped<ISpartaApiRepository<TraineeProfile>, SpartaApiRepository<TraineeProfile>>();
-            builder.Services.AddScoped<ISpartaApiService<TraineeProfile>, SpartaApiService<TraineeProfile>>();
             var app = builder.Build();
             using (var scope = app.Services.CreateScope())
             {

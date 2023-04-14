@@ -19,5 +19,10 @@ namespace Final_Project.Models.DTO
         public bool Complete { get; set; }
 
         public string SpartanId { get; set; } = null!;
+
+        public string? Spartan { get; set; }
+
+        public List<LinkDTO> Links = new();
+
     }
 }
