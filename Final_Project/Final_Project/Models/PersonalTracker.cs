@@ -25,7 +25,7 @@ namespace Final_Project.Models
 
         public static string[] SkillLevelOptionsArray { get; } = new string[] { "Unskilled", "Low Skilled", "Partially Skilled", "Skilled" };
 
-        public SelectList? SkillLevelOptions = new SelectList(SkillLevelOptionsArray);
+        public SelectList SkillLevelOptions = new SelectList(SkillLevelOptionsArray);
 
 
         [Display(Name = "Technical Skills")]
