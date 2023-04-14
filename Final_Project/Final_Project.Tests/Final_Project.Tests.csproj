@@ -27,4 +27,8 @@
     <ProjectReference Include="..\Final_Project\Final_Project.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Final_Project\Final_Project.csproj" />
+  </ItemGroup>
+
 </Project>
