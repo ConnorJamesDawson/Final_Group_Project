@@ -17,9 +17,15 @@ namespace Final_Project.Data
                 context.Spartans.RemoveRange(context.Spartans);
                 context.UserRoles.RemoveRange(context.UserRoles);
                 context.Roles.RemoveRange(context.Roles);
+                context.Users.RemoveRange(context.Users);
                 context.SaveChanges();
             }
 
+            var admin = new IdentityRole
+            {
+                Name = "Admin",
+                NormalizedName = "ADMIN"
+            };
             var trainer = new IdentityRole
             {
                 Name = "Trainer",
@@ -39,7 +45,17 @@ namespace Final_Project.Data
                 .CreateAsync(trainee)
                 .GetAwaiter()
                 .GetResult();
+            roleStore
+                .CreateAsync(admin)
+                .GetAwaiter()
+                .GetResult();
 
+            var connor = new Spartan
+            {
+                UserName = "connor@spartaglobal.com",
+                Email = "connor@spartaglobal.com",
+                EmailConfirmed = true
+            };
             var phil = new Spartan
             {
                 UserName = "phil@spartaglobal.com",
@@ -58,8 +74,10 @@ namespace Final_Project.Data
                 Email = "cathy@spartaglobal.com",
                 EmailConfirmed = true,
             };
-
-
+            userManager
+                .CreateAsync(connor, "Password1!")
+                .GetAwaiter()
+                .GetResult();
             userManager
                 .CreateAsync(phil, "Password1!")
                 .GetAwaiter()
@@ -77,21 +95,26 @@ namespace Final_Project.Data
 
             context.UserRoles.AddRange(new IdentityUserRole<string>[]
             {
-             new IdentityUserRole<string>
-             {
-                 UserId = userManager.GetUserIdAsync(phil).Result,
-                 RoleId = roleStore.GetRoleIdAsync(trainee).Result
-             },
-             new IdentityUserRole<string>
-             {
-                 UserId = userManager.GetUserIdAsync(laura).Result,
-                 RoleId = roleStore.GetRoleIdAsync(trainee).Result
-             },
-             new IdentityUserRole<string>
-             {
-                 UserId = userManager.GetUserIdAsync(cathy).Result,
-                 RoleId = roleStore.GetRoleIdAsync(trainer).Result
-             }
+                 new IdentityUserRole<string>
+                 {
+                     UserId = userManager.GetUserIdAsync(phil).Result,
+                     RoleId = roleStore.GetRoleIdAsync(trainee).Result
+                 },
+                 new IdentityUserRole<string>
+                 {
+                     UserId = userManager.GetUserIdAsync(laura).Result,
+                     RoleId = roleStore.GetRoleIdAsync(trainee).Result
+                 },
+                 new IdentityUserRole<string>
+                 {
+                     UserId = userManager.GetUserIdAsync(cathy).Result,
+                     RoleId = roleStore.GetRoleIdAsync(trainer).Result
+                 },
+                 new IdentityUserRole<string>
+                 {
+                     UserId = userManager.GetUserIdAsync(connor).Result,
+                     RoleId = roleStore.GetRoleIdAsync(admin).Result
+                 }
             });
 
 
@@ -115,11 +138,6 @@ namespace Final_Project.Data
                 new PersonalTracker
                 {
                     Title = "Week1",
-                    Spartan = cathy
-                },
-                new PersonalTracker
-                {
-                    Title = "Week1",
                     Spartan = laura
                 }
             ) ;
@@ -128,11 +146,6 @@ namespace Final_Project.Data
                 {
                     Title = "About me: Phil!",
                     Spartan = phil
-                },
-                new TraineeProfile
-                {
-                    Title = "About me: Cathy!",
-                    Spartan = cathy
                 },
                 new TraineeProfile
                 {
