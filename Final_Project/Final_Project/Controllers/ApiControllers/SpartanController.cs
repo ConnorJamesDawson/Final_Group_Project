@@ -1,7 +1,9 @@
 ﻿using Final_Project.ApiServices;
 using Final_Project.Models;
 using Final_Project.Models.DTO;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Final_Project.Controllers.ApiControllers
 {
@@ -70,7 +72,7 @@ namespace Final_Project.Controllers.ApiControllers
         // POST: api/Suppliers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost(Name = nameof(PostSpartan))]
-        public async Task<ActionResult<Spartan>> PostSpartan(Spartan spartan)
+        /*public async Task<ActionResult<Spartan>> PostSpartan(Spartan spartan)
         {
             bool created = await _spartaService.CreateAsync(spartan);
 
@@ -80,6 +82,34 @@ namespace Final_Project.Controllers.ApiControllers
             }
 
             return CreatedAtAction("GetSupplier", new { id = spartan.Id }, CreateSpartanLinks(Utils.SpartanToDTO(spartan)));
+        }*/
+        public async Task<ActionResult<SpartanDTO>> PostSpartan(SpartanDTO spartanDto)
+        {
+            // Create a new entity instance and map the DTO properties to the entity
+            var spartan = new Spartan();
+            spartan.UserName = spartanDto.UserName;
+            spartan.Email = spartanDto.Email;
+            spartan.EmailConfirmed = spartanDto.EmailConfirmed;
+
+            // Hash the password using the default password hasher provided by ASP.NET Identity
+            var passwordHasher = new PasswordHasher<Spartan>();
+            spartan.PasswordHash = passwordHasher.HashPassword(spartan, spartanDto.PasswordHash);
+
+            // Add the entity to the context and save changes
+            _spartaService.CreateAsync(spartan);
+            await _spartaService.SaveAsync();
+
+            // Map the entity back to a DTO and return it in the response
+            var createdSpartanDto = new SpartanDTO
+            {
+                Id = spartan.Id,
+                UserName = spartan.UserName,
+                Email = spartan.Email,
+                EmailConfirmed = spartan.EmailConfirmed,
+                Links = spartanDto.Links
+            };
+
+            return CreatedAtAction(nameof(GetSpartan), new { id = spartan.Id }, createdSpartanDto);
         }
 
         // DELETE: api/Suppliers/5

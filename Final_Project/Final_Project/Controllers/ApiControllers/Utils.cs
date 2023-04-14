@@ -1,5 +1,6 @@
 ﻿using Final_Project.Models;
 using Final_Project.Models.DTO;
+using Microsoft.AspNetCore.Identity;
 
 namespace Final_Project.Controllers.ApiControllers
 {
@@ -19,9 +20,10 @@ namespace Final_Project.Controllers.ApiControllers
         public static SpartanDTO SpartanToDTO(Spartan spartan) => new SpartanDTO()
         {
             Id = spartan.Id,
-            NormalizedUserName = spartan.NormalizedUserName,
-            NormalizedEmail = spartan.NormalizedEmail,
-            PhoneNumber = spartan.PhoneNumber
+            UserName = spartan.UserName,
+            Email = spartan.Email,
+            EmailConfirmed = spartan.EmailConfirmed,
+            PasswordHash = spartan.PasswordHash
         };
     }
 }
