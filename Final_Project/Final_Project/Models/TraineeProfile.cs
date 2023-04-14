@@ -11,7 +11,7 @@ public class TraineeProfile
     [StringLength(50)]
     public string Title { get; set; } = null!;
 
-    public string PictureURL;
+    public string? PictureURL { get; set; }
     [Display(Name = "About Me")]
     [StringLength(2000)]
     public string? AboutMe { get; set; }

@@ -1,7 +1,15 @@
+using Final_Project.ApiServices;
 using Final_Project.Data;
+using Final_Project.Data.ApiRepositories;
+using Final_Project.Data.Repositories;
 using Final_Project.Models;
+using Final_Project.Models.DTO;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Final_Project.Data.Repositories;
+using Final_Project.Data.ApiRepositories;
+using Final_Project.ApiServices;
+using NorthwindAPI_MiniProject.Data.Repository;
 
 namespace Final_Project
 {
@@ -16,6 +24,15 @@ namespace Final_Project
             builder.Services.AddDbContext<SpartaDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
+
+            builder.Services.AddScoped(
+                 typeof(ISpartaApiRepository<>),
+                 typeof(SpartaApiRepository<>));
+
+            builder.Services.AddScoped(
+                 typeof(ISpartaApiService<>),
+                 typeof(SpartaApiService<>));
+
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             builder.Services.AddDefaultIdentity<Spartan>
@@ -23,10 +40,23 @@ namespace Final_Project
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<SpartaDbContext>();
 
-            builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped(
+                typeof(ISpartanApiRepository<Spartan>),
+                typeof(SpartanApiRepository));
+
+            builder.Services.AddScoped(
+                typeof(ISpartanApiService<Spartan>),
+                typeof(SpartanApiService));
+
+            builder.Services.AddControllers()
+                .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+            builder.Services.AddEndpointsApiExplorer();
 
             builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
+            builder.Services.AddScoped<ISpartaApiRepository<TraineeProfile>, SpartaApiRepository<TraineeProfile>>();
+            builder.Services.AddScoped<ISpartaApiService<TraineeProfile>, SpartaApiService<TraineeProfile>>();
             var app = builder.Build();
             using (var scope = app.Services.CreateScope())
             {

@@ -4,6 +4,7 @@ using Final_Project.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Final_Project.Data.Migrations
 {
     [DbContext(typeof(SpartaDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230414113410_PictureURL_added")]
+    partial class PictureURL_added
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,10 +36,6 @@ namespace Final_Project.Data.Migrations
                     b.Property<string>("CommentsSelfFeedback")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ConsultantSkills")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ContinueSelfFeedback")
                         .HasColumnType("nvarchar(max)");
 
@@ -48,10 +47,6 @@ namespace Final_Project.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StopSelfFeedback")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TechnicalSkills")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
