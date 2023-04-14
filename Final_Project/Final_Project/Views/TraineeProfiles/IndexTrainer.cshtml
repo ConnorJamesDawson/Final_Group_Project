@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Final_Project.Models.TraineeProfile>
+
+@{
+    ViewData["Title"] = "Trainee Profiles";
+}
+
+<h1>Trainee Profiles</h1>
+
+
+<table class="table table-bordered border-dark" >
+    <thead>
+        <tr class="table-warning border-dark">
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AboutMe)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WorkExperience)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Spartan.UserName)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

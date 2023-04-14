@@ -1,0 +1,88 @@
+﻿@model Final_Project.Models.PersonalTracker
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Personal Tracker</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StopSelfFeedback" class="control-label"></label>
+                <input asp-for="StopSelfFeedback" class="form-control" />
+                <span asp-validation-for="StopSelfFeedback" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StartSelfFeedback" class="control-label"></label>
+                <input asp-for="StartSelfFeedback" class="form-control" />
+                <span asp-validation-for="StartSelfFeedback" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ContinueSelfFeedback" class="control-label"></label>
+                <input asp-for="ContinueSelfFeedback" class="form-control" />
+                <span asp-validation-for="ContinueSelfFeedback" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CommentsSelfFeedback" class="control-label"></label>
+                <input asp-for="CommentsSelfFeedback" class="form-control" />
+                <span asp-validation-for="CommentsSelfFeedback" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="TechnicalSkills" class="control-label"></label>
+                <select asp-for="TechnicalSkills">
+                    <option value="Unskilled">Unskilled</option>
+                    <option value="Low Skilled">Low Skilled</option>
+                    <option value="Partially Skilled">Partially Skilled</option>
+                    <option value="Skilled">Skilled</option>
+                </select>
+
+                <div class="form-group">
+                    <label asp-for="ConsultantSkills" class="control-label"></label>
+                    <select asp-for="ConsultantSkills">
+                        <option value="Unskilled">Unskilled</option>
+                        <option value="Low Skilled">Low Skilled</option>
+                        <option value="Partially Skilled">Partially Skilled</option>
+                        <option value="Skilled">Skilled</option>
+                    </select>
+
+
+           @if (User.IsInRole("Admin")){
+            <div class="form-group">
+                <label asp-for="SpartanId" class="control-label"></label>
+                <select asp-for="SpartanId" class="form-control" asp-items="ViewBag.SpartanId"></select>
+                <span asp-validation-for="SpartanId" class="text-danger"></span>
+            </div>
+            }
+            @if (User.IsInRole("Trainee")){
+            <div class="form-group" style="display:none">
+                <label asp-for="SpartanId" class="control-label"></label>
+                <select asp-for="SpartanId" class="form-control" asp-items="ViewBag.SpartanId"></select>
+                <span asp-validation-for="SpartanId" class="text-danger"></span>
+            </div>
+            }
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

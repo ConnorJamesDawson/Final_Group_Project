@@ -1,0 +1,70 @@
+﻿@model Final_Project.Models.TraineeProfile
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Trainee Profile</h1>
+
+<div>
+        @if (User.IsInRole("Admin")){
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Spartan)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Spartan.Id)
+        </dd>
+        }
+        @if (User.IsInRole("Trainee")){
+         <div style="display: none">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Spartan)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Spartan.Id)
+        </dd>
+        </div>
+        }
+    </dl>
+</div>
+
+<div id="profile-container" class="col col-lg-12 mb-4 mb-lg-0">
+    <div class="card mb-3" style="border-radius: .5rem;">
+        <div class="row g-0">
+            <div class="col-md-4 gradient-custom text-center text-white d-flex align-items-center justify-content-center flex-column"
+                 style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                     alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
+                <h3>@Html.DisplayFor(model => model.Title)</h3>
+                <h5>@Html.DisplayFor(model => model.Spartan.Email)</h5>
+                <p>Spartan</p>
+                <i class="far fa-edit mb-5"></i>
+            </div>
+            <div class="col-md-8">
+                <div class="card-body p-4">
+                    <h6>About Me</h6>
+                    <hr class="mt-0 mb-4">
+                    <div class="row pt-1">
+                        <div class="col-12 mb-3">
+                            <p class="text-muted">
+                            @Html.DisplayFor(model => model.AboutMe)
+                            </p>
+                        </div>
+                    </div>
+                    <h6>Work Experience</h6>
+                    <hr class="mt-0 mb-4">
+                    <div class="row pt-1">
+                        <div class="col-12 mb-3">
+                            <p class="text-muted">
+                                @Html.DisplayFor(model => model.WorkExperience)
+                            </p>
+                        </div>
+                    </div>
+                    <div class ="d-flex justify-content-end">
+                        <a asp-action="IndexTrainer" role="button" class="btn btn-warning">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
