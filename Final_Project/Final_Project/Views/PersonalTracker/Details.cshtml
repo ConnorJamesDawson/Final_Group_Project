@@ -4,54 +4,13 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>@Html.DisplayFor(model => model.Title)</h1>
 
 <div>
     <h4>Personal Tracker</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StopSelfFeedback)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StopSelfFeedback)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.StartSelfFeedback)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.StartSelfFeedback)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ContinueSelfFeedback)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ContinueSelfFeedback)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CommentsSelfFeedback)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CommentsSelfFeedback)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.TechnicalSkills)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.TechnicalSkills)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ConsultantSkills)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.ConsultantSkills)
-        </dd>
+
 
          @if (User.IsInRole("Admin")){
         <dt class = "col-sm-2">
@@ -77,8 +36,8 @@
 <div>
     @if (User.IsInRole("Trainee"))
     {
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
-    <a asp-action="Index">Back to my Trainee Trackers</a>
+        <a asp-action="Edit" asp-route-id="@Model?.Id" role="button" class="btn btn-light">Edit</a>
+        <a asp-action="Index" role="button" class="btn btn-light">Back to My Personal Tracker</a>
     }
     
     @if (User.IsInRole("Trainer"))
@@ -88,3 +47,55 @@
     }
 </div>
 
+<div class="border">
+<div class="col-lg-12 mt-2">
+    <div class="row gap-5 justify-content-center">
+        <div class="card text-light bg-success mb-3" style="max-width: 18rem; min-height: 10rem;">
+            <div class="card-header fw-bold fs-5">Start</div>
+            <div class="card-body">
+                <p class="card-text">@Html.DisplayFor(model => model.StartSelfFeedback)</p>
+            </div>
+        </div>
+        <div class="card text-light bg-danger mb-3" style="max-width: 18rem; min-height: 10rem;">
+            <div class="card-header fw-bold fs-5">Stop</div>
+            <div class="card-body">
+                <p class="card-text">@Html.DisplayFor(model => model.StopSelfFeedback)</p>
+            </div>
+        </div>
+        <div class="card text-light bg-secondary mb-3" style="max-width: 18rem; min-height: 10rem;">
+            <div class="card-header fw-bold fs-5">Continue</div>
+            <div class="card-body">
+                <p class="card-text">@Html.DisplayFor(model => model.ContinueSelfFeedback)</p>
+            </div>
+        </div>
+    </div>   
+    <div class="row gap-5 justify-content-center">
+        <div class="card bg-light mb-3" style="max-width: 18rem; min-height: 7rem;">
+            <div class="card-header fw-bold fs-5">Technical Skills</div>
+            <div class="card-body">
+                <p class="card-text fs-3 text-center">@Html.DisplayFor(model => model.TechnicalSkills)</p>
+            </div>
+        </div>
+        <div class="card bg-light mb-3" style="max-width: 18rem; min-height: 7rem;">
+            <div class="card-header fw-bold fs-5">Consultant Skills</div>
+            <div class="card-body">
+                    <p class="card-text fs-3 text-center">@Html.DisplayFor(model => model.ConsultantSkills)</p>
+            </div>
+        </div>
+    </div>
+    <div class="row gap-5 justify-content-center">
+            <div class="card bg-warning mb-3 w-100" style="max-width: 25rem; min-height: 10rem;">
+            <div class="card-header fw-bold fs-5">Trainee Comments</div>
+            <div class="card-body">
+                <p class="card-text">@Html.DisplayFor(model => model.CommentsSelfFeedback)</p>
+            </div>
+        </div>
+        <div class="card bg-warning mb-3 w-100" style="max-width: 25rem; min-height: 10rem;">
+            <div class="card-header fw-bold fs-5">Trainer Comments</div>
+            <div class="card-body">
+                <p class="card-text">@Html.DisplayFor(model => model.TrainerComments)</p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

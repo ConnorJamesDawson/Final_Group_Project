@@ -9,39 +9,18 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table table-bordered border-dark">
     <thead>
-        <tr>
+        <tr class="table-warning border-dark">
             <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StopSelfFeedback)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StartSelfFeedback)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ContinueSelfFeedback)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CommentsSelfFeedback)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TrainerComments)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TechnicalSkills)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ConsultantSkills)
-            </th>
+            <th></th>
             @if (User.IsInRole("Admin")){
             <th>
                 @Html.DisplayNameFor(model => model.Spartan)
             </th>
             }
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -50,38 +29,19 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StopSelfFeedback)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartSelfFeedback)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContinueSelfFeedback)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CommentsSelfFeedback)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TrainerComments)
-            </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TechnicalSkills)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ConsultantSkills)
-                </td>
             @if (User.IsInRole("Admin")){
             <td>
                 @Html.DisplayFor(modelItem => item.Spartan.Id)
             </td>
             }
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" role="button" class="btn btn-warning">Edit</a> 
+                <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-warning">Details</a> 
+                <a asp-action="Delete" asp-route-id="@item.Id" role="button" class="btn btn-danger">Delete</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+
