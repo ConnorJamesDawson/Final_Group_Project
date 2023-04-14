@@ -61,7 +61,7 @@ namespace Final_Project.Controllers.ApiControllers
         {
             var spartan = await _spartaService.GetAsync(id);
 
-            if (await _spartaService.GetAsync(id) == null)
+            if (spartan == null)
             {
                 return NotFound();
             }
@@ -115,6 +115,10 @@ namespace Final_Project.Controllers.ApiControllers
         public async Task<IActionResult> DeleteSpartan(string id)
         {
             var spartan = await _spartaService.GetAsync(id);
+            if (spartan == null)
+            {
+                return NotFound();
+            }
             var trackers = spartan.Personal_Trackers;
             if(trackers != null)
             {
