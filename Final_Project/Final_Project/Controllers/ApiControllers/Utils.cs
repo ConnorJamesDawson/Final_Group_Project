@@ -14,7 +14,7 @@ namespace Final_Project.Controllers.ApiControllers
             Complete = profile.Complete,
             SpartanId = profile.SpartanId,
             WorkExperience = profile.WorkExperience,
-            PictureURL = profile.PictureURL
+            PictureURL = profile.PictureURL,
         };
 
         public static SpartanDTO SpartanToDTO(Spartan spartan) => new SpartanDTO()

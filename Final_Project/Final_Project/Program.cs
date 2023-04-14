@@ -55,8 +55,6 @@ namespace Final_Project
 
             builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
-            builder.Services.AddScoped<ISpartaApiRepository<TraineeProfile>, SpartaApiRepository<TraineeProfile>>();
-            builder.Services.AddScoped<ISpartaApiService<TraineeProfile>, SpartaApiService<TraineeProfile>>();
             var app = builder.Build();
             using (var scope = app.Services.CreateScope())
             {

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Final_Project.Data;
 using Final_Project.Models;
 using Final_Project.ApiServices;
+using Final_Project.Models.DTO;
 
 namespace Final_Project.Controllers.ApiControllers
 {
@@ -23,27 +24,27 @@ namespace Final_Project.Controllers.ApiControllers
         }
 
         // GET: api/TraineeProfiles
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<TraineeProfile>>> GetTraineeProfile()
+        [HttpGet()]
+        public async Task<ActionResult<IEnumerable<TraineeProfileDTO>>> GetTraineeProfile()
         {
             var result = await _service.GetAllAsync();
             if (result is null)
             {
                 return NotFound();
             }
-            return result.ToList();
+            return result.Select(pr => CreateProfileLinks(Utils.ProfileToDTO(pr))).ToList();
         }
 
         // GET: api/TraineeProfiles/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<TraineeProfile>> GetTraineeProfile(int id)
+        [HttpGet("{id}", Name = nameof(GetTraineeProfile))]
+        public async Task<ActionResult<TraineeProfileDTO>> GetTraineeProfile(int id)
         {
             var result = await _service.GetAsync(id);
             if (result is null)
             {
                 return NotFound();
             }
-            return result;
+            return CreateProfileLinks(Utils.ProfileToDTO(result));
         }
 
         // PUT: api/TraineeProfiles/5
@@ -62,7 +63,7 @@ namespace Final_Project.Controllers.ApiControllers
 
         // POST: api/TraineeProfiles
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
+        [HttpPost(Name = nameof(PostTraineeProfile))]
         public async Task<ActionResult<TraineeProfile>> PostTraineeProfile(TraineeProfile traineeProfile)
         {
             var result = await _service.CreateAsync(traineeProfile);
@@ -74,7 +75,7 @@ namespace Final_Project.Controllers.ApiControllers
         }
 
         // DELETE: api/TraineeProfiles/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}", Name = nameof(DeleteTraineeProfile))]
         public async Task<IActionResult> DeleteTraineeProfile(int id)
         {
             var result = await _service.DeleteAsync(id);
@@ -83,6 +84,32 @@ namespace Final_Project.Controllers.ApiControllers
                 return NotFound();
             }
             return NoContent();
+        }
+
+        private TraineeProfileDTO CreateProfileLinks(TraineeProfileDTO profile)
+        {
+            if (Url is null) return profile;
+
+            var idObj = new { id = profile.Id };
+
+            profile.Spartan = Url.Link("GetSpartan", new { id = profile.SpartanId });
+
+            profile.Links.Add(
+                new LinkDTO(Url.Link(nameof(GetTraineeProfile), idObj),
+                "self",
+                "GET"));
+
+            profile.Links.Add(
+                new LinkDTO(Url.Link(nameof(PostTraineeProfile), null),
+                "post_profile",
+                "POST"));
+
+            profile.Links.Add(
+                new LinkDTO(Url.Link(nameof(DeleteTraineeProfile), idObj),
+                "delete_profile",
+                "DELETE"));
+
+            return profile;
         }
     }
 }
