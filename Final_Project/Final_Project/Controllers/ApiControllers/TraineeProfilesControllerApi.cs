@@ -68,7 +68,7 @@ namespace Final_Project.Controllers.ApiControllers
             var result = await _service.CreateAsync(traineeProfile);
             if (!result)
             {
-                return Problem("Error creating Trainee Profile");
+                return BadRequest("Error creating Trainee Profile");
             }
             return CreatedAtAction("GetTraineeProfile", new { id = traineeProfile.Id }, traineeProfile);
         }
