@@ -105,6 +105,7 @@ namespace Final_Project.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,StopSelfFeedback,StartSelfFeedback,ContinueSelfFeedback,CommentsSelfFeedback,TechnicalSkills,ConsultantSkills,SpartanId")] PersonalTracker personal_Tracker)
         {
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
             if (id != personal_Tracker.Id)
             {
                 return NotFound();
@@ -114,6 +115,8 @@ namespace Final_Project.Controllers
             {
                 try
                 {
+                    
+                    personal_Tracker.SpartanId = currentUser.Id;
                     _context.Update(personal_Tracker);
                     await _context.SaveChangesAsync();
                 }
