@@ -2,14 +2,12 @@
 {
     public class SpartanDTO
     {
-        public string Id { get; set; }
+        public string Id { get; set; } = "______";
+        public string UserName { get; set; }
+        public string Email { get; set; }
+        public bool EmailConfirmed { get; set; }
+        public string PasswordHash { get; set; }
 
-        public string NormalizedUserName { get; set; }
-
-        public string NormalizedEmail { get; set; }
-
-        public string? PhoneNumber { get; set; }
-
-        public List<LinkDTO> Links = new List<LinkDTO>();
+        public List<LinkDTO>? Links = new List<LinkDTO>();
     }
 }

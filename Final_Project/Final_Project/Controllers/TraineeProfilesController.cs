@@ -7,22 +7,36 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Final_Project.Data;
 using Final_Project.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Final_Project.Controllers
 {
     public partial class TraineeProfilesController : Controller
     {
         private readonly SpartaDbContext _context;
+        private readonly UserManager<Spartan> _userManager;
 
-        public TraineeProfilesController(SpartaDbContext context)
+        public TraineeProfilesController(SpartaDbContext context, UserManager<Spartan> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: TraineeProfiles
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.TraineeProfile.Include(t => t.Spartan);
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+            var applicationDbContext = _context.TraineeProfile
+                    .Include(t => t.Spartan);
+            if (User.IsInRole("Trainee")) { 
+             applicationDbContext = _context.TraineeProfile
+                .Where(t => t.SpartanId == currentUser.Id)
+                .Include(t => t.Spartan);
+            } else
+            {
+                 applicationDbContext = _context.TraineeProfile
+                    .Include(t => t.Spartan);
+            }
             return View(await applicationDbContext.ToListAsync());
         }
 

@@ -9,10 +9,28 @@ namespace Final_Project.Controllers
 {
     public partial class PersonalTrackerController : Controller
     {
-        public async Task<IActionResult> IndexTrainer()
+        public async Task<IActionResult> IndexTrainer(string search = null, string titleSearch= null)
         {
-            var applicationDbContext = _context.Personal_Tracker.Include(p => p.Spartan);
-            return View(await applicationDbContext.ToListAsync());
+            IQueryable<string> titleQuery = from t in _context.Personal_Tracker
+                                            orderby t.Title
+                                            select t.Title;
+            var tracker = _context.Personal_Tracker.Include(t => t.Spartan).AsQueryable();
+
+            if(!string.IsNullOrEmpty(search))
+                tracker = tracker.Where(s => s.Spartan.UserName.Contains(search));
+
+            if(!string.IsNullOrEmpty(titleSearch))
+                tracker = tracker.Where(x => x.Title ==  titleSearch);
+
+            var titleVM = new TitleViewModel
+            {
+                Titles = new SelectList(await titleQuery.Distinct().ToListAsync()),
+                Trackers = await tracker.ToListAsync()
+            };
+
+            return View(titleVM);
+
+
         }
 
         //GET
@@ -34,8 +52,8 @@ namespace Final_Project.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize (Roles = "Trainer")]
-        public async Task<IActionResult> EditTrainer(int id, [Bind("TrainerComments","Id")] PersonalTrackerVM personalTrackerVM)
+        [Authorize(Roles = "Trainer")]
+        public async Task<IActionResult> EditTrainer(int id, [Bind("TrainerComments", "Id")] PersonalTrackerVM personalTrackerVM)
         {
             if (id != personalTrackerVM.Id)
             {

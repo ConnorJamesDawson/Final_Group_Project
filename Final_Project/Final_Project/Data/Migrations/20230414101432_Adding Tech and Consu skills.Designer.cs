@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Final_Project.Data.Migrations
 {
     [DbContext(typeof(SpartaDbContext))]
-    [Migration("20230414132137_PictureURLAdded")]
-    partial class PictureURLAdded
+    [Migration("20230414101432_Adding Tech and Consu skills")]
+    partial class AddingTechandConsuskills
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -86,9 +86,6 @@ namespace Final_Project.Data.Migrations
 
                     b.Property<bool>("Complete")
                         .HasColumnType("bit");
-
-                    b.Property<string>("PictureURL")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SpartanId")
                         .IsRequired()

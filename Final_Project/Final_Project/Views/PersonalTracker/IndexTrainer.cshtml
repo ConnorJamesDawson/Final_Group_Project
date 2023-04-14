@@ -1,29 +1,38 @@
-﻿@model IEnumerable<Final_Project.Models.PersonalTracker>
+﻿
+@model Final_Project.Models.ViewModels.TitleViewModel
 
 @{
     ViewData["Title"] = "Trainee Treackers";
 }
 
-<h1>Trainee Treackers</h1>
-
+<h1>Trainee Trackers</h1>
+<form asp-controller="PersonalTracker" asp-action="IndexTrainer">
+    <p>
+        <select asp-for="TitleSearch" asp-items="Model.Titles">
+            <option value="">All</option>
+        </select>
+        Name: <input type="text" asp-for="Search" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Spartan)
+                @Html.DisplayNameFor(model => model.Trackers[0].Spartan)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                @Html.DisplayNameFor(model => model.Trackers[0].Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TrainerComments)
+                @Html.DisplayNameFor(model => model.Trackers[0].TrainerComments)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.Trackers) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Spartan!.UserName)

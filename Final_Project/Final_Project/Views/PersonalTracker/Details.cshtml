@@ -7,7 +7,7 @@
 <h1>Details</h1>
 
 <div>
-    <h4>PersonalTracker</h4>
+    <h4>Personal Tracker</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -40,12 +40,38 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.CommentsSelfFeedback)
         </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TechnicalSkills)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TechnicalSkills)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ConsultantSkills)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ConsultantSkills)
+        </dd>
+
+         @if (User.IsInRole("Admin")){
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Spartan)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Spartan.Id)
+        </dd>
+        }
+
+        @if (User.IsInRole("Trainee")){
+         <div style="display: none">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Spartan)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Spartan.UserName)
         </dd>
+        </div>
+        }
     </dl>
 </div>
 <div>

@@ -12,8 +12,6 @@ namespace Final_Project.Data
             var userManager = serviceProvider.GetRequiredService<UserManager<Spartan>>();
             var roleStore = new RoleStore<IdentityRole>(context);
 
-
-
             if (context.Spartans.Any())
             {
                 context.Spartans.RemoveRange(context.Spartans);
@@ -102,6 +100,14 @@ namespace Final_Project.Data
                 new PersonalTracker
                 {
                     Title = "Week1",
+
+                    StopSelfFeedback = "Stop",
+                    StartSelfFeedback = "Start",
+                    Spartan = phil
+                },            
+                new PersonalTracker
+                {
+                    Title = "Week2",
                     StopSelfFeedback = "Stop",
                     StartSelfFeedback = "Start",
                     Spartan = phil
@@ -116,7 +122,7 @@ namespace Final_Project.Data
                     Title = "Week1",
                     Spartan = laura
                 }
-            );
+            ) ;
             context.TraineeProfile.AddRange(
                 new TraineeProfile
                 {
