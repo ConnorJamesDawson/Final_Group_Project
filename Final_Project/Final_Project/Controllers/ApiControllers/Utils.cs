@@ -21,9 +21,22 @@ namespace Final_Project.Controllers.ApiControllers
         {
             Id = spartan.Id,
             UserName = spartan.UserName,
+            FirstName = spartan.FirstName,
+            LastName = spartan.LastName,
             Email = spartan.Email,
             EmailConfirmed = spartan.EmailConfirmed,
+            PhoneNumber = spartan.PhoneNumber,
             PasswordHash = spartan.PasswordHash
+        };
+
+        public static Spartan DTOToSpartan(SpartanDTO spartanDto) => new Spartan()
+        {
+            UserName = spartanDto.UserName,
+            FirstName = spartanDto.FirstName,
+            LastName = spartanDto.LastName,
+            Email = spartanDto.Email,
+            EmailConfirmed = spartanDto.EmailConfirmed,
+            PhoneNumber = spartanDto.PhoneNumber
         };
     }
 }
