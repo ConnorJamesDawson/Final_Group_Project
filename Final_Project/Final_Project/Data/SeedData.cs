@@ -104,6 +104,13 @@ namespace Final_Project.Data
                     StopSelfFeedback = "Stop",
                     StartSelfFeedback = "Start",
                     Spartan = phil
+                },            
+                new PersonalTracker
+                {
+                    Title = "Week2",
+                    StopSelfFeedback = "Stop",
+                    StartSelfFeedback = "Start",
+                    Spartan = phil
                 },
                 new PersonalTracker
                 {
