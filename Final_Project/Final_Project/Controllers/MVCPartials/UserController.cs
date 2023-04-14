@@ -33,6 +33,42 @@ namespace Final_Project.Controllers.MVCPartials
 
             return View(spartans);
         }
+
+        public async Task<IActionResult> Delete(string? id)
+        {
+            if (id == null || _context.Spartans == null)
+            {
+                return NotFound();
+            }
+
+            var deleteUser = await _context.Spartans
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (deleteUser == null)
+            {
+                return NotFound();
+            }
+
+            return View(deleteUser);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(string id)
+        {
+            if (_context.Spartans == null)
+            {
+                return Problem("Entity set 'ApplicationDbContext.Spartans'  is null.");
+            }
+            var deleteUser = await _context.Spartans.FindAsync(id);
+            if (deleteUser != null)
+            {
+                _context.Spartans.Remove(deleteUser);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
         // GET: Personal_Tracker/Create
         public IActionResult CreateTrainee()
         {
