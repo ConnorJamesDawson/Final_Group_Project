@@ -7,7 +7,7 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Personal_Tracker</h4>
+    <h4>PersonalTracker</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -44,11 +44,21 @@
             @Html.DisplayNameFor(model => model.Spartan)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Spartan.Id)
+            @Html.DisplayFor(model => model.Spartan.UserName)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @if (User.IsInRole("Trainee"))
+    {
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
+    <a asp-action="Index">Back to my Trainee Trackers</a>
+    }
+    
+    @if (User.IsInRole("Trainer"))
+    {
+        <a asp-action="EditTrainer" asp-route-id="@Model.Id">Add Comments</a> 
+        <a asp-action="IndexTrainer">Back to all Trainee Trackers</a>
+    }
 </div>
+
