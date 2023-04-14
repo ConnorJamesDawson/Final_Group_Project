@@ -7,16 +7,19 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Final_Project.Data;
 using Final_Project.Models;
+using AutoMapper;
 
 namespace Final_Project.Controllers
 {
     public partial class PersonalTrackerController : Controller
     {
         private readonly SpartaDbContext _context;
+        private readonly IMapper _mapper;
 
-        public PersonalTrackerController(SpartaDbContext context)
+        public PersonalTrackerController(SpartaDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: Personal_Tracker
@@ -91,7 +94,7 @@ namespace Final_Project.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Stop_SelfFeedback,Start_SelfFeedback,Continue_SelfFeedback,Comments_SelfFeedback,SpartanId")] PersonalTracker personal_Tracker)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,StopSelfFeedback,StartSelfFeedback,ContinueSelfFeedback,CommentsSelfFeedback,TrainerComments,SpartanId")] PersonalTracker personal_Tracker)
         {
             if (id != personal_Tracker.Id)
             {

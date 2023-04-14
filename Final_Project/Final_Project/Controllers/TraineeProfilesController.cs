@@ -10,7 +10,7 @@ using Final_Project.Models;
 
 namespace Final_Project.Controllers
 {
-    public class TraineeProfilesController : Controller
+    public partial class TraineeProfilesController : Controller
     {
         private readonly SpartaDbContext _context;
 
