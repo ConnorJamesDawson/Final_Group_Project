@@ -6,7 +6,7 @@
 
 <h1>Create</h1>
 
-<h4>PersonalTracker</h4>
+<h4>Personal Tracker</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -37,10 +37,41 @@
                 <input asp-for="CommentsSelfFeedback" class="form-control" />
                 <span asp-validation-for="CommentsSelfFeedback" class="text-danger"></span>
             </div>
+           @* @Html.DropDownListFor(m => item.TechnicalSkills, new SelectList(item.SkillLevelOptions))*@
+
+
+            <div class="form-group">
+                <label asp-for="TechnicalSkills" class="control-label"></label>
+                <select asp-for="TechnicalSkills">
+                    <option value="Unskilled">Unskilled</option>
+                    <option value="Low Skilled">Low Skilled</option>
+                    <option value="Partially Skilled">Partially Skilled</option>
+                    <option value="Skilled">Skilled</option>
+                </select>
+            
+            <div class="form-group">
+            <label asp-for="ConsultantSkills" class="control-label"></label>
+            <select asp-for="ConsultantSkills">
+            <option value="Unskilled">Unskilled</option>
+            <option value="Low Skilled">Low Skilled</option>
+            <option value="Partially Skilled">Partially Skilled</option>
+            <option value="Skilled">Skilled</option>
+            </select>
+
+            @if (User.IsInRole("Admin")){
             <div class="form-group">
                 <label asp-for="SpartanId" class="control-label"></label>
                 <select asp-for="SpartanId" class ="form-control" asp-items="ViewBag.SpartanId"></select>
             </div>
+            }
+
+             @if (User.IsInRole("Trainee")){
+                <div class="form-group" style="display:none">>
+                <label asp-for="SpartanId" class="control-label"></label>
+                <select asp-for="SpartanId" class ="form-control" asp-items="ViewBag.SpartanId"></select>
+            </div>
+
+            }
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
