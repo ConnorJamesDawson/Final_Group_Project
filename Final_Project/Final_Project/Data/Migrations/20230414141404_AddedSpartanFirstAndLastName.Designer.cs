@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Final_Project.Data.Migrations
 {
     [DbContext(typeof(SpartaDbContext))]
-    [Migration("20230414132137_PictureURLAdded")]
-    partial class PictureURLAdded
+    [Migration("20230414141404_AddedSpartanFirstAndLastName")]
+    partial class AddedSpartanFirstAndLastName
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -324,6 +324,12 @@ namespace Final_Project.Data.Migrations
             modelBuilder.Entity("Final_Project.Models.Spartan", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("Spartan");
                 });
