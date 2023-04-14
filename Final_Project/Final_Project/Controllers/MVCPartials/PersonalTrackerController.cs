@@ -34,7 +34,7 @@ namespace Final_Project.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //[Authorize (Roles = "Trainer")]
+        [Authorize (Roles = "Trainer")]
         public async Task<IActionResult> EditTrainer(int id, [Bind("TrainerComments","Id")] PersonalTrackerVM personalTrackerVM)
         {
             if (id != personalTrackerVM.Id)

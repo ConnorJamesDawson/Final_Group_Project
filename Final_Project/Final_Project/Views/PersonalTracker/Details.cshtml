@@ -57,6 +57,7 @@
     
     @if (User.IsInRole("Trainer"))
     {
+        <a asp-action="EditTrainer" asp-route-id="@Model.Id">Add Comments</a> 
         <a asp-action="IndexTrainer">Back to all Trainee Trackers</a>
     }
 </div>
