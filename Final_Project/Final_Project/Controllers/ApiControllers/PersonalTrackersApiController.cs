@@ -26,12 +26,11 @@ namespace Final_Project.Controllers.ApiControllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PersonalTracker>>> GetPersonal_Tracker()
         {
-          //if (_service.GetAllAsync() == null)
-          //{
-          //    return NotFound();
-
-          //}
             var result = await _service.GetAllAsync();
+            if (result == null)
+            {
+                return NotFound();
+            }
 
             return result.ToList();
         }
@@ -40,10 +39,10 @@ namespace Final_Project.Controllers.ApiControllers
         [HttpGet("{id}")]
         public async Task<ActionResult<PersonalTracker>> GetPersonalTracker(int id)
         {
-          if (_service.GetAllAsync() == null)
-          {
-              return NotFound();
-          }
+            if (_service.GetAllAsync() == null)
+            {
+                return NotFound();
+            }
             var personalTracker = await _service.GetAsync(id);
 
             if (personalTracker == null)
@@ -66,11 +65,11 @@ namespace Final_Project.Controllers.ApiControllers
 
             var result = await _service.UpdateAsync(id, personalTracker);
 
-            if(result)
+            if (result)
             {
                 return NoContent();
             }
-     
+
 
             return NotFound();
         }
@@ -83,13 +82,14 @@ namespace Final_Project.Controllers.ApiControllers
 
             var result = await _service.CreateAsync(personalTracker);
 
-            if(result)
+            if (result)
             {
                 return CreatedAtAction("GetPersonalTracker", new { id = personalTracker.Id }, personalTracker);
             }
-            else {
+            else
+            {
                 return Problem($"Entity set 'SpartaDbContext.PersonalTracker'  is null or entity with id: {personalTracker.Id} already exists");
-                  }
+            }
         }
 
         // DELETE: api/PersonalTrackersApi/5
