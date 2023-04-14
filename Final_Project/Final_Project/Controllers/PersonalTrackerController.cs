@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Final_Project.Data;
 using Final_Project.Models;
+using Microsoft.AspNetCore.Identity;
 using AutoMapper;
 
 namespace Final_Project.Controllers
@@ -14,18 +15,25 @@ namespace Final_Project.Controllers
     public partial class PersonalTrackerController : Controller
     {
         private readonly SpartaDbContext _context;
+        private readonly UserManager<Spartan> _userManager;
         private readonly IMapper _mapper;
 
-        public PersonalTrackerController(SpartaDbContext context, IMapper mapper)
+        public PersonalTrackerController(SpartaDbContext context,
+            UserManager<Spartan> userManager, IMapper mapper)
         {
             _context = context;
+            _userManager = userManager;
             _mapper = mapper;
         }
 
         // GET: Personal_Tracker
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Personal_Tracker.Include(p => p.Spartan);
+
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+            var applicationDbContext = _context.Personal_Tracker
+                .Where(t => t.SpartanId == currentUser.Id)
+                .Include(p => p.Spartan);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -53,6 +61,7 @@ namespace Final_Project.Controllers
         {
             ViewData["SpartanId"] = new SelectList(_context.Set<Spartan>(), "Id", "Id");
             return View();
+            
         }
 
         // POST: Personal_Tracker/Create
@@ -60,10 +69,13 @@ namespace Final_Project.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Stop_SelfFeedback,Start_SelfFeedback,Continue_SelfFeedback,Comments_SelfFeedback,SpartanId")] PersonalTracker personal_Tracker)
+        public async Task<IActionResult> Create(PersonalTracker personal_Tracker)
+        //public async Task<IActionResult> Create([Bind("Id,Title,StopSelfFeedback,StartSelfFeedback,ContinueSelfFeedback,CommentsSelfFeedback,SpartanId")] PersonalTracker personal_Tracker)
         {
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
             if (ModelState.IsValid)
             {
+                personal_Tracker.SpartanId = currentUser.Id;
                 _context.Add(personal_Tracker);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -94,7 +106,7 @@ namespace Final_Project.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,StopSelfFeedback,StartSelfFeedback,ContinueSelfFeedback,CommentsSelfFeedback,TrainerComments,SpartanId")] PersonalTracker personal_Tracker)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,StopSelfFeedback,StartSelfFeedback,ContinueSelfFeedback,CommentsSelfFeedback,TechnicalSkills,ConsultantSkills,SpartanId")] PersonalTracker personal_Tracker)
         {
             if (id != personal_Tracker.Id)
             {
