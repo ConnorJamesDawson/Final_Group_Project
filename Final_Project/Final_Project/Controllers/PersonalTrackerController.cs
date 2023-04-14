@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Final_Project.Data;
 using Final_Project.Models;
 using Microsoft.AspNetCore.Identity;
+using AutoMapper;
 
 namespace Final_Project.Controllers
 {
@@ -15,12 +16,14 @@ namespace Final_Project.Controllers
     {
         private readonly SpartaDbContext _context;
         private readonly UserManager<Spartan> _userManager;
+        private readonly IMapper _mapper;
 
         public PersonalTrackerController(SpartaDbContext context,
-            UserManager<Spartan> userManager)
+            UserManager<Spartan> userManager, IMapper mapper)
         {
             _context = context;
             _userManager = userManager;
+            _mapper = mapper;
         }
 
         // GET: Personal_Tracker

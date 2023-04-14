@@ -7,7 +7,7 @@ public class AutoMapperProfile : Profile
 {
     public AutoMapperProfile()
     {
-        CreateMap<PersonalTracker, Personal_TrackerVM>();
-        CreateMap<Personal_TrackerVM, PersonalTracker> ();
+        CreateMap<PersonalTracker, PersonalTrackerVM>();
+        CreateMap<PersonalTrackerVM, PersonalTracker> ();
     }
 }
