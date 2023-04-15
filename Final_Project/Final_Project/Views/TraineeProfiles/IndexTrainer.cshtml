@@ -5,20 +5,18 @@
 }
 
 <h1>Trainee Profiles</h1>
+<hr />
 
-
-<table class="table table-bordered border-dark" >
+<table class="table table-bordered border-dark">
     <thead>
         <tr class="table-warning border-dark">
             <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AboutMe)
+                @Html.DisplayNameFor(model => model.Spartan.Email)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WorkExperience)
-            </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -31,8 +29,8 @@
                 @Html.DisplayFor(modelItem => item.Spartan.UserName)
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
-            </td>
+                    <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-warning">Details</a>
+                </td>
         </tr>
 }
     </tbody>
