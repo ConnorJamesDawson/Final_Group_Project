@@ -74,3 +74,9 @@ body {
     color: white!important;
     background-color: #e23565!important;
 }
+
+.form-check-input:checked {
+    background-color: #e23565!important;
+    border-color: #e23565!important;
+    outline: none!important;
+}
