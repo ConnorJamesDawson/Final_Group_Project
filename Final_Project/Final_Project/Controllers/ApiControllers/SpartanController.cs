@@ -57,20 +57,37 @@ namespace Final_Project.Controllers.ApiControllers
         // PUT: api/Suppliers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}", Name = nameof(PutSpartan))]
-        public async Task<IActionResult> PutSpartan(string id, Spartan spartan)
+        public async Task<ActionResult<SpartanDTO>> PutSpartan(string id, SpartanDTO spartanDto)
         {
-            if (id != spartan.Id)
-            {
-                return BadRequest();
-            }
+            var spartan = await _spartaService.GetAsync(id);
 
-            var updatedSuccessfully = await _spartaService.UpdateAsync(id, spartan);
-
-            if (!updatedSuccessfully)
+            if (spartan == null)
             {
                 return NotFound();
             }
-            return NoContent();
+
+            spartan.UserName = spartanDto.UserName;
+            spartan.FirstName = spartanDto.FirstName;
+            spartan.LastName = spartanDto.LastName;
+            spartan.Email = spartanDto.Email;
+            spartan.PhoneNumber = spartanDto.PhoneNumber;
+            spartan.EmailConfirmed = spartanDto.EmailConfirmed;
+
+
+            if (!string.IsNullOrEmpty(spartanDto.PasswordHash))
+            {
+                var passwordHasher = new PasswordHasher<Spartan>();
+                spartan.PasswordHash = passwordHasher.HashPassword(spartan, spartanDto.PasswordHash);
+            }
+
+            var result = await _spartaService.UpdateAsync(spartan.Id, spartan);
+
+            if (!result)
+            {
+                return BadRequest(result);
+            }
+
+            return Ok(Utils.SpartanToDTO(spartan));
         }
 
         // POST: api/Suppliers
@@ -79,9 +96,8 @@ namespace Final_Project.Controllers.ApiControllers
         public async Task<ActionResult<SpartanDTO>> PostSpartan(SpartanDTO spartanDto)
         {
             var spartan = new Spartan();
-            spartan.UserName = spartanDto.UserName;
-            spartan.Email = spartanDto.Email;
-            spartan.EmailConfirmed = spartanDto.EmailConfirmed;
+
+            spartan = Utils.DTOToSpartan(spartanDto);
 
             var passwordHasher = new PasswordHasher<Spartan>();
             spartan.PasswordHash = passwordHasher.HashPassword(spartan, spartanDto.PasswordHash);
@@ -89,15 +105,8 @@ namespace Final_Project.Controllers.ApiControllers
             _spartaService.CreateAsync(spartan);
             await _spartaService.SaveAsync();
 
-            var createdSpartanDto = new SpartanDTO
-            {
-                Id = spartan.Id,
-                UserName = spartan.UserName,
-                Email = spartan.Email,
-                EmailConfirmed = spartan.EmailConfirmed,
-                Links = spartanDto.Links
-            };
-
+            var createdSpartanDto = Utils.SpartanToDTO(spartan);
+            
             return CreatedAtAction(nameof(GetSpartan), new { id = spartan.Id }, createdSpartanDto);
         }
 
@@ -106,6 +115,10 @@ namespace Final_Project.Controllers.ApiControllers
         public async Task<IActionResult> DeleteSpartan(string id)
         {
             var spartan = await _spartaService.GetAsync(id);
+            if (spartan == null)
+            {
+                return NotFound();
+            }
             var trackers = spartan.Personal_Trackers;
             if(trackers != null)
             {
