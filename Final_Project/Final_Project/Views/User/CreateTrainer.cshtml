@@ -3,6 +3,10 @@
 @{
     ViewData["Title"] = "Create a Trainer";
 }
+@if (!User.IsInRole("Admin"))
+{
+    Context.Response.Redirect("/");
+}
 
 <h1>Create</h1>
 

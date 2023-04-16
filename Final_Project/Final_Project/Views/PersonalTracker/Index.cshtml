@@ -3,7 +3,10 @@
 @{
     ViewData["Title"] = "Index";
 }
-
+@if(!User.Identity.IsAuthenticated)
+{
+    Context.Response.Redirect("/");
+}
 <h1>Index</h1>
 
 <p>

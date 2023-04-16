@@ -4,6 +4,11 @@
     ViewData["Title"] = "Index";
 }
 
+@if (!User.Identity.IsAuthenticated)
+{
+    Context.Response.Redirect("/");
+}
+
 <h1>Profile</h1>
 @if (User.IsInRole("Admin")){
 <p>

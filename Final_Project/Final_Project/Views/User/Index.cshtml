@@ -1,15 +1,17 @@
 ﻿@model IEnumerable<Final_Project.Models.Spartan>
-
 @{
     ViewData["Title"] = "Users";
 }
-
 <h1>Index</h1>
 @if (User.IsInRole("Admin")){
-<p>
-    <a asp-action="CreateTrainee">Create New Trainee</a>
-    <a asp-action="CreateTrainer">Create New Trainer</a>
-</p>
+    <p>
+        <a asp-action="CreateTrainee">Create New Trainee</a>
+        <a asp-action="CreateTrainer">Create New Trainer</a>
+    </p>
+}
+else
+{
+    Context.Response.Redirect("/");
 }
 <table class="table">
     <thead>

@@ -4,6 +4,11 @@
     ViewData["Title"] = "Trainee Profiles";
 }
 
+@if (!User.IsInRole("Admin") || !User.IsInRole("Trainer"))
+{
+    Context.Response.Redirect("/");
+}
+
 <h1>Trainee Profiles</h1>
 
 

@@ -1,10 +1,12 @@
-﻿
-
-
-@model Final_Project.Models.PersonalTracker
+﻿@model Final_Project.Models.PersonalTracker
 
 @{
     ViewData["Title"] = "Delete";
+}
+
+@if (!User.Identity.IsAuthenticated)
+{
+    Context.Response.Redirect("/");
 }
 
 <h1>Delete</h1>
