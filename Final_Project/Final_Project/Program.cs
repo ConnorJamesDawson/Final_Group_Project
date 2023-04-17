@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Final_Project
 {
@@ -29,27 +28,7 @@ namespace Final_Project
             builder.Services.AddDbContext<SpartaDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
-            //builder.Services.AddAuthorization();
             builder.Services.AddAuthentication(x => { x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;}).AddJwtBearer();
-
-          
-
-            //builder.Services.ConfigureApplicationCookie(options =>
-            //{
-            //    options.Events.OnRedirectToAccessDenied = context =>
-            //    {
-            //        context.Response.StatusCode = 403;
-            //        return Task.CompletedTask;
-            //    };
-
-            //    options.Events.OnRedirectToLogin = context =>
-            //    {
-            //        context.Response.StatusCode = 401;
-            //        return Task.CompletedTask;
-            //    };
-            //});
-
-
 
             builder.Services.AddScoped(
                  typeof(ISpartaApiRepository<>),
