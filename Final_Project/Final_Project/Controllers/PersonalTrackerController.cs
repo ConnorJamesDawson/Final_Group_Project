@@ -16,15 +16,12 @@ namespace Final_Project.Controllers
 {
     public partial class PersonalTrackerController : Controller
     {
-        private readonly SpartaDbContext _context;
         private readonly UserManager<Spartan> _userManager;
         private readonly IMapper _mapper;
         private PersonalTrackerService _personalTrackerService;
 
-        public PersonalTrackerController(SpartaDbContext context,
-            UserManager<Spartan> userManager, IMapper mapper, PersonalTrackerService personalTrackerService)
+        public PersonalTrackerController(UserManager<Spartan> userManager, IMapper mapper, PersonalTrackerService personalTrackerService)
         {
-            _context = context;
             _userManager = userManager;
             _mapper = mapper;
             _personalTrackerService = personalTrackerService;
