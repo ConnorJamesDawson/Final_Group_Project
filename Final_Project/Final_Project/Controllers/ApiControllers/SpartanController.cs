@@ -9,7 +9,7 @@ namespace Final_Project.Controllers.ApiControllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SpartanController : ControllerBase
+    public partial class SpartanController : Controller
     {
         private readonly ISpartanApiService<Spartan> _spartaService;
         private readonly ISpartaApiService<PersonalTracker> _personalTrackerService;

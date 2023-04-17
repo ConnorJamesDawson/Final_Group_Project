@@ -9,6 +9,7 @@ using Final_Project.Data;
 using Final_Project.Models;
 using Microsoft.AspNetCore.Identity;
 using AutoMapper;
+using Final_Project.Models.ViewModels;
 
 namespace Final_Project.Controllers
 {
@@ -112,6 +113,11 @@ namespace Final_Project.Controllers
             {
                 return NotFound();
             }
+            var originalTracker = await _context.Personal_Tracker
+            .AsNoTracking()
+            .FirstOrDefaultAsync(pt => pt.Id == id);
+
+            personal_Tracker.TrainerComments = originalTracker!.TrainerComments;
 
             if (ModelState.IsValid)
             {
