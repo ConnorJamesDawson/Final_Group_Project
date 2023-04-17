@@ -4,27 +4,25 @@
     ViewData["Title"] = "Trainee Profiles";
 }
 
+@if (!User.IsInRole("Admin") && !User.IsInRole("Trainer"))
+{
+    Context.Response.Redirect("/");
+}
+
 <h1>Trainee Profiles</h1>
+<hr />
 
-
-<table class="table">
+<table class="table table-bordered border-dark">
     <thead>
-        <tr>
+        <tr class="table-warning border-dark">
+            <th>
+                @Html.DisplayNameFor(model => model.Spartan)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AboutMe)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WorkExperience)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Complete)
-            </th>
-
-            <th>
-                @Html.DisplayNameFor(model => model.Spartan)
+                @Html.DisplayNameFor(model => model.Spartan!.Email)
             </th>
             <th></th>
         </tr>
@@ -33,14 +31,17 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                    @Html.DisplayFor(modelItem => item.Spartan!.UserName)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Spartan.UserName)
+                @Html.DisplayFor(modelItem => item.Spartan!.UserName)
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
-            </td>
+                    <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-warning">Details</a>
+                </td>
         </tr>
 }
     </tbody>
