@@ -33,6 +33,7 @@ namespace Final_Project
             builder.Services.AddScoped(
                  typeof(ISpartaApiService<>),
                  typeof(SpartaApiService<>));
+           
 
             builder.Services.AddScoped(
                 typeof(ISpartanApiRepository<Spartan>),
@@ -42,15 +43,19 @@ namespace Final_Project
                 typeof(ISpartanApiService<Spartan>),
                 typeof(SpartanApiService));
 
-            
+
+            builder.Services.AddScoped(
+            typeof(TraineeProfilesService),
+            typeof(TraineeProfilesService));
+
             builder.Services.AddScoped(
                 typeof(PersonalTrackerService),
                 typeof(PersonalTrackerService));
 
-            builder.Services.AddScoped<ISpartaApiRepository<TraineeProfile>, 
+            builder.Services.AddScoped<ISpartaApiRepository<TraineeProfile>,
                 SpartaApiRepository<TraineeProfile>>();
-            
-            builder.Services.AddScoped<ISpartaApiService<TraineeProfile>, 
+
+            builder.Services.AddScoped<ISpartaApiService<TraineeProfile>,
                 SpartaApiService<TraineeProfile>>();
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
