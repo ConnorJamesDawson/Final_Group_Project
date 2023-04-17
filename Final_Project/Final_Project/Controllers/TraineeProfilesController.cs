@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Final_Project.Data;
 using Final_Project.Models;
 using Microsoft.AspNetCore.Identity;
+using Final_Project.MVCService;
 
 namespace Final_Project.Controllers
 {
@@ -15,29 +16,34 @@ namespace Final_Project.Controllers
     {
         private readonly SpartaDbContext _context;
         private readonly UserManager<Spartan> _userManager;
+        private TraineeProfilesService _traineeProfilesService;
 
-        public TraineeProfilesController(SpartaDbContext context, UserManager<Spartan> userManager)
+        public TraineeProfilesController(SpartaDbContext context, 
+            UserManager<Spartan> userManager
+            , 
+            TraineeProfilesService traineeProfilesService
+            )
         {
             _context = context;
             _userManager = userManager;
+            _traineeProfilesService = traineeProfilesService;
         }
 
         // GET: TraineeProfiles
+
+        private string? GetRole()
+        {
+            return HttpContext.User.IsInRole("Trainee") ? "Trainee" : "Trainer";
+        }
         public async Task<IActionResult> Index()
         {
             var currentUser = await _userManager.GetUserAsync(HttpContext.User);
-            var applicationDbContext = _context.TraineeProfile
-                    .Include(t => t.Spartan);
-            if (User.IsInRole("Trainee")) { 
-             applicationDbContext = _context.TraineeProfile
-                .Where(t => t.SpartanId == currentUser.Id)
-                .Include(t => t.Spartan);
-            } else
-            {
-                 applicationDbContext = _context.TraineeProfile
-                    .Include(t => t.Spartan);
-            }
-            return View(await applicationDbContext.ToListAsync());
+
+            string role =  GetRole();
+
+            var applicationDbContext2 = await _traineeProfilesService.ReturnIndex(role, currentUser.Id);
+
+            return View(await applicationDbContext2.ToListAsync());
         }
 
         // GET: TraineeProfiles/Details/5
@@ -86,17 +92,17 @@ namespace Final_Project.Controllers
         // GET: TraineeProfiles/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.TraineeProfile == null)
+            if (id == null || await _traineeProfilesService.isContextNull())
             {
                 return NotFound();
             }
 
-            var traineeProfile = await _context.TraineeProfile.FindAsync(id);
+            var traineeProfile = await _traineeProfilesService.FindAsync(id);
             if (traineeProfile == null)
             {
                 return NotFound();
             }
-            ViewData["SpartanId"] = new SelectList(_context.Set<Spartan>(), "Id", "Id", traineeProfile.SpartanId);
+            ViewData["SpartanId"] = await _traineeProfilesService.ReturnSelectListAsync(traineeProfile);
             return View(traineeProfile);
         }
 
@@ -116,8 +122,7 @@ namespace Final_Project.Controllers
             {
                 try
                 {
-                    _context.Update(traineeProfile);
-                    await _context.SaveChangesAsync();
+                    await _traineeProfilesService.Update(traineeProfile);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -132,7 +137,7 @@ namespace Final_Project.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SpartanId"] = new SelectList(_context.Set<Spartan>(), "Id", "Id", traineeProfile.SpartanId);
+            ViewData["SpartanId"] = await _traineeProfilesService.ReturnSelectListAsync(traineeProfile);
             return View(traineeProfile);
         }
 
@@ -176,7 +181,7 @@ namespace Final_Project.Controllers
 
         private bool TraineeProfileExists(int id)
         {
-          return (_context.TraineeProfile?.Any(e => e.Id == id)).GetValueOrDefault();
+          return  _traineeProfilesService.FindAsync(id) == null ;
         }
     }
 }
