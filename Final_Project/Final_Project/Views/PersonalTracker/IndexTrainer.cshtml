@@ -5,20 +5,34 @@
     ViewData["Title"] = "Trainee Treackers";
 }
 
+@if (!User.IsInRole("Admin") && !User.IsInRole("Trainer"))
+{
+    Context.Response.Redirect("/");
+}
+
 <h1>Trainee Trackers</h1>
-<form asp-controller="PersonalTracker" asp-action="IndexTrainer">
-    <p>
-        <select asp-for="TitleSearch" asp-items="Model.Titles">
-            <option value="">All</option>
-        </select>
-        Name: <input type="text" asp-for="Search" />
-        <input type="submit" value="Filter" />
-    </p>
+<hr />
+<form asp-controller="PersonalTracker" asp-action="IndexTrainer" class="border-dark mb-3" id="filter-form" style="display: none;">
+    <div class="d-flex mb-3">
+        <label for="inputEmail3" class="col-sm-1 col-form-label">Spartan Name:</label>
+        <input type="text" asp-for="Search" id="name-filter-search" />
+    </div>
+    <div class="d-flex mb-3 align-items-center">
+        <label for="inputPassword3" class="col-sm-1 col-form-label">Tracker Title:</label>
+        <div class="col-sm-6">
+            <select asp-for="TitleSearch" asp-items="Model.Titles" id="title-filter-select">
+                <option value="">All</option>
+            </select>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-dark">Apply Filters</button>
 </form>
 
-<table class="table">
+<button class="btn btn-dark mb-3" id="btn-show-filters">Show Filters</button>
+<button class="btn btn-dark mb-3" id="btn-hide-filters" style="display: none;">Hide Filters</button>
+<table class="table table-bordered border-dark">
     <thead>
-        <tr>
+        <tr class="table-warning border-dark">
             <th>
                 @Html.DisplayNameFor(model => model.Trackers[0].Spartan)
             </th>
@@ -44,8 +58,8 @@
                 @Html.DisplayFor(modelItem => item.TrainerComments)
             </td>
             <td>
-                <a asp-action="EditTrainer" asp-route-id="@item.Id">Add Comments</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
+                <a asp-action="EditTrainer" asp-route-id="@item.Id" role="button" class="btn btn-warning">Add Comments</a>
+                <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-warning">Details</a>
             </td>
         </tr>
 }

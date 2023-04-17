@@ -10,6 +10,7 @@ using Final_Project.Models;
 using Final_Project.ApiServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Final_Project.Models.DTO;
 
 namespace Final_Project.Controllers.ApiControllers
 {
@@ -27,26 +28,31 @@ namespace Final_Project.Controllers.ApiControllers
 
         // GET: api/PersonalTrackersApi
         [HttpGet, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<ActionResult<IEnumerable<PersonalTracker>>> GetPersonal_Tracker()
+        public async Task<ActionResult<IEnumerable<PersonalTrackerDTO>>> GetPersonal_Tracker()
         {
-          //if (_service.GetAllAsync() == null)
-          //{
-          //    return NotFound();
+            var trackers = await _service.GetAllAsync();
+            if (trackers == null)
+            {
+                return NotFound();
+            }
 
-          //}
-            var result = await _service.GetAllAsync();
+            var result = new List<PersonalTrackerDTO>();
 
+            foreach (var tracker in trackers)
+            {
+                result.Add(CreateTrackerLinks(tracker));
+            }
             return result.ToList();
         }
 
         // GET: api/PersonalTrackersApi/5
         [HttpGet("{id}"), Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<ActionResult<PersonalTracker>> GetPersonalTracker(int id)
+        public async Task<ActionResult<PersonalTrackerDTO>> GetPersonalTracker(int id)
         {
-          if (_service.GetAllAsync() == null)
-          {
-              return NotFound();
-          }
+            if (_service.GetAllAsync() == null)
+            {
+                return NotFound();
+            }
             var personalTracker = await _service.GetAsync(id);
 
             if (personalTracker == null)
@@ -54,13 +60,14 @@ namespace Final_Project.Controllers.ApiControllers
                 return NotFound();
             }
 
-            return personalTracker;
+            return CreateTrackerLinks(personalTracker);
         }
 
         // PUT: api/PersonalTrackersApi/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}"), Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<IActionResult> PutPersonalTracker(int id, PersonalTracker personalTracker)
+        public async Task<IActionResult> PutPersonalTracker(int id, 
+            [Bind("Id, Title, StopSelfFeedback, StartSelfFeedback, ContinueSelfFeedback, CommentsSelfFeedback, TrainerComments, TechnicalSkills, ConsultantSkills, SpartanId")]PersonalTracker personalTracker)
         {
             if (id != personalTracker.Id)
             {
@@ -69,34 +76,35 @@ namespace Final_Project.Controllers.ApiControllers
 
             var result = await _service.UpdateAsync(id, personalTracker);
 
-            if(result)
+            if (result)
             {
                 return NoContent();
             }
-     
+
 
             return NotFound();
         }
 
         // POST: api/PersonalTrackersApi
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<ActionResult<PersonalTracker>> PostPersonalTracker(PersonalTracker personalTracker)
+        [HttpPost(Name = nameof(PostPersonalTracker)), Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult<PersonalTrackerDTO>> PostPersonalTracker([Bind("Id, Title, StopSelfFeedback, StartSelfFeedback, ContinueSelfFeedback, CommentsSelfFeedback, TrainerComments, TechnicalSkills, ConsultantSkills, SpartanId")] PersonalTracker personalTracker)
         {
 
             var result = await _service.CreateAsync(personalTracker);
 
-            if(result)
+            if (result)
             {
-                return CreatedAtAction("GetPersonalTracker", new { id = personalTracker.Id }, personalTracker);
+                return CreatedAtAction("GetPersonalTracker", new { id = personalTracker.Id }, CreateTrackerLinks(personalTracker));
             }
-            else {
+            else
+            {
                 return Problem($"Entity set 'SpartaDbContext.PersonalTracker'  is null or entity with id: {personalTracker.Id} already exists");
-                  }
+            }
         }
 
         // DELETE: api/PersonalTrackersApi/5
-        [HttpDelete("{id}"), Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpDelete("{id}", Name = nameof(DeletePersonalTracker)), Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> DeletePersonalTracker(int id)
         {
             if (_service == null)
@@ -113,6 +121,34 @@ namespace Final_Project.Controllers.ApiControllers
             {
                 return NotFound();
             }
+        }
+
+        private PersonalTrackerDTO CreateTrackerLinks(PersonalTracker tracker)
+        {
+            PersonalTrackerDTO output = Utils.PersonalTrackerToDTO(tracker);
+            if (Url is null) return output;
+
+            var idObj = new { id = tracker.Id };
+      
+            output.Links.Add(
+                new LinkDTO(Url.Link(nameof(GetPersonalTracker), idObj),
+                "self",
+                "GET"));
+
+            output.Links.Add(
+                new LinkDTO(Url.Link(nameof(PostPersonalTracker), null),
+                "post_tracker",
+                "POST"));
+
+            output.Links.Add(
+                new LinkDTO(Url.Link(nameof(DeletePersonalTracker), idObj),
+                "delete_tracker",
+                "DELETE"));
+            output.Links.Add(
+                new LinkDTO(Url.Link(nameof(SpartanController.GetSpartan), new { id = output.SpartanId }),
+                "owner",
+                "GET"));
+            return output;
         }
     }
 }

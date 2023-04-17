@@ -59,13 +59,6 @@ namespace Final_Project
                  typeof(ISpartaApiService<>),
                  typeof(SpartaApiService<>));
 
-            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
-            builder.Services.AddDefaultIdentity<Spartan>
-                (options => options.SignIn.RequireConfirmedAccount = true)
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<SpartaDbContext>();
-
             builder.Services.AddScoped(
                 typeof(ISpartanApiRepository<Spartan>),
                 typeof(SpartanApiRepository));
@@ -74,8 +67,18 @@ namespace Final_Project
                 typeof(ISpartanApiService<Spartan>),
                 typeof(SpartanApiService));
 
+            builder.Services.AddScoped<ISpartaApiRepository<TraineeProfile>, 
+                SpartaApiRepository<TraineeProfile>>();
+            
+            builder.Services.AddScoped<ISpartaApiService<TraineeProfile>, 
+                SpartaApiService<TraineeProfile>>();
 
+            builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+            builder.Services.AddDefaultIdentity<Spartan>
+                (options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<SpartaDbContext>();
 
             builder.Services.AddControllers()
                 .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -83,29 +86,6 @@ namespace Final_Project
             builder.Services.AddEndpointsApiExplorer();
 
             builder.Services.AddAutoMapper(typeof(Program).Assembly);
-
-            builder.Services.AddScoped<ISpartaApiRepository<TraineeProfile>, SpartaApiRepository<TraineeProfile>>();
-            builder.Services.AddScoped<ISpartaApiService<TraineeProfile>, SpartaApiService<TraineeProfile>>();
-
-
-            //var jwtSettings = builder.Configuration.GetSection("JwtSettings");
-            //builder.Services.AddAuthentication(options =>
-            //{
-            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-
-            //}).AddJwtBearer(options =>
-            //{
-            //    options.RequireHttpsMetadata = false;
-            //    options.SaveToken = true;
-            //    options.TokenValidationParameters = new TokenValidationParameters
-            //    {
-            //        ValidateIssuer = false,
-            //        ValidateAudience = false,
-            //        ValidateIssuerSigningKey = true,
-            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings["Secret"]))
-            //    };
-            //});
 
             var app = builder.Build();
             using (var scope = app.Services.CreateScope())

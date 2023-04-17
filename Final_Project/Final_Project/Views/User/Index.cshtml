@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Final_Project.Models.Spartan>
+@{
+    ViewData["Title"] = "Users";
+}
+<h1>Index</h1>
+@if (User.IsInRole("Admin")){
+    <p>
+        <a asp-action="CreateTrainee">Create New Trainee</a>
+        <a asp-action="CreateTrainer">Create New Trainer</a>
+    </p>
+}
+else
+{
+    Context.Response.Redirect("/");
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete User</a> 
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
