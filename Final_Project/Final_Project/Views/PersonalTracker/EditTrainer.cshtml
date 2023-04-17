@@ -9,13 +9,17 @@
     Context.Response.Redirect("/");
 }
 
-<h1>Add Comments</h1>
+<div class="container-xxl page-header page-header-trainee-profile" style="background-color: #e23565">
+    <div class="container text-center">
+        <h1 class="text-white animated zoomIn mb-3">Add Comments</h1>
+        <p class="lead text-white">Add trainer comments to the trainee tracker</p>
+    </div>
+</div>
 
-<h4>PersonalTracker</h4>
-<table class="table table-striped table-hover">
+<table class="table table-striped table-bordered table-hover border-dark" style="width: max-content">
     <tr>
         <td>
-            @Html.DisplayNameFor(model => model.Title)
+            <p class="fw-bold">Title</p>
         </td>
 
         <td>
@@ -24,7 +28,7 @@
     </tr>
     <tr>
         <td>
-            @Html.DisplayNameFor(model => model.StopSelfFeedback)
+            <p class="fw-bold">Stop</p>
         </td>
 
         <td>
@@ -33,7 +37,7 @@
     </tr>
     <tr>
         <td>
-            @Html.DisplayNameFor(model => model.StartSelfFeedback)
+            <p class="fw-bold">Start</p>
         </td>
 
         <td>
@@ -42,7 +46,7 @@
     </tr>
     <tr>
         <td>
-            @Html.DisplayNameFor(model => model.ContinueSelfFeedback)
+            <p class="fw-bold">Continue</p>
         </td>
 
         <td>
@@ -51,7 +55,7 @@
     </tr>
     <tr>
         <td>
-            @Html.DisplayNameFor(model => model.CommentsSelfFeedback)
+            <p class="fw-bold">Comments</p>
         </td>
 
         <td>
@@ -59,27 +63,24 @@
         </td>
     </tr>
 </table>
-<hr />
+
     <div class="row">
         <div class="col-md-4">
             <form asp-action="EditTrainer">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="Id" />
-                <div class="form-group">
-                    <label asp-for="TrainerComments" class="control-label"></label>
-                    <input asp-for="TrainerComments" class="form-control" />
+                <div class="form-group mb-3">
+                    <label asp-for="TrainerComments" class="control-label">Trainer Comments</label>
+                    <textarea asp-for="TrainerComments" class="form-control"></textarea>
                     <span asp-validation-for="TrainerComments" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <input type="submit" value="Save" class="btn bg-main" />
+                    <a asp-action="IndexTrainer" role="button" class="btn btn-dark">Back to List</a>
                 </div>
             </form>
         </div>
     </div>
-
-<div>
-    <a asp-action="IndexTrainer">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

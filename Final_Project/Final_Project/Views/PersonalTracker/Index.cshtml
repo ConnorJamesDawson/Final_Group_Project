@@ -10,46 +10,50 @@
         <p class="lead text-white">Monitor your performance periodically and receive feedback from your trainers.</p>
     </div>
 </div>
+<div class="d-flex justify-content-center">
     <a asp-action="Create" role="button" class="btn btn-dark mb-3">Create New Tracker</a>
-
+</div>
+<div class="d-flex justify-content-center">
 @if(!User.Identity.IsAuthenticated)
 {
     Context.Response.Redirect("/");
 }
-
-<table class="table table-bordered border-dark" style="width: max-content">
-    <thead>
-        <tr class="table-warning border-dark">
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th></th>
-            @if (User.IsInRole("Admin")){
-            <th>
-                @Html.DisplayNameFor(model => model.Spartan)
-            </th>
+    <table class="table table-bordered table-hover border-dark" style="width: max-content">
+        <thead>
+            <tr class="table table-danger border-dark">
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th></th>
+                @if (User.IsInRole("Admin"))
+                {
+                    <th>
+                        @Html.DisplayNameFor(model => model.Spartan)
+                    </th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Spartan.Id)
+                        </td>
+                    }
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" role="button" class="btn bg-main">Edit</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn bg-main">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" role="button" class="btn bg-danger text-white">Delete</a>
+                    </td>
+                </tr>
             }
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            @if (User.IsInRole("Admin")){
-            <td>
-                @Html.DisplayFor(modelItem => item.Spartan.Id)
-            </td>
-            }
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id" role="button" class="btn bg-main">Edit</a> 
-                <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn bg-main">Details</a> 
-                <a asp-action="Delete" asp-route-id="@item.Id" role="button" class="btn bg-danger text-white">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
-
+        </tbody>
+    </table>
+</div>
 

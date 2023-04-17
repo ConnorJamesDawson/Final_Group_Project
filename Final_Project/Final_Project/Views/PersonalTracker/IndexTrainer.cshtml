@@ -10,8 +10,13 @@
     Context.Response.Redirect("/");
 }
 
-<h1>Trainee Trackers</h1>
-<hr />
+<div class="container-xxl page-header page-header-trainee-profile" style="background-color: #e23565">
+    <div class="container text-center">
+        <h1 class="text-white animated zoomIn mb-3">Trainee Trackers</h1>
+        <p class="lead text-white">List of all the trainees and their trackers to view</p>
+    </div>
+</div>
+
 <form asp-controller="PersonalTracker" asp-action="IndexTrainer" class="border-dark mb-3" id="filter-form" style="display: none;">
     <div class="d-flex mb-3">
         <label for="inputEmail3" class="col-sm-1 col-form-label">Spartan Name:</label>
@@ -30,9 +35,9 @@
 
 <button class="btn btn-dark mb-3" id="btn-show-filters">Show Filters</button>
 <button class="btn btn-dark mb-3" id="btn-hide-filters" style="display: none;">Hide Filters</button>
-<table class="table table-bordered border-dark">
+<table class="table table-bordered table-hover border-dark">
     <thead>
-        <tr class="table-warning border-dark">
+        <tr class="table-danger border-dark">
             <th>
                 @Html.DisplayNameFor(model => model.Trackers[0].Spartan)
             </th>
@@ -58,8 +63,8 @@
                 @Html.DisplayFor(modelItem => item.TrainerComments)
             </td>
             <td>
-                <a asp-action="EditTrainer" asp-route-id="@item.Id" role="button" class="btn btn-warning">Add Comments</a>
-                <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-warning">Details</a>
+                <a asp-action="EditTrainer" asp-route-id="@item.Id" role="button" class="btn bg-main">Add Comments</a>
+                <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn bg-main">Details</a>
             </td>
         </tr>
 }
