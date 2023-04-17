@@ -1,113 +1,83 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
 using Final_Project.Data;
 using Final_Project.Models;
 using Microsoft.AspNetCore.Identity;
-using AutoMapper;
-using Final_Project.Models.ViewModels;
-using Final_Project.MVCService;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
-namespace Final_Project.Controllers
+namespace Final_Project.MVCService
 {
-    public partial class PersonalTrackerController : Controller
+    public class PersonalTrackerService : Controller
     {
+
         private readonly SpartaDbContext _context;
         private readonly UserManager<Spartan> _userManager;
         private readonly IMapper _mapper;
-        private PersonalTrackerService _personalTrackerService;
 
-        public PersonalTrackerController(SpartaDbContext context,
-            UserManager<Spartan> userManager, IMapper mapper, PersonalTrackerService personalTrackerService)
+        public PersonalTrackerService(SpartaDbContext context,
+            UserManager<Spartan> userManager, IMapper mapper)
         {
             _context = context;
             _userManager = userManager;
             _mapper = mapper;
-            _personalTrackerService = personalTrackerService;
         }
 
-        private string? GetRole()
-        {
-            return HttpContext.User.IsInRole("Trainee") ? "Trainee" : "Trainer";
-        }
 
         // GET: Personal_Tracker
-        public async Task<IActionResult> Index()
+        public async Task<List<PersonalTracker>> GetList(string currentUserId)
         {
-            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
-            var role = GetRole();
-            var applicationDbContext = _personalTrackerService.GetList(currentUser.Id);
-                
-            return View(await applicationDbContext);
+
+            var applicationDbContext = _context.Personal_Tracker
+                .Where(t => t.SpartanId == currentUserId)
+                .Include(p => p.Spartan);
+            
+            return await applicationDbContext.ToListAsync();
         }
 
         // GET: Personal_Tracker/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<PersonalTracker> Details(int? id)
         {
-            if (id == null || await _personalTrackerService.contextIsNull())
-            {
-                return NotFound();
-            }
 
-            var personal_Tracker = await _personalTrackerService.Details(id);
-
-            if (personal_Tracker == null)
-            {
-                return NotFound();
-            }
-
-            return View(personal_Tracker);
-        }
-
-        // GET: Personal_Tracker/Create
-        public IActionResult Create()
-        {
-            ViewData["SpartanId"] = new SelectList(_context.Set<Spartan>(), "Id", "Id");
-            return View();
+            var personal_Tracker = await _context.Personal_Tracker
+                .Include(p => p.Spartan)
+                .FirstOrDefaultAsync(m => m.Id == id);
             
+            return  personal_Tracker;
         }
 
-        // POST: Personal_Tracker/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
+
+   
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(PersonalTracker personal_Tracker)
+        public async Task Create(PersonalTracker personal_Tracker, string currentUserId)
         //public async Task<IActionResult> Create([Bind("Id,Title,StopSelfFeedback,StartSelfFeedback,ContinueSelfFeedback,CommentsSelfFeedback,SpartanId")] PersonalTracker personal_Tracker)
         {
-            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
 
             if (ModelState.IsValid)
             {
-
-                await _personalTrackerService.Create(personal_Tracker, currentUser.Id);
-                return RedirectToAction(nameof(Index));
+                personal_Tracker.SpartanId = currentUserId;
+                _context.Add(personal_Tracker);
+                await _context.SaveChangesAsync();
             }
-
-            ViewData["SpartanId"] = new SelectList(_context.Set<Spartan>(), "Id", "Id", personal_Tracker.SpartanId);
-            return View(personal_Tracker);
         }
 
         // GET: Personal_Tracker/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<PersonalTracker> GetTracker(int? id)
         {
-            if (id == null || await _personalTrackerService.contextIsNull() )
-            {
-                return NotFound();
-            }
 
-            var personal_Tracker = await _personalTrackerService.GetTracker(id);
+             var personal_Tracker = await _context.Personal_Tracker
+            .AsNoTracking()
+            .FirstOrDefaultAsync(pt => pt.Id == id);
 
-            if (personal_Tracker == null)
-            {
-                return NotFound();
-            }
-            ViewData["SpartanId"] = new SelectList(_context.Set<Spartan>(), "Id", "Id", personal_Tracker.SpartanId);
-            return View(personal_Tracker);
+            return personal_Tracker;
+        }
+
+        public async Task<bool> contextIsNull()
+        {
+            return _context.Personal_Tracker.IsNullOrEmpty();
         }
 
         // POST: Personal_Tracker/Edit/5
@@ -117,11 +87,10 @@ namespace Final_Project.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,StopSelfFeedback,StartSelfFeedback,ContinueSelfFeedback,CommentsSelfFeedback,TechnicalSkills,ConsultantSkills,SpartanId")] PersonalTracker personal_Tracker)
         {
-            if (id != personal_Tracker.Id)
-            {
-                return NotFound();
-            }
-            var originalTracker = await _personalTrackerService.GetTracker(id);
+
+            var originalTracker = await _context.Personal_Tracker
+            .AsNoTracking()
+            .FirstOrDefaultAsync(pt => pt.Id == id);
 
             personal_Tracker.TrainerComments = originalTracker!.TrainerComments;
 
@@ -129,7 +98,8 @@ namespace Final_Project.Controllers
             {
                 try
                 {
-                   await _personalTrackerService.UpdatePersonalTracker(personal_Tracker);
+                    _context.Update(personal_Tracker);
+                    await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -149,6 +119,12 @@ namespace Final_Project.Controllers
         }
 
         // GET: Personal_Tracker/Delete/5
+
+        public async Task UpdatePersonalTracker(PersonalTracker personal_Tracker)
+        {
+            _context.Update(personal_Tracker);
+            await _context.SaveChangesAsync();
+        }
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Personal_Tracker == null)
@@ -181,14 +157,15 @@ namespace Final_Project.Controllers
             {
                 _context.Personal_Tracker.Remove(personal_Tracker);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool Personal_TrackerExists(int id)
         {
-          return (_context.Personal_Tracker?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Personal_Tracker?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
     }
 }

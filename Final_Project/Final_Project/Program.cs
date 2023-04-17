@@ -10,6 +10,7 @@ using Final_Project.Data.Repositories;
 using Final_Project.Data.ApiRepositories;
 using Final_Project.ApiServices;
 using NorthwindAPI_MiniProject.Data.Repository;
+using Final_Project.MVCService;
 
 namespace Final_Project
 {
@@ -40,6 +41,11 @@ namespace Final_Project
             builder.Services.AddScoped(
                 typeof(ISpartanApiService<Spartan>),
                 typeof(SpartanApiService));
+
+            
+            builder.Services.AddScoped(
+                typeof(PersonalTrackerService),
+                typeof(PersonalTrackerService));
 
             builder.Services.AddScoped<ISpartaApiRepository<TraineeProfile>, 
                 SpartaApiRepository<TraineeProfile>>();
