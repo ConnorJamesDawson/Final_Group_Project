@@ -33,7 +33,7 @@ namespace Final_Project.Controllers.ApiControllers
                 return NotFound();
             }
             
-            var spartansDtos = spartans.Select(s => CreateSpartanLinks(Utils.SpartanToDTO(s))).ToList();
+            var spartansDtos = spartans.Select(s => CreateSpartanLinks(s)).ToList();
 
             return spartansDtos;
         }
@@ -49,7 +49,7 @@ namespace Final_Project.Controllers.ApiControllers
                 return NotFound();
             }
 
-            var spartanDto = CreateSpartanLinks(Utils.SpartanToDTO(spartan));
+            var spartanDto = CreateSpartanLinks(spartan);
 
             return spartanDto;
         }
@@ -144,28 +144,37 @@ namespace Final_Project.Controllers.ApiControllers
         }
 
 
-        private SpartanDTO CreateSpartanLinks(SpartanDTO spartan)
+        private SpartanDTO CreateSpartanLinks(Spartan spartan)
         {
-            if (Url == null) return spartan;
+            var spartanDto = Utils.SpartanToDTO(spartan);
+            if (Url == null) return spartanDto;
+
+            var profiles = _traineeProfileService.GetAllAsync().Result;
+            var profile = profiles.Where(p => p.SpartanId == spartan.Id).FirstOrDefault();
 
             var idObj = new { id = spartan.Id };
-            
-            spartan.Links.Add(
+
+            if (profile != null)
+            {
+                spartanDto.Profile = Url.Link("GetTraineeProfile", new { id = profile.Id });
+            }
+
+            spartanDto.Links.Add(
                 new LinkDTO(Url.Link(nameof(this.GetSpartan), idObj),
                 "self",
                 "GET"));
 
-            spartan.Links.Add(
+            spartanDto.Links.Add(
                 new LinkDTO(Url.Link(nameof(this.PostSpartan), idObj),
                 "post_spartan",
                 "POST"));
 
-            spartan.Links.Add(
+            spartanDto.Links.Add(
                 new LinkDTO(Url.Link(nameof(this.PutSpartan), idObj),
                 "delete_spartan",
                 "DELETE"));
 
-            return spartan;
+            return spartanDto;
         }
     }
 }
