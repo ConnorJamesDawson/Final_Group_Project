@@ -10,6 +10,11 @@ using Final_Project.Data.Repositories;
 using Final_Project.Data.ApiRepositories;
 using Final_Project.ApiServices;
 using NorthwindAPI_MiniProject.Data.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Final_Project
 {
@@ -23,6 +28,27 @@ namespace Final_Project
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<SpartaDbContext>(options =>
                 options.UseSqlServer(connectionString));
+
+            //builder.Services.AddAuthorization();
+            builder.Services.AddAuthentication(x => { x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;}).AddJwtBearer();
+
+          
+
+            //builder.Services.ConfigureApplicationCookie(options =>
+            //{
+            //    options.Events.OnRedirectToAccessDenied = context =>
+            //    {
+            //        context.Response.StatusCode = 403;
+            //        return Task.CompletedTask;
+            //    };
+
+            //    options.Events.OnRedirectToLogin = context =>
+            //    {
+            //        context.Response.StatusCode = 401;
+            //        return Task.CompletedTask;
+            //    };
+            //});
+
 
 
             builder.Services.AddScoped(
@@ -48,6 +74,9 @@ namespace Final_Project
                 typeof(ISpartanApiService<Spartan>),
                 typeof(SpartanApiService));
 
+
+
+
             builder.Services.AddControllers()
                 .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
@@ -57,6 +86,27 @@ namespace Final_Project
 
             builder.Services.AddScoped<ISpartaApiRepository<TraineeProfile>, SpartaApiRepository<TraineeProfile>>();
             builder.Services.AddScoped<ISpartaApiService<TraineeProfile>, SpartaApiService<TraineeProfile>>();
+
+
+            //var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+            //builder.Services.AddAuthentication(options =>
+            //{
+            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            //}).AddJwtBearer(options =>
+            //{
+            //    options.RequireHttpsMetadata = false;
+            //    options.SaveToken = true;
+            //    options.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        ValidateIssuer = false,
+            //        ValidateAudience = false,
+            //        ValidateIssuerSigningKey = true,
+            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings["Secret"]))
+            //    };
+            //});
+
             var app = builder.Build();
             using (var scope = app.Services.CreateScope())
             {
@@ -78,7 +128,10 @@ namespace Final_Project
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

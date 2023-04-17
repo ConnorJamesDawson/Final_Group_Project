@@ -8,11 +8,14 @@ using Microsoft.EntityFrameworkCore;
 using Final_Project.Data;
 using Final_Project.Models;
 using Final_Project.ApiServices;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Final_Project.Controllers.ApiControllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class PersonalTrackersApiController : ControllerBase
     {
         private readonly ISpartaApiService<PersonalTracker> _service;
@@ -23,7 +26,7 @@ namespace Final_Project.Controllers.ApiControllers
         }
 
         // GET: api/PersonalTrackersApi
-        [HttpGet]
+        [HttpGet, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<IEnumerable<PersonalTracker>>> GetPersonal_Tracker()
         {
           //if (_service.GetAllAsync() == null)
@@ -37,7 +40,7 @@ namespace Final_Project.Controllers.ApiControllers
         }
 
         // GET: api/PersonalTrackersApi/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}"), Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<PersonalTracker>> GetPersonalTracker(int id)
         {
           if (_service.GetAllAsync() == null)
@@ -56,7 +59,7 @@ namespace Final_Project.Controllers.ApiControllers
 
         // PUT: api/PersonalTrackersApi/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("{id}"), Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PutPersonalTracker(int id, PersonalTracker personalTracker)
         {
             if (id != personalTracker.Id)
@@ -77,7 +80,7 @@ namespace Final_Project.Controllers.ApiControllers
 
         // POST: api/PersonalTrackersApi
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
+        [HttpPost, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<PersonalTracker>> PostPersonalTracker(PersonalTracker personalTracker)
         {
 
@@ -93,7 +96,7 @@ namespace Final_Project.Controllers.ApiControllers
         }
 
         // DELETE: api/PersonalTrackersApi/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"), Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> DeletePersonalTracker(int id)
         {
             if (_service == null)

@@ -1,6 +1,8 @@
 ﻿using Final_Project.ApiServices;
 using Final_Project.Models;
 using Final_Project.Models.DTO;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +11,7 @@ namespace Final_Project.Controllers.ApiControllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class SpartanController : ControllerBase
     {
         private readonly ISpartanApiService<Spartan> _spartaService;
@@ -23,7 +26,7 @@ namespace Final_Project.Controllers.ApiControllers
         }
 
         // GET: api/Spartan
-        [HttpGet(Name = nameof(GetSpartans))]
+        [HttpGet(Name = nameof(GetSpartans)), Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<IEnumerable<SpartanDTO>>> GetSpartans()
         {
             var spartans = await _spartaService.GetAllAsync();
@@ -39,7 +42,7 @@ namespace Final_Project.Controllers.ApiControllers
         }
 
         // GET: api/Spartan/5
-        [HttpGet("{id}", Name = nameof(GetSpartan))]
+        [HttpGet("{id}", Name = nameof(GetSpartan)), Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<SpartanDTO>> GetSpartan(string id)
         {
             var spartan = await _spartaService.GetAsync(id);
@@ -56,7 +59,7 @@ namespace Final_Project.Controllers.ApiControllers
 
         // PUT: api/Suppliers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}", Name = nameof(PutSpartan))]
+        [HttpPut("{id}", Name = nameof(PutSpartan)), Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PutSpartan(string id, Spartan spartan)
         {
             if (id != spartan.Id)
@@ -75,7 +78,7 @@ namespace Final_Project.Controllers.ApiControllers
 
         // POST: api/Suppliers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost(Name = nameof(PostSpartan))]
+        [HttpPost(Name = nameof(PostSpartan)), Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<SpartanDTO>> PostSpartan(SpartanDTO spartanDto)
         {
             var spartan = new Spartan();
@@ -102,7 +105,7 @@ namespace Final_Project.Controllers.ApiControllers
         }
 
         // DELETE: api/Suppliers/5
-        [HttpDelete("{id}", Name = nameof(DeleteSpartan))]
+        [HttpDelete("{id}", Name = nameof(DeleteSpartan)), Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> DeleteSpartan(string id)
         {
             var spartan = await _spartaService.GetAsync(id);

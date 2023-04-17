@@ -8,11 +8,14 @@ using Microsoft.EntityFrameworkCore;
 using Final_Project.Data;
 using Final_Project.Models;
 using Final_Project.ApiServices;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Final_Project.Controllers.ApiControllers
 {
     [Route("api/Profiles")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class TraineeProfilesControllerApi : ControllerBase
     {
         private readonly ISpartaApiService<TraineeProfile> _service;
@@ -23,7 +26,7 @@ namespace Final_Project.Controllers.ApiControllers
         }
 
         // GET: api/TraineeProfiles
-        [HttpGet]
+        [HttpGet, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<IEnumerable<TraineeProfile>>> GetTraineeProfile()
         {
             var result = await _service.GetAllAsync();
@@ -35,7 +38,7 @@ namespace Final_Project.Controllers.ApiControllers
         }
 
         // GET: api/TraineeProfiles/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}"), Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<TraineeProfile>> GetTraineeProfile(int id)
         {
             var result = await _service.GetAsync(id);
@@ -48,7 +51,7 @@ namespace Final_Project.Controllers.ApiControllers
 
         // PUT: api/TraineeProfiles/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("{id}"), Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PutTraineeProfile(int id, TraineeProfile traineeProfile)
         {
             if (id != traineeProfile.Id)
@@ -62,7 +65,7 @@ namespace Final_Project.Controllers.ApiControllers
 
         // POST: api/TraineeProfiles
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
+        [HttpPost, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<TraineeProfile>> PostTraineeProfile(TraineeProfile traineeProfile)
         {
             var result = await _service.CreateAsync(traineeProfile);
@@ -74,7 +77,7 @@ namespace Final_Project.Controllers.ApiControllers
         }
 
         // DELETE: api/TraineeProfiles/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"), Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> DeleteTraineeProfile(int id)
         {
             var result = await _service.DeleteAsync(id);
