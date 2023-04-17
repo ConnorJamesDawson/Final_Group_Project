@@ -14,7 +14,7 @@ public class SpartaApiService<T> : ISpartaApiService<T> where T : class
         _repository = respository;
     }
 
-    public async Task<bool> CreateAsync(T entity, Spartan? user = null, string role = "Trainee")
+    public async Task<bool> CreateAsync(T entity)
     {
         if (_repository.IsNull || entity == null)
         {
@@ -28,7 +28,7 @@ public class SpartaApiService<T> : ISpartaApiService<T> where T : class
         }
     }
 
-    public async Task<bool> DeleteAsync(int id, Spartan? user = null, string role = "Trainee")
+    public async Task<bool> DeleteAsync(int id)
     {
         if (_repository.IsNull)
         {
@@ -49,7 +49,7 @@ public class SpartaApiService<T> : ISpartaApiService<T> where T : class
         return true;
     }
 
-    public async Task<IEnumerable<T>?> GetAllAsync(Spartan? user = null, string role = "Trainee")
+    public async Task<IEnumerable<T>?> GetAllAsync()
     {
 
         if (_repository.IsNull)
@@ -60,7 +60,7 @@ public class SpartaApiService<T> : ISpartaApiService<T> where T : class
             .ToList();
     }
 
-    public async Task<T?> GetAsync(int id, Spartan? user = null, string role = "Trainee")
+    public async Task<T?> GetAsync(int id)
     {
         if (_repository.IsNull)
         {
@@ -83,7 +83,7 @@ public class SpartaApiService<T> : ISpartaApiService<T> where T : class
         _repository.SaveAsync();
     }
 
-    public async Task<bool> UpdateAsync(int id, T entity, Spartan? user = null, string role = "Trainee")
+    public async Task<bool> UpdateAsync(int id, T entity)
     {
         _repository.Update(entity);
         try

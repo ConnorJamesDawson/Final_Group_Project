@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Final_Project.ApiServices
 {
-    public class MVCService<T> : ISpartaApiService<T> where T : class
+    public class MVCService<T> : ISpartaService<T> where T : class
     {
         protected readonly ISpartaApiRepository<T> _repository;
 
