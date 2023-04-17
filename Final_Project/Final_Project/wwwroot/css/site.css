@@ -97,3 +97,15 @@ body {
 .index-anchors:hover {
     color: white!important;
 }
+
+.p3 {
+    font-family: "Lucida Console", "Courier New", monospace;
+}
+
+.title {
+    font-family: Papyrus, fantasy;
+}
+
+h1 {
+    letter-spacing: 1.5px;
+}
