@@ -3,6 +3,10 @@
 @{
     ViewData["Title"] = "Create";
 }
+@if(!User.Identity.IsAuthenticated)
+{
+    Context.Response.Redirect("/");
+}
 
 <h1>Create</h1>
 

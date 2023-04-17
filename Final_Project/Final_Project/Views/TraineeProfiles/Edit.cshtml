@@ -9,6 +9,11 @@
         <h1 class="text-white animated zoomIn mb-3">Edit Your Profile</h1>
     </div>
 </div>
+@if (!User.Identity.IsAuthenticated)
+{
+    Context.Response.Redirect("/");
+}
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit" class="mb-3">

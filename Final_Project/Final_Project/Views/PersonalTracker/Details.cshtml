@@ -9,6 +9,12 @@
         <h1 class="text-white animated zoomIn mb-3">Tracker Details: @Html.DisplayFor(model => model.Title)</h1>
     </div>
 </div>
+
+@if (!User.Identity.IsAuthenticated)
+{
+    Context.Response.Redirect("/");
+}
+
 <div>
     <dl class="row">
          @if (User.IsInRole("Admin")){

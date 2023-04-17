@@ -10,6 +10,12 @@
         <p class="lead text-white">View and Update your Sparta profile until you feel it is complete and is ready to be distributed to potential clients.</p>
     </div>
 </div>
+
+@if (!User.Identity.IsAuthenticated)
+{
+    Context.Response.Redirect("/");
+}
+
 @if (User.IsInRole("Admin")){
 <p>
     <a asp-action="Create">Create New</a>

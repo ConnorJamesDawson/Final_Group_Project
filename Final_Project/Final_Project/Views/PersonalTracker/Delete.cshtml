@@ -10,6 +10,12 @@
         <p class="lead text-white">Are you sure you want to delete this Personal Tracker entry?</p>
     </div>
 </div>
+
+@if (!User.Identity.IsAuthenticated)
+{
+    Context.Response.Redirect("/");
+}
+
     <dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Title)

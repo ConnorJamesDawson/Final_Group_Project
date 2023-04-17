@@ -4,6 +4,11 @@
     ViewData["Title"] = "Create a Trainee";
 }
 
+@if (!User.IsInRole("Admin"))
+{
+    Context.Response.Redirect("/");
+}
+
 <h1>Create</h1>
 
 <h4>Trainee Account</h4>

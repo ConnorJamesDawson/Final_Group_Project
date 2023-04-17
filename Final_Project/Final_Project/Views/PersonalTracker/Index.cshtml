@@ -11,6 +11,12 @@
     </div>
 </div>
     <a asp-action="Create" role="button" class="btn btn-dark mb-3">Create New Tracker</a>
+
+@if(!User.Identity.IsAuthenticated)
+{
+    Context.Response.Redirect("/");
+}
+
 <table class="table table-bordered border-dark" style="width: max-content">
     <thead>
         <tr class="table-warning border-dark">

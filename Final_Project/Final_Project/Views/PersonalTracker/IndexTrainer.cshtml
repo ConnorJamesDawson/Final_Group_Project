@@ -5,6 +5,11 @@
     ViewData["Title"] = "Trainee Treackers";
 }
 
+@if (!User.IsInRole("Admin") || !User.IsInRole("Trainer"))
+{
+    Context.Response.Redirect("/");
+}
+
 <h1>Trainee Trackers</h1>
 <hr />
 <form asp-controller="PersonalTracker" asp-action="IndexTrainer" class="border-dark mb-3" id="filter-form" style="display: none;">
