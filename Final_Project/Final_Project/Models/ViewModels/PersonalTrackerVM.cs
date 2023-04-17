@@ -15,10 +15,7 @@ namespace Final_Project.Models.ViewModels
         public string? ContinueSelfFeedback { get; set; }
         public string? CommentsSelfFeedback { get; set; }
         public string? TrainerComments { get; set; }
-
-        public SkillLevel TechnicalSkills = SkillLevel.Unskilled;
-
-        public SkillLevel ConsultantSkills = SkillLevel.Unskilled;
-
+        public string TechnicalSkills { get; set; } = "Unskilled";
+        public string ConsultantSkills { get; set; } = "Unskilled";
     }
 }

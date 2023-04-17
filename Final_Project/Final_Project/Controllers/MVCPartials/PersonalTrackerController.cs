@@ -64,16 +64,13 @@ namespace Final_Project.Controllers
                 .AsNoTracking()
                 .FirstOrDefaultAsync(pt => pt.Id == id);
 
-            personalTrackerVM.Title = originalTracker!.Title;
-
-            var personalTracker = _mapper.Map<PersonalTracker>(personalTrackerVM);
-            personalTracker.SpartanId = originalTracker!.SpartanId;
+            originalTracker.TrainerComments = personalTrackerVM.TrainerComments;
 
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(personalTracker);
+                    _context.Update(originalTracker);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -89,7 +86,7 @@ namespace Final_Project.Controllers
                 }
                 return RedirectToAction(nameof(IndexTrainer));
             }
-            //ViewData["SpartanId"] = new SelectList(_context.Set<Spartan>(), "Id", "Id", personalTracker.SpartanId);
+            ViewData["SpartanId"] = new SelectList(_context.Set<Spartan>(), "Id", "Id", originalTracker.SpartanId);
             return View(personalTrackerVM);
         }
     }
