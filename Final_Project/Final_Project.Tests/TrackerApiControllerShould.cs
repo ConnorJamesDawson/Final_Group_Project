@@ -1,6 +1,7 @@
 ﻿using Final_Project.ApiServices;
 using Final_Project.Controllers.ApiControllers;
 using Final_Project.Models;
+using Final_Project.Models.DTO;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -21,19 +22,23 @@ internal class TrackerApiControllerShould
 
     [Test]
     [Category("Happy Path")]
-    public async Task GetPersonalTrackers_ShouldReturnListOfTrackers()
+    public async Task GetPersonalTrackers_ShouldReturnListOfTrackerDTOs()
     {
-        List<PersonalTracker> trackers =  new List<PersonalTracker>
+        List<PersonalTracker> trackers = new List<PersonalTracker>
         {
-              It.IsAny<PersonalTracker>()
-        };
+            new PersonalTracker {
+            Id = It.IsAny<int>(),
+            SpartanId = It.IsAny<string>(),
+            Title = It.IsAny<string>(),
+        }
+    };
         Mock.Get(_service)
             .Setup(s => s.GetAllAsync().Result)
             .Returns(trackers);
 
         var result = await _sut.GetPersonal_Tracker();
 
-        Assert.That(result.Value, Is.InstanceOf<List<PersonalTracker>>());
+        Assert.That(result.Value, Is.InstanceOf<List<PersonalTrackerDTO>>());
     }
 
     [Test]
@@ -53,7 +58,8 @@ internal class TrackerApiControllerShould
     [Category("Happy Path")]
     public async Task GetPersonalTracker_ReturnsPersonalTracker()
     {
-        var tracker = new PersonalTracker{
+        var tracker = new PersonalTracker
+        {
             Id = It.IsAny<int>(),
             SpartanId = It.IsAny<string>(),
             Title = It.IsAny<string>(),
@@ -64,7 +70,7 @@ internal class TrackerApiControllerShould
 
         var result = await _sut.GetPersonalTracker(It.IsAny<int>());
 
-        Assert.That(result.Value, Is.InstanceOf<PersonalTracker>());
+        Assert.That(result.Value, Is.InstanceOf<PersonalTrackerDTO>());
     }
 
     [Test]
@@ -137,7 +143,7 @@ internal class TrackerApiControllerShould
 
     [Test]
     [Category("Happy Path")]
-    public async Task PostPersonalTracker_ReturnsCreatedAtAndNewPersonalTracker()
+    public async Task PostPersonalTracker_ReturnsCreatedAtAndNewPersonalTrackerDTO()
     {
         var tracker = new PersonalTracker
         {
@@ -152,7 +158,7 @@ internal class TrackerApiControllerShould
         var actionResult = await _sut.PostPersonalTracker(tracker);
         Assert.That(actionResult.Result, Is.InstanceOf<CreatedAtActionResult>());
         var result = actionResult.Result as CreatedAtActionResult;
-        Assert.That(result.Value, Is.InstanceOf<PersonalTracker>());
+        Assert.That(result.Value, Is.InstanceOf<PersonalTrackerDTO>());
     }
 
     [Test]
@@ -167,7 +173,7 @@ internal class TrackerApiControllerShould
 
         Mock.Get(_service)
             .Setup(s => s.CreateAsync(tracker).Result)
-            .Returns(false) ;
+            .Returns(false);
 
         var actionResult = await _sut.PostPersonalTracker(tracker);
 
@@ -180,7 +186,7 @@ internal class TrackerApiControllerShould
     public async Task DeletePersonalTracker_ReturnsNoContentWhenSuccessful()
     {
         Mock.Get(_service)
-            .Setup(s=> s.DeleteAsync(It.IsAny<int>()).Result)
+            .Setup(s => s.DeleteAsync(It.IsAny<int>()).Result)
             .Returns(true);
 
         var result = await _sut.DeletePersonalTracker(It.IsAny<int>());

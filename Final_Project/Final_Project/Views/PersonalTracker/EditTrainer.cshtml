@@ -4,6 +4,11 @@
     ViewData["Title"] = "Add Comments";
 }
 
+@if (!User.IsInRole("Admin") && !User.IsInRole("Trainer"))
+{
+    Context.Response.Redirect("/");
+}
+
 <h1>Add Comments</h1>
 
 <h4>PersonalTracker</h4>
