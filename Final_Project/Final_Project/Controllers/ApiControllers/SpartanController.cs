@@ -152,14 +152,23 @@ namespace Final_Project.Controllers.ApiControllers
             var spartanDto = Utils.SpartanToDTO(spartan);
             if (Url == null) return spartanDto;
 
-            var profiles = _traineeProfileService.GetAllAsync().Result;
-            var profile = profiles.Where(p => p.SpartanId == spartan.Id).FirstOrDefault();
-
             var idObj = new { id = spartan.Id };
+
+            var profile = _traineeProfileService.GetAllAsync().Result.Where(p => p.SpartanId == spartan.Id).FirstOrDefault();
 
             if (profile != null)
             {
                 spartanDto.Profile = Url.Link("GetTraineeProfile", new { id = profile.Id });
+            }
+
+            var trackers = _personalTrackerService.GetAllAsync().Result.Where(t => t.SpartanId == spartan.Id);
+
+            if (trackers != null)
+            {
+                foreach (var tracker in trackers)
+                {
+                    spartanDto.Trackers.Add(Url.Link("GetPersonalTracker", new { id = tracker.Id }));
+                }
             }
 
             spartanDto.Links.Add(
