@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Final_Project.Models
 {
@@ -10,6 +12,5 @@ namespace Final_Project.Models
         public List<PersonalTracker>? Personal_Trackers { get; set; }
 
         public TraineeProfile? UserProfile { get; set; }
-
     }
 }

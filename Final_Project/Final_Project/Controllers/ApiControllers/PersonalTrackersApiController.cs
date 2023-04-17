@@ -8,12 +8,15 @@ using Microsoft.EntityFrameworkCore;
 using Final_Project.Data;
 using Final_Project.Models;
 using Final_Project.ApiServices;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Final_Project.Models.DTO;
 
 namespace Final_Project.Controllers.ApiControllers
 {
-    [Route("api/personaltrackers")]
     [ApiController]
+    [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class PersonalTrackersApiController : ControllerBase
     {
         private readonly ISpartaApiService<PersonalTracker> _service;
@@ -24,7 +27,7 @@ namespace Final_Project.Controllers.ApiControllers
         }
 
         // GET: api/PersonalTrackersApi
-        [HttpGet]
+        [HttpGet, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<IEnumerable<PersonalTrackerDTO>>> GetPersonal_Tracker()
         {
             var trackers = await _service.GetAllAsync();
@@ -43,7 +46,7 @@ namespace Final_Project.Controllers.ApiControllers
         }
 
         // GET: api/PersonalTrackersApi/5
-        [HttpGet("{id}", Name = nameof(GetPersonalTracker))]
+        [HttpGet("{id}"), Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<PersonalTrackerDTO>> GetPersonalTracker(int id)
         {
             if (_service.GetAllAsync() == null)
@@ -62,7 +65,7 @@ namespace Final_Project.Controllers.ApiControllers
 
         // PUT: api/PersonalTrackersApi/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("{id}"), Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> PutPersonalTracker(int id, 
             [Bind("Id, Title, StopSelfFeedback, StartSelfFeedback, ContinueSelfFeedback, CommentsSelfFeedback, TrainerComments, TechnicalSkills, ConsultantSkills, SpartanId")]PersonalTracker personalTracker)
         {
@@ -84,7 +87,7 @@ namespace Final_Project.Controllers.ApiControllers
 
         // POST: api/PersonalTrackersApi
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost(Name = nameof(PostPersonalTracker))]
+        [HttpPost(Name = nameof(PostPersonalTracker)), Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<PersonalTrackerDTO>> PostPersonalTracker([Bind("Id, Title, StopSelfFeedback, StartSelfFeedback, ContinueSelfFeedback, CommentsSelfFeedback, TrainerComments, TechnicalSkills, ConsultantSkills, SpartanId")] PersonalTracker personalTracker)
         {
 
@@ -101,7 +104,7 @@ namespace Final_Project.Controllers.ApiControllers
         }
 
         // DELETE: api/PersonalTrackersApi/5
-        [HttpDelete("{id}", Name = nameof(DeletePersonalTracker))]
+        [HttpDelete("{id}", Name = nameof(DeletePersonalTracker)), Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> DeletePersonalTracker(int id)
         {
             if (_service == null)
