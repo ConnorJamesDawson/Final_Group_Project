@@ -10,6 +10,7 @@ using Final_Project.Data.Repositories;
 using Final_Project.Data.ApiRepositories;
 using Final_Project.ApiServices;
 using NorthwindAPI_MiniProject.Data.Repository;
+using Final_Project.MVCService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.IdentityModel.Tokens;
@@ -37,6 +38,7 @@ namespace Final_Project
             builder.Services.AddScoped(
                  typeof(ISpartaApiService<>),
                  typeof(SpartaApiService<>));
+           
 
             builder.Services.AddScoped(
                 typeof(ISpartanApiRepository<Spartan>),
@@ -46,10 +48,19 @@ namespace Final_Project
                 typeof(ISpartanApiService<Spartan>),
                 typeof(SpartanApiService));
 
-            builder.Services.AddScoped<ISpartaApiRepository<TraineeProfile>, 
+
+            builder.Services.AddScoped(
+            typeof(TraineeProfilesService),
+            typeof(TraineeProfilesService));
+
+            builder.Services.AddScoped(
+                typeof(PersonalTrackerService),
+                typeof(PersonalTrackerService));
+
+            builder.Services.AddScoped<ISpartaApiRepository<TraineeProfile>,
                 SpartaApiRepository<TraineeProfile>>();
-            
-            builder.Services.AddScoped<ISpartaApiService<TraineeProfile>, 
+
+            builder.Services.AddScoped<ISpartaApiService<TraineeProfile>,
                 SpartaApiService<TraineeProfile>>();
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
