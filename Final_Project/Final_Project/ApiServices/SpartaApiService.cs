@@ -1,4 +1,5 @@
 ﻿using Final_Project.Data.Repositories;
+using Final_Project.Models;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +14,7 @@ public class SpartaApiService<T> : ISpartaApiService<T> where T : class
         _repository = respository;
     }
 
-    public async Task<bool> CreateAsync(T entity)
+    public async Task<bool> CreateAsync(T entity, Spartan? user = null, string role = "Trainee")
     {
         if (_repository.IsNull || entity == null)
         {
@@ -27,7 +28,7 @@ public class SpartaApiService<T> : ISpartaApiService<T> where T : class
         }
     }
 
-    public async Task<bool> DeleteAsync(int id)
+    public async Task<bool> DeleteAsync(int id, Spartan? user = null, string role = "Trainee")
     {
         if (_repository.IsNull)
         {
@@ -48,7 +49,7 @@ public class SpartaApiService<T> : ISpartaApiService<T> where T : class
         return true;
     }
 
-    public async Task<IEnumerable<T>?> GetAllAsync()
+    public async Task<IEnumerable<T>?> GetAllAsync(Spartan? user = null, string role = "Trainee")
     {
 
         if (_repository.IsNull)
@@ -59,7 +60,7 @@ public class SpartaApiService<T> : ISpartaApiService<T> where T : class
             .ToList();
     }
 
-    public async Task<T?> GetAsync(int id)
+    public async Task<T?> GetAsync(int id, Spartan? user = null, string role = "Trainee")
     {
         if (_repository.IsNull)
         {
@@ -82,7 +83,7 @@ public class SpartaApiService<T> : ISpartaApiService<T> where T : class
         _repository.SaveAsync();
     }
 
-    public async Task<bool> UpdateAsync(int id, T entity)
+    public async Task<bool> UpdateAsync(int id, T entity, Spartan? user = null, string role = "Trainee")
     {
         _repository.Update(entity);
         try
