@@ -2,6 +2,7 @@
 using Final_Project.Controllers.ApiControllers;
 using Final_Project.Models;
 using Final_Project.Models.DTO;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 
@@ -12,6 +13,9 @@ internal class SpartanApiControllerTests
     private ISpartanApiService<Spartan> _spartanService;
     private ISpartaApiService<TraineeProfile> _profileService;
     private ISpartaApiService<PersonalTracker> _trackerService;
+    private ISpartanApiService<IdentityUserRole<string>> _userRoleService;
+    private ISpartanApiService<IdentityRole> _roleService;
+    private UserManager<Spartan> _userManager;
     private SpartanController _sut;
 
     [SetUp]
@@ -20,7 +24,10 @@ internal class SpartanApiControllerTests
         _spartanService = Mock.Of<ISpartanApiService<Spartan>>();
         _profileService = Mock.Of<ISpartaApiService<TraineeProfile>>();
         _trackerService = Mock.Of<ISpartaApiService<PersonalTracker>>();
-        _sut = new SpartanController(_spartanService, _trackerService, _profileService);
+        _userRoleService = Mock.Of<ISpartanApiService<IdentityUserRole<string>>>();
+        _roleService = Mock.Of<ISpartanApiService<IdentityRole>>();
+        _userManager = Mock.Of<UserManager<Spartan>>();
+        _sut = new SpartanController(_spartanService, _trackerService, _profileService, _userRoleService, _roleService, _userManager);
     }
 
     [Test]

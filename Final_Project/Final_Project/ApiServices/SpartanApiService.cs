@@ -7,16 +7,16 @@ using System.Text.RegularExpressions;
 
 namespace Final_Project.ApiServices;
 
-public class SpartanApiService : ISpartanApiService<Spartan>
+public class SpartanApiService<T> : ISpartanApiService<T> where T : class
 {
-    protected readonly ISpartanApiRepository<Spartan> _repository;
+    protected readonly ISpartanApiRepository<T> _repository;
 
-    public SpartanApiService(ISpartanApiRepository<Spartan> respository)
+    public SpartanApiService(ISpartanApiRepository<T> respository)
     {
         _repository = respository;
     }
 
-    public async Task<bool> CreateAsync(Spartan entity)
+    public async Task<bool> CreateAsync(T entity)
     {
         if (_repository.IsNull || entity == null)
         {
@@ -51,7 +51,7 @@ public class SpartanApiService : ISpartanApiService<Spartan>
         return true;
     }
 
-    public async Task<IEnumerable<Spartan>?> GetAllAsync()
+    public async Task<IEnumerable<T>?> GetAllAsync()
     {
 
         if (_repository.IsNull)
@@ -62,14 +62,14 @@ public class SpartanApiService : ISpartanApiService<Spartan>
             .ToList();
     }
 
-    public async Task<Spartan?> GetAsync(string id)
+    public async Task<T?> GetAsync(string id)
     {
         if (_repository.IsNull)
         {
             return null;
         }
 
-        Spartan entity = await _repository.FindAsync(id);
+        T entity = await _repository.FindAsync(id);
 
         if (entity == null)
         {
@@ -85,7 +85,7 @@ public class SpartanApiService : ISpartanApiService<Spartan>
         _repository.SaveAsync();
     }
 
-    public async Task<bool> UpdateAsync(string id, Spartan entity)
+    public async Task<bool> UpdateAsync(string id, T entity)
     {
         _repository.Update(entity);
 
