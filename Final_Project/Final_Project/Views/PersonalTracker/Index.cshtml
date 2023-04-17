@@ -3,16 +3,21 @@
 @{
     ViewData["Title"] = "Index";
 }
+
+<div class="container-xxl page-header page-header-trainee-profile" style="background-color: #e23565">
+    <div class="container text-center">
+        <h1 class="text-white animated zoomIn mb-3">Personal Tracker</h1>
+        <p class="lead text-white">Monitor your performance periodically and receive feedback from your trainers.</p>
+    </div>
+</div>
+    <a asp-action="Create" role="button" class="btn btn-dark mb-3">Create New Tracker</a>
+
 @if(!User.Identity.IsAuthenticated)
 {
     Context.Response.Redirect("/");
 }
-<h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table table-bordered border-dark">
+<table class="table table-bordered border-dark" style="width: max-content">
     <thead>
         <tr class="table-warning border-dark">
             <th>
@@ -38,9 +43,9 @@
             </td>
             }
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id" role="button" class="btn btn-warning">Edit</a> 
-                <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-warning">Details</a> 
-                <a asp-action="Delete" asp-route-id="@item.Id" role="button" class="btn btn-danger">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.Id" role="button" class="btn bg-main">Edit</a> 
+                <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn bg-main">Details</a> 
+                <a asp-action="Delete" asp-route-id="@item.Id" role="button" class="btn bg-danger text-white">Delete</a>
             </td>
         </tr>
 }
