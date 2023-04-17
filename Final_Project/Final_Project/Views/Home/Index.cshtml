@@ -6,25 +6,68 @@
     <div class="container text-center">
         <h1 class="text-white animated zoomIn mb-3">Sparta Trainee Tracker</h1>
         <p class="lead text-white">The place for Sparta Trainees to manage their profiles as well as monitor their performance using the provided Personal Tracker.</p>
-        <a asp-area="Identity" asp-page="/Account/Login" role="button" class="btn index-btn bg-white btn-lg px-4 me-md-2" style="color: #e23565">Login</a>
+        @if (User.IsInRole("Admin") || (User.IsInRole("Trainee") || (User.IsInRole("Trainer"))))
+        {
+            //do nothing
+        }
+        else
+        {
+            <a asp-area="Identity" asp-page="/Account/Login" role="button" class="btn index-btn bg-white btn-lg px-4 me-md-2" style="color: #e23565">Login</a>
+        }
     </div>
 </div>
 
-<div class="row justify-content-center" style="gap: 2em;">
-    <div class="card mb-3 index-card" style="max-width: 20rem; border: 1px solid #e23565; color: #e23565;">
-        <div class="card-body">
-            <h5 class="card-title">Manage Your Profile</h5>
-            <p class="card-text">Ensure your Sparta Profile is client ready.</p>
+@if (User.IsInRole("Trainee"))
+{
+    <div class="row justify-content-center" style="gap: 2em;">
+        <div class="card mb-3 index-card" style="max-width: 20rem; border: 1px solid #e23565; color: #e23565;">
+            <div class="card-body">
+                <h5 class="card-title">Manage Your Profile</h5>
+                <p class="card-text">Ensure your Sparta Profile is client ready.</p>
+            </div>
         </div>
-    </div>
 
-    <div class="card mb-3 index-card" style="max-width: 20rem; border: 1px solid #e23565; color: #e23565;">
-        <div class="card-body">
-            <h5 class="card-title">Manage Your Performance</h5>
-            <p class="card-text">Track your path to becoming a fully-fledged Spartan</p>
+        <div class="card mb-3 index-card" style="max-width: 20rem; border: 1px solid #e23565; color: #e23565;">
+            <div class="card-body">
+                <h5 class="card-title">Manage Your Performance</h5>
+                <p class="card-text">Track your path to becoming a fully-fledged Spartan</p>
+            </div>
         </div>
     </div>
-</div>
+}
+@if (User.IsInRole("Trainer"))
+{
+    <div class="row justify-content-center" style="gap: 2em;">
+        <div class="card mb-3 index-card" style="max-width: 20rem; border: 1px solid #e23565; color: #e23565;">
+            <div class="card-body">
+                <h5 class="card-title">Manage Your Trainees</h5>
+                <p class="card-text">Ensure all Sparta Profiles are client-ready.</p>
+
+            </div>
+        </div>
+
+        <div class="card mb-3 index-card" style="max-width: 20rem; border: 1px solid #e23565; color: #e23565;">
+            <div class="card-body">
+                <h5 class="card-title">Track Trainee Progression</h5>
+                <p class="card-text">Leave comments on Trainee trackers for reflection.</p>
+            </div>
+        </div>
+    </div>
+}
+@if (User.IsInRole("Admin"))
+{
+    <div class="row justify-content-center" style="gap: 2em;">
+        <div class="card mb-3 index-card" style="max-width: 20rem; border: 1px solid #e23565; color: #e23565;">
+
+            <div class="card-body">
+                <h5 class="card-title">Manage Spartans</h5>
+                <p class="card-text">Create new and Manage all Spartan accounts.</p>
+
+            </div>
+        </div>
+    </div>
+}
+
 <!--
 <img src="~/sparta-icon.png" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="300" height="150" loading="lazy">
 -->

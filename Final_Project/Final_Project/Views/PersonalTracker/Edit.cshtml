@@ -4,10 +4,11 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
-<h4>Personal Tracker</h4>
-<hr />
+<div class="container-xxl page-header page-header-trainee-profile" style="background-color: #e23565; margin-bottom: 1em!important;">
+    <div class="container text-center">
+        <h1 class="text-white animated zoomIn mb-3">Edit Personal Tracker Details: @Html.DisplayFor(model => model.Title)</h1>
+    </div>
+</div>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
