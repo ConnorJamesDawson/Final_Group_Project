@@ -33,7 +33,7 @@ namespace Final_Project.Controllers.ApiControllers
                 return NotFound();
             }
             
-            var spartansDtos = spartans.Select(s => CreateSpartanLinks(Utils.SpartanToDTO(s))).ToList();
+            var spartansDtos = spartans.Select(s => CreateSpartanLinks(s)).ToList();
 
             return spartansDtos;
         }
@@ -49,12 +49,12 @@ namespace Final_Project.Controllers.ApiControllers
                 return NotFound();
             }
 
-            var spartanDto = CreateSpartanLinks(Utils.SpartanToDTO(spartan));
+            var spartanDto = CreateSpartanLinks(spartan);
 
             return spartanDto;
         }
 
-        // PUT: api/Suppliers/5
+        // PUT: api/Spartans/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}", Name = nameof(PutSpartan))]
         public async Task<ActionResult<SpartanDTO>> PutSpartan(string id, SpartanDTO spartanDto)
@@ -90,7 +90,7 @@ namespace Final_Project.Controllers.ApiControllers
             return Ok(Utils.SpartanToDTO(spartan));
         }
 
-        // POST: api/Suppliers
+        // POST: api/Spartan
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost(Name = nameof(PostSpartan))]
         public async Task<ActionResult<SpartanDTO>> PostSpartan(SpartanDTO spartanDto)
@@ -110,7 +110,7 @@ namespace Final_Project.Controllers.ApiControllers
             return CreatedAtAction(nameof(GetSpartan), new { id = spartan.Id }, createdSpartanDto);
         }
 
-        // DELETE: api/Suppliers/5
+        // DELETE: api/Spartan/5
         [HttpDelete("{id}", Name = nameof(DeleteSpartan))]
         public async Task<IActionResult> DeleteSpartan(string id)
         {
@@ -144,28 +144,37 @@ namespace Final_Project.Controllers.ApiControllers
         }
 
 
-        private SpartanDTO CreateSpartanLinks(SpartanDTO spartan)
+        private SpartanDTO CreateSpartanLinks(Spartan spartan)
         {
-            if (Url == null) return spartan;
+            var spartanDto = Utils.SpartanToDTO(spartan);
+            if (Url == null) return spartanDto;
+
+            var profiles = _traineeProfileService.GetAllAsync().Result;
+            var profile = profiles.Where(p => p.SpartanId == spartan.Id).FirstOrDefault();
 
             var idObj = new { id = spartan.Id };
-            
-            spartan.Links.Add(
+
+            if (profile != null)
+            {
+                spartanDto.Profile = Url.Link("GetTraineeProfile", new { id = profile.Id });
+            }
+
+            spartanDto.Links.Add(
                 new LinkDTO(Url.Link(nameof(this.GetSpartan), idObj),
                 "self",
                 "GET"));
 
-            spartan.Links.Add(
+            spartanDto.Links.Add(
                 new LinkDTO(Url.Link(nameof(this.PostSpartan), idObj),
                 "post_spartan",
                 "POST"));
 
-            spartan.Links.Add(
+            spartanDto.Links.Add(
                 new LinkDTO(Url.Link(nameof(this.PutSpartan), idObj),
                 "delete_spartan",
                 "DELETE"));
 
-            return spartan;
+            return spartanDto;
         }
     }
 }
