@@ -71,7 +71,6 @@ namespace Final_Project.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(PersonalTracker personal_Tracker)
-        //public async Task<IActionResult> Create([Bind("Id,Title,StopSelfFeedback,StartSelfFeedback,ContinueSelfFeedback,CommentsSelfFeedback,SpartanId")] PersonalTracker personal_Tracker)
         {
             var currentUser = await _userManager.GetUserAsync(HttpContext.User);
             if (ModelState.IsValid)
