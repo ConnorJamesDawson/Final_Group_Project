@@ -12,7 +12,7 @@ using Final_Project.Models.DTO;
 
 namespace Final_Project.Controllers.ApiControllers
 {
-    [Route("api/trackers")]
+    [Route("api/personaltrackers")]
     [ApiController]
     public class PersonalTrackersApiController : ControllerBase
     {
