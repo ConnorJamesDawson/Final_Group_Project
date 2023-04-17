@@ -68,7 +68,10 @@ namespace Final_Project
             builder.Services.AddDefaultIdentity<Spartan>
                 (options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<SpartaDbContext>();
+                .AddEntityFrameworkStores<SpartaDbContext>()
+                .AddSignInManager<SignInManager<Spartan>>();
+
+
 
             builder.Services.AddControllers()
                 .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);

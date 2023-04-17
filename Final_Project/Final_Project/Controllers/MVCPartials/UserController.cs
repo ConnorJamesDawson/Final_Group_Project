@@ -77,6 +77,7 @@ namespace Final_Project.Controllers.MVCPartials
 
             if (ModelState.IsValid)
             {
+                spartan.Email = spartan.UserName;
                 spartan.EmailConfirmed = true;
                 spartan.Role = "Trainee";
 
@@ -118,6 +119,7 @@ namespace Final_Project.Controllers.MVCPartials
 
             if (ModelState.IsValid)
             {
+                spartan.Email = spartan.UserName;
                 spartan.EmailConfirmed = true;
                 spartan.Role = "Trainer";
 
