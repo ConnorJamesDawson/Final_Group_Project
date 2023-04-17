@@ -66,7 +66,7 @@ namespace Final_Project.Controllers
         // GET: Personal_Tracker/Create
         public IActionResult Create()
         {
-            ViewData["SpartanId"] = new SelectList(_context.Set<Spartan>(), "Id", "Id");
+            ViewData["SpartanId"] =  _personalTrackerService.returnSelectListWithoutSpartanId();
             return View();
             
         }
@@ -82,12 +82,11 @@ namespace Final_Project.Controllers
 
             if (ModelState.IsValid)
             {
-
                 await _personalTrackerService.Create(personal_Tracker, currentUser.Id);
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["SpartanId"] = new SelectList(_context.Set<Spartan>(), "Id", "Id", personal_Tracker.SpartanId);
+            ViewData["SpartanId"] = await _personalTrackerService.returnSelectList(personal_Tracker);
             return View(personal_Tracker);
         }
 
@@ -105,7 +104,7 @@ namespace Final_Project.Controllers
             {
                 return NotFound();
             }
-            ViewData["SpartanId"] = new SelectList(_context.Set<Spartan>(), "Id", "Id", personal_Tracker.SpartanId);
+            ViewData["SpartanId"] = await _personalTrackerService.returnSelectList(personal_Tracker);
             return View(personal_Tracker);
         }
 
@@ -132,7 +131,7 @@ namespace Final_Project.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!Personal_TrackerExists(personal_Tracker.Id))
+                    if (!_personalTrackerService.Personal_TrackerExists(personal_Tracker.Id))
                     {
                         return NotFound();
                     }
@@ -143,21 +142,20 @@ namespace Final_Project.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["SpartanId"] = new SelectList(_context.Set<Spartan>(), "Id", "Id", personal_Tracker.SpartanId);
+            ViewData["SpartanId"] = await _personalTrackerService.returnSelectList(personal_Tracker);
             return View(personal_Tracker);
         }
 
         // GET: Personal_Tracker/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Personal_Tracker == null)
+            if (id == null || await _personalTrackerService.contextIsNull() )
             {
                 return NotFound();
             }
 
-            var personal_Tracker = await _context.Personal_Tracker
-                .Include(p => p.Spartan)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var personal_Tracker = await _personalTrackerService.GetTracker(id);
+
             if (personal_Tracker == null)
             {
                 return NotFound();
@@ -171,23 +169,19 @@ namespace Final_Project.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Personal_Tracker == null)
+            if (await _personalTrackerService.contextIsNull())
             {
                 return Problem("Entity set 'ApplicationDbContext.Personal_Tracker'  is null.");
             }
-            var personal_Tracker = await _context.Personal_Tracker.FindAsync(id);
+            var personal_Tracker = await _personalTrackerService.FindAsync(id);
             if (personal_Tracker != null)
             {
-                _context.Personal_Tracker.Remove(personal_Tracker);
+               await _personalTrackerService.Delete(personal_Tracker);
             }
-            
-            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
-        private bool Personal_TrackerExists(int id)
-        {
-          return (_context.Personal_Tracker?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
+
     }
 }

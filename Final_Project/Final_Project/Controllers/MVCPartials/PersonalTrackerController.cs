@@ -75,7 +75,7 @@ namespace Final_Project.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!Personal_TrackerExists(personalTrackerVM.Id))
+                    if (!_personalTrackerService.Personal_TrackerExists(personalTrackerVM.Id))
                     {
                         return NotFound();
                     }
