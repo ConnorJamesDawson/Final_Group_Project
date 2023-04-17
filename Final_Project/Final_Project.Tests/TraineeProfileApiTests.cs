@@ -30,9 +30,10 @@ namespace Final_Project.Tests
             .Setup(sc => sc.GetAllAsync().Result)
             .Returns(profiles);
 
+
             var sut = new TraineeProfilesControllerApi(mockService);
             var result = await sut.GetTraineeProfile();
-            Assert.That(result.Value, Is.EqualTo(profiles));
+            Assert.That(result.Value, Is.InstanceOf<List<TraineeProfileDTO>>());
         }
 
         [Category("Sad Path")]

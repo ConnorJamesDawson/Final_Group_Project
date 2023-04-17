@@ -2,20 +2,24 @@
 @{
     ViewData["Title"] = "Users";
 }
-<h1>Index</h1>
+<div class="container-xxl page-header page-header-trainee-profile" style="background-color: #e23565; margin-bottom: 1em!important;">
+    <div class="container text-center">
+        <h1 class="text-white animated zoomIn mb-3">Users</h1>
+    </div>
+</div>
 @if (User.IsInRole("Admin")){
     <p>
-        <a asp-action="CreateTrainee">Create New Trainee</a>
-        <a asp-action="CreateTrainer">Create New Trainer</a>
+        <a asp-action="CreateTrainee" role="button" class="btn bg-main">Create New Trainee</a>
+        <a asp-action="CreateTrainer" role="button" class="btn bg-main">Create New Trainer</a>
     </p>
 }
 else
 {
     Context.Response.Redirect("/");
 }
-<table class="table">
+<table class="table table table-bordered table-hover border-dark">
     <thead>
-        <tr>
+        <tr class ="table-danger border-dark">
             <th>
                 @Html.DisplayNameFor(model => model.UserName)
             </th>
@@ -28,6 +32,7 @@ else
             <th>
                 @Html.DisplayNameFor(model => model.PhoneNumber)
             </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -46,8 +51,7 @@ else
                 @Html.DisplayFor(modelItem => item.PhoneNumber)
             </td>
             <td>
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete User</a> 
-
+                <a asp-action="Delete" asp-route-id="@item.Id" role="button" class="btn btn-danger">Delete User</a>
             </td>
         </tr>
 }

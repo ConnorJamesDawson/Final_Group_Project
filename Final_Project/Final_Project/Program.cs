@@ -11,6 +11,10 @@ using Final_Project.Data.ApiRepositories;
 using Final_Project.ApiServices;
 using NorthwindAPI_MiniProject.Data.Repository;
 using Final_Project.MVCService;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Final_Project
 {
@@ -25,6 +29,7 @@ namespace Final_Project
             builder.Services.AddDbContext<SpartaDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
+            builder.Services.AddAuthentication().AddJwtBearer();
 
             builder.Services.AddScoped(
                  typeof(ISpartaApiRepository<>),
@@ -93,7 +98,10 @@ namespace Final_Project
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
