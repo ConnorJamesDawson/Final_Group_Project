@@ -36,13 +36,9 @@ namespace Final_Project.Controllers.MVCPartials
 
         public async Task<IActionResult> Delete(string? id)
         {
-            if (id == null || _context.Spartans == null)
-            {
-                return NotFound();
-            }
 
-            var deleteUser = await _context.Spartans
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var deleteUser = await _spartaService.GetAsync(id);
+
             if (deleteUser == null)
             {
                 return NotFound();
@@ -55,17 +51,15 @@ namespace Final_Project.Controllers.MVCPartials
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            if (_context.Spartans == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Spartans'  is null.");
-            }
-            var deleteUser = await _context.Spartans.FindAsync(id);
+
+            var deleteUser = await _spartaService.GetAsync(id);
+
             if (deleteUser != null)
             {
-                _context.Spartans.Remove(deleteUser);
+                await _spartaService.DeleteAsync(id);
             }
 
-            await _context.SaveChangesAsync();
+            await _spartaService.SaveAsync();
             return RedirectToAction(nameof(Index));
         }
 

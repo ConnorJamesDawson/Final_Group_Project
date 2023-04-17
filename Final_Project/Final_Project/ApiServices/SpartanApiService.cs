@@ -1,6 +1,9 @@
-﻿using Final_Project.Data.ApiRepositories;
+﻿using Final_Project.Data;
+using Final_Project.Data.ApiRepositories;
 using Final_Project.Data.Repositories;
 using Final_Project.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
@@ -10,10 +13,12 @@ namespace Final_Project.ApiServices;
 public class SpartanApiService : ISpartanApiService<Spartan>
 {
     protected readonly ISpartanApiRepository<Spartan> _repository;
+    private readonly SpartaDbContext _context;
 
-    public SpartanApiService(ISpartanApiRepository<Spartan> respository)
+    public SpartanApiService(ISpartanApiRepository<Spartan> respository, SpartaDbContext context)
     {
         _repository = respository;
+        _context = context;
     }
 
     public async Task<bool> CreateAsync(Spartan entity)
@@ -99,4 +104,5 @@ public class SpartanApiService : ISpartanApiService<Spartan>
         }
         return true;
     }
+
 }
