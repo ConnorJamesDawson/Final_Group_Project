@@ -38,5 +38,18 @@ namespace Final_Project.Controllers.ApiControllers
             EmailConfirmed = spartanDto.EmailConfirmed,
             PhoneNumber = spartanDto.PhoneNumber
         };
+        public static PersonalTrackerDTO PersonalTrackerToDTO(PersonalTracker personalTracker) => new PersonalTrackerDTO()
+        {
+            Id = personalTracker.Id,
+            Title = personalTracker.Title,
+            StopSelfFeedback = personalTracker.StopSelfFeedback,
+            StartSelfFeedback = personalTracker.StartSelfFeedback,
+            ContinueSelfFeedback = personalTracker.ContinueSelfFeedback,
+            CommentsSelfFeedback = personalTracker.CommentsSelfFeedback,
+            TrainerComments = personalTracker.TrainerComments,
+            TechnicalSkills = personalTracker.TechnicalSkills,
+            ConsultantSkills = personalTracker.ConsultantSkills,
+            SpartanId = personalTracker.SpartanId,
+        };
     }
 }
