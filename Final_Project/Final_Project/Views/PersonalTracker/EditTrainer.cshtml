@@ -4,7 +4,7 @@
     ViewData["Title"] = "Add Comments";
 }
 
-@if (!User.IsInRole("Admin") || !User.IsInRole("Trainer"))
+@if (!User.IsInRole("Admin") && !User.IsInRole("Trainer"))
 {
     Context.Response.Redirect("/");
 }

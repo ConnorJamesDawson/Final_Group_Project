@@ -5,7 +5,7 @@
     ViewData["Title"] = "Trainee Treackers";
 }
 
-@if (!User.IsInRole("Admin") || !User.IsInRole("Trainer"))
+@if (!User.IsInRole("Admin") && !User.IsInRole("Trainer"))
 {
     Context.Response.Redirect("/");
 }

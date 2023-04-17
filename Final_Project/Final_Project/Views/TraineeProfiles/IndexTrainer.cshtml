@@ -4,7 +4,7 @@
     ViewData["Title"] = "Trainee Profiles";
 }
 
-@if (!User.IsInRole("Admin") || !User.IsInRole("Trainer"))
+@if (!User.IsInRole("Admin") && !User.IsInRole("Trainer"))
 {
     Context.Response.Redirect("/");
 }
@@ -16,10 +16,13 @@
     <thead>
         <tr class="table-warning border-dark">
             <th>
+                @Html.DisplayNameFor(model => model.Spartan)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Spartan.Email)
+                @Html.DisplayNameFor(model => model.Spartan!.Email)
             </th>
             <th></th>
         </tr>
@@ -28,10 +31,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                    @Html.DisplayFor(modelItem => item.Spartan!.UserName)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Spartan.UserName)
+                @Html.DisplayFor(modelItem => item.Spartan!.UserName)
             </td>
             <td>
                     <a asp-action="Details" asp-route-id="@item.Id" role="button" class="btn btn-warning">Details</a>
