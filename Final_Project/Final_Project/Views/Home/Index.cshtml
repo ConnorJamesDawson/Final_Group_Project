@@ -21,17 +21,20 @@
 {
     <div class="row justify-content-center" style="gap: 2em;">
         <div class="card mb-3 index-card" style="max-width: 20rem; border: 1px solid #e23565; color: #e23565;">
-            <div class="card-body">
-                <h5 class="card-title">Manage Your Profile</h5>
-                <p class="card-text">Ensure your Sparta Profile is client ready.</p>
-            </div>
+            <a class="index-anchors" asp-area="" asp-controller="TraineeProfiles" asp-action="Index">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Your Profile</h5>
+                    <p class="card-text">Ensure your Sparta Profile is client ready.</p>
+                </div>
+            </a>
         </div>
-
         <div class="card mb-3 index-card" style="max-width: 20rem; border: 1px solid #e23565; color: #e23565;">
-            <div class="card-body">
-                <h5 class="card-title">Manage Your Performance</h5>
-                <p class="card-text">Track your path to becoming a fully-fledged Spartan</p>
-            </div>
+            <a class="index-anchors" asp-area="" asp-controller="PersonalTracker" asp-action="Index">
+                <div class="card-body">
+                    <h5 class="card-title">Manage Your Performance</h5>
+                    <p class="card-text">Track your path to becoming a fully-fledged Spartan</p>
+                </div>
+            </a>
         </div>
     </div>
 }
@@ -39,18 +42,21 @@
 {
     <div class="row justify-content-center" style="gap: 2em;">
         <div class="card mb-3 index-card" style="max-width: 20rem; border: 1px solid #e23565; color: #e23565;">
+            <a class="index-anchors" asp-area="" asp-controller="TraineeProfiles" asp-action="IndexTrainer">
             <div class="card-body">
                 <h5 class="card-title">Manage Your Trainees</h5>
                 <p class="card-text">Ensure all Sparta Profiles are client-ready.</p>
-
             </div>
+            </a>
         </div>
 
         <div class="card mb-3 index-card" style="max-width: 20rem; border: 1px solid #e23565; color: #e23565;">
+            <a class ="index-anchors" asp-area="" asp-controller="PersonalTracker" asp-action="IndexTrainer">
             <div class="card-body">
                 <h5 class="card-title">Track Trainee Progression</h5>
                 <p class="card-text">Leave comments on Trainee trackers for reflection.</p>
             </div>
+            </a>
         </div>
     </div>
 }
@@ -58,12 +64,12 @@
 {
     <div class="row justify-content-center" style="gap: 2em;">
         <div class="card mb-3 index-card" style="max-width: 20rem; border: 1px solid #e23565; color: #e23565;">
-
+            <a class="index-anchors" asp-area="" asp-controller="User" asp-action="Index">
             <div class="card-body">
                 <h5 class="card-title">Manage Spartans</h5>
                 <p class="card-text">Create new and Manage all Spartan accounts.</p>
-
             </div>
+            </a>
         </div>
     </div>
 }

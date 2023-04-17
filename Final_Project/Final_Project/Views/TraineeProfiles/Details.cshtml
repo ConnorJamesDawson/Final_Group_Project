@@ -4,29 +4,18 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Trainee Profile</h1>
-
-<div>
-        @if (User.IsInRole("Admin")){
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Spartan)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Spartan.Id)
-        </dd>
+<div class="container-xxl page-header page-header-trainee-profile" style="background-color: #e23565">
+    <div class="container text-center">
+        <h1 class="text-white animated zoomIn mb-3">View Trainee Profile</h1>
+        <p class="lead text-white">Look at the details of @Html.DisplayFor(model => model.Spartan.UserName)</p>
+        @if (User.IsInRole("Admin"))
+        {
+            <p class="text-white">Spartan ID: @Html.DisplayFor(model => model.Spartan.Id)</p>
         }
-        @if (User.IsInRole("Trainee")){
-         <div style="display: none">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Spartan)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Spartan.Id)
-        </dd>
-        </div>
-        }
-    </dl>
+    </div>
 </div>
+
+
 
 <div id="profile-container" class="col col-lg-12 mb-4 mb-lg-0">
     <div class="card mb-3" style="border-radius: .5rem;">
@@ -46,7 +35,7 @@
                     <hr class="mt-0 mb-4">
                     <div class="row pt-1">
                         <div class="col-12 mb-3">
-                            <p class="text-muted">
+                            <p class="text-muted about-me-p">
                             @Html.DisplayFor(model => model.AboutMe)
                             </p>
                         </div>
@@ -55,13 +44,13 @@
                     <hr class="mt-0 mb-4">
                     <div class="row pt-1">
                         <div class="col-12 mb-3">
-                            <p class="text-muted">
+                            <p class="text-muted about-me-p">
                                 @Html.DisplayFor(model => model.WorkExperience)
                             </p>
                         </div>
                     </div>
                     <div class ="d-flex justify-content-end">
-                        <a asp-action="IndexTrainer" role="button" class="btn btn-warning">Back to List</a>
+                        <a asp-action="IndexTrainer" role="button" class="btn bg-main">Back to List</a>
                     </div>
                 </div>
             </div>
