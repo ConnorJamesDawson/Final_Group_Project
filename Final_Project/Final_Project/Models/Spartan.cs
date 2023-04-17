@@ -9,6 +9,8 @@ namespace Final_Project.Models
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
 
+        public string? Role { get; set; }
+
         public List<PersonalTracker>? Personal_Trackers { get; set; }
 
         public TraineeProfile? UserProfile { get; set; }

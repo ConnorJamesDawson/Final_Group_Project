@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Final_Project.Data.Migrations
+namespace Final_Project.Migrations
 {
     [DbContext(typeof(SpartaDbContext))]
-    [Migration("20230413131718_Initial")]
-    partial class Initial
+    [Migration("20230417171549_Spartan knows role")]
+    partial class Spartanknowsrole
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,26 +33,37 @@ namespace Final_Project.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Comments_SelfFeedback")
+                    b.Property<string>("CommentsSelfFeedback")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Continue_SelfFeedback")
+                    b.Property<string>("ConsultantSkills")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContinueSelfFeedback")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SpartanId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Start_SelfFeedback")
+                    b.Property<string>("StartSelfFeedback")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Stop_SelfFeedback")
+                    b.Property<string>("StopSelfFeedback")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TechnicalSkills")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("TrainerComments")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -75,6 +86,9 @@ namespace Final_Project.Data.Migrations
 
                     b.Property<bool>("Complete")
                         .HasColumnType("bit");
+
+                    b.Property<string>("PictureURL")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SpartanId")
                         .IsRequired()
@@ -310,6 +324,15 @@ namespace Final_Project.Data.Migrations
             modelBuilder.Entity("Final_Project.Models.Spartan", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("Spartan");
                 });

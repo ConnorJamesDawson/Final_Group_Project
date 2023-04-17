@@ -54,25 +54,30 @@ namespace Final_Project.Data
             {
                 UserName = "connor@spartaglobal.com",
                 Email = "connor@spartaglobal.com",
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                Role = "Admin"
+          
             };
             var phil = new Spartan
             {
                 UserName = "phil@spartaglobal.com",
                 Email = "phil@spartaglobal.com",
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                Role = "Trainee"
             };
             var laura = new Spartan
             {
                 UserName = "laura@spartaglobal.com",
                 Email = "laura@spartaglobal.com",
                 EmailConfirmed = true,
+                Role = "Trainee"
             };
             var cathy = new Spartan
             {
                 UserName = "cathy@spartaglobal.com",
                 Email = "cathy@spartaglobal.com",
                 EmailConfirmed = true,
+                Role = "Trainer"
             };
             userManager
                 .CreateAsync(connor, "Password1!")

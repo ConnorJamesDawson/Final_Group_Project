@@ -78,7 +78,8 @@ namespace Final_Project.Controllers.MVCPartials
             if (ModelState.IsValid)
             {
                 spartan.EmailConfirmed = true;
-                
+                spartan.Role = "Trainee";
+
                 _userManager
                     .CreateAsync(spartan, "Password1!")
                     .GetAwaiter()
@@ -118,6 +119,7 @@ namespace Final_Project.Controllers.MVCPartials
             if (ModelState.IsValid)
             {
                 spartan.EmailConfirmed = true;
+                spartan.Role = "Trainer";
 
                 _userManager
                     .CreateAsync(spartan, "Password1!")

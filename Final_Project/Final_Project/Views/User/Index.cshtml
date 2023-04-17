@@ -21,6 +21,9 @@ else
     <thead>
         <tr class ="table-danger border-dark">
             <th>
+                @Html.DisplayNameFor(model => model.Role)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.UserName)
             </th>
             <th>
@@ -38,6 +41,9 @@ else
     <tbody>
 @foreach (var item in Model) {
         <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Role)
+                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.UserName)
             </td>
