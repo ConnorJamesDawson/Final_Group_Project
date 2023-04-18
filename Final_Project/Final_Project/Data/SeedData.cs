@@ -175,7 +175,11 @@ namespace Final_Project.Data
                 },
                 new PersonalTracker
                 {
-                    Title = "Week1",
+                    Title = "Week 1",
+                    StopSelfFeedback = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean maximus nisi id tortor ultrices vulputate. Aliquam commodo tempus semper.",
+                    StartSelfFeedback = "Nulla sed ornare nisi. Fusce non rhoncus massa. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+                    ContinueSelfFeedback = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean maximus nisi id tortor ultrices vulputate.",
+                    CommentsSelfFeedback = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                     Spartan = ruya
                 }
             ); ;
