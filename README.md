@@ -13,6 +13,17 @@ Admins can sign in, view lists of all trainees and their profiles and trackers, 
 ### API
 The API was built for the use of an internal adminstrator to manage all users and entries, thus they can perform CRUD operations on the Users, Profiles and PersonalTrackers tables. JWT authentication is implemented for data security, though the concept is that the API would only be available internally via intranet.
 
+## Web App Use
+The application can be accessed by running the Visual Studio ASP.NET Core Web App project called Final_Project. 
+
+This opens up a login page where the user can sign in as either Trainee, Trainer or Admin and depending on who the user is, they will be shown a different home page. 
+
+Trainees have two buttons that lead them to manage their profile or trackers which they can edit and view. They are also able to delete the tracker if it is no longer needed. 
+
+Trainers have two buttons that lead them to a list of all the Trainees and their profiles which they can then view, or a list of Trainees and their various trackers which can be viewed by the Trainer and they are able to add comments to the tracker, to provide their feedback. There is also a search filter when they view the list of Trainees and their trackers, so that the Trainer can either search for trainee by their username or by the name of the tracker with a dropdown box. 
+
+Admins have one button on the home page that leads them to manage the users of the application. But they are able to view the Trainee Profiles and Trackers through the navigation bar of the application. 
+
 ## API Use
 When the application runs the URL will begin with `https://localhost:7141/` followed by the endpoint:
 
@@ -103,3 +114,17 @@ This will output a jwt that you can add as a bearer token in requests to the API
 - Microsoft.EntityFrameworkCore.InMemory v7.0.5
 - Moq v4.18.4
 - Nunit.Analyzers 3.6.1
+
+## Credits
+- [Mubashir Ahmad](https://github.com/Mubashir-A)
+- [Ali Butt](https://github.com/TheDevAli)
+- [Connor Dawson](https://github.com/ConnorJamesDawson)
+- [Byron Esson](https://github.com/byronEsson)
+- [Valentin Gaudeau](https:/github.com/valgaudeau)
+- [Ricardo Goncalves](https://github.com/RicardoGoncalves-CS)
+- [Alex Ho](https://github.com/AlexCKHO)
+- [Ruya Kumru-Holroyd](https://github.com/RuyaKH)
+- [Jack Linstead](https://github.com/juniorwiz)
+- [Luke Pinder](https://github.com/clear-dev)
+- [Alin Rusu](https://github.com/AlinRSpartan)
+- [Henry Shapland](https://github.com/HShapland/)
