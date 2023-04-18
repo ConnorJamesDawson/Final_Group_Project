@@ -72,7 +72,7 @@ namespace Final_Project.Data
                 Email = "laura@spartaglobal.com",
                 EmailConfirmed = true,
                 Role = "Trainee",
-                Course = "Tech 205"
+                Course = "Tech 201"
             };
             var cathy = new Spartan
             {
