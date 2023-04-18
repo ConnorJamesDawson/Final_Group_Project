@@ -25,6 +25,9 @@ else
                 @Html.DisplayNameFor(model => model.Role)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Course)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.UserName)
             </th>
             <th>
@@ -40,8 +43,11 @@ else
 @foreach (var item in Model) {
         <tr>
             <td>
-                    @Html.DisplayFor(modelItem => item.Role)
-                </td>
+                @Html.DisplayFor(modelItem => item.Role)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Course)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.UserName)
             </td>

@@ -8,8 +8,8 @@ namespace Final_Project.Models
     {
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
-
         public string? Role { get; set; }
+        public string? Course { get; set; }
 
         public List<PersonalTracker>? Personal_Trackers { get; set; }
 

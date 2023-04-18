@@ -23,6 +23,9 @@
                 @Html.DisplayNameFor(model => model.Spartan)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Spartan!.Course)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
@@ -35,7 +38,10 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                    @Html.DisplayFor(modelItem => item.Spartan!.UserName)
+                @Html.DisplayFor(modelItem => item.Spartan!.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Spartan!.Course)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)

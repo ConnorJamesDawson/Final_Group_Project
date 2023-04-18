@@ -55,7 +55,8 @@ namespace Final_Project.Data
                 UserName = "connor@spartaglobal.com",
                 Email = "connor@spartaglobal.com",
                 EmailConfirmed = true,
-                Role = "Admin"
+                Role = "Admin",
+                Course = ""
           
             };
             var phil = new Spartan
@@ -63,21 +64,32 @@ namespace Final_Project.Data
                 UserName = "phil@spartaglobal.com",
                 Email = "phil@spartaglobal.com",
                 EmailConfirmed = true,
-                Role = "Trainee"
+                Role = "Trainee",
+                Course = "Tech 205"
             };
             var laura = new Spartan
             {
                 UserName = "laura@spartaglobal.com",
                 Email = "laura@spartaglobal.com",
                 EmailConfirmed = true,
-                Role = "Trainee"
+                Role = "Trainee",
+                Course = "Tech 201"
+            };
+            var ruya = new Spartan
+            {
+                UserName = "ruya@spartaglobal.com",
+                Email = "ruya@spartaglobal.com",
+                EmailConfirmed = true,
+                Role = "Trainee",
+                Course = "Tech 201"
             };
             var cathy = new Spartan
             {
                 UserName = "cathy@spartaglobal.com",
                 Email = "cathy@spartaglobal.com",
                 EmailConfirmed = true,
-                Role = "Trainer"
+                Role = "Trainer",
+                Course = "Tech 206"
             };
             userManager
                 .CreateAsync(connor, "Password1!")
@@ -160,6 +172,11 @@ namespace Final_Project.Data
                     ContinueSelfFeedback = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean maximus nisi id tortor ultrices vulputate.",
                     CommentsSelfFeedback = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                     Spartan = laura
+                },
+                new PersonalTracker
+                {
+                    Title = "Week1",
+                    Spartan = ruya
                 }
             ); ;
             context.TraineeProfile.AddRange(

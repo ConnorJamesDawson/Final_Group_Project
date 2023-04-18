@@ -25,6 +25,11 @@
                 <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
             <div class="form-group mb-3">
+                <label asp-for="Course" class="control-label fw-bold">Course</label>
+                <input asp-for="Course" class="form-control" />
+                <span asp-validation-for="Course" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
                 <label asp-for="PhoneNumber" class="control-label fw-bold">Phone Number</label>
                 <input asp-for="PhoneNumber" class="form-control" asp-items="ViewBag.SpartanId"/>
             </div>

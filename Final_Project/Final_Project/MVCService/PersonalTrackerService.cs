@@ -37,7 +37,7 @@ namespace Final_Project.MVCService
             return await applicationDbContext.ToListAsync();
         }
 
-        public async Task<ServiceResponse<TitleViewModel>> GetListTrainer(string search = null, string titleSearch = null)
+        public async Task<ServiceResponse<TitleViewModel>> GetListTrainer(string search = null, string titleSearch = null, string courseSearch = null)
         {
             var response = new ServiceResponse<TitleViewModel>();
 
@@ -51,10 +51,14 @@ namespace Final_Project.MVCService
             IQueryable<string> titleQuery = from t in _context.Personal_Tracker
                                             orderby t.Title
                                             select t.Title;
+
             var tracker = _context.Personal_Tracker.Include(t => t.Spartan).AsQueryable();
 
             if (!string.IsNullOrEmpty(search))
                 tracker = tracker.Where(s => s.Spartan.UserName.Contains(search));
+
+            if (!string.IsNullOrEmpty(courseSearch))
+                tracker = tracker.Where(s => s.Spartan.Course.Contains(courseSearch));
 
             if (!string.IsNullOrEmpty(titleSearch))
                 tracker = tracker.Where(x => x.Title == titleSearch);
