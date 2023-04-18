@@ -9,9 +9,9 @@ namespace Final_Project.Controllers
 {
     public partial class PersonalTrackerController : Controller
     {
-        public async Task<IActionResult> IndexTrainer(string search = null, string titleSearch= null)
+        public async Task<IActionResult> IndexTrainer(string search = null, string titleSearch= null, string courseSearch = null)
         {
-            var response = _personalTrackerService.GetListTrainer(search, titleSearch).Result;
+            var response = _personalTrackerService.GetListTrainer(search, titleSearch, courseSearch).Result;
 
             if(response.Success == false)
             {

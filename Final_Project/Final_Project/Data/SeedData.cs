@@ -55,7 +55,8 @@ namespace Final_Project.Data
                 UserName = "connor@spartaglobal.com",
                 Email = "connor@spartaglobal.com",
                 EmailConfirmed = true,
-                Role = "Admin"
+                Role = "Admin",
+                Course = ""
           
             };
             var phil = new Spartan
@@ -70,6 +71,14 @@ namespace Final_Project.Data
             {
                 UserName = "laura@spartaglobal.com",
                 Email = "laura@spartaglobal.com",
+                EmailConfirmed = true,
+                Role = "Trainee",
+                Course = "Tech 201"
+            };
+            var ruya = new Spartan
+            {
+                UserName = "ruya@spartaglobal.com",
+                Email = "ruya@spartaglobal.com",
                 EmailConfirmed = true,
                 Role = "Trainee",
                 Course = "Tech 201"
@@ -147,6 +156,11 @@ namespace Final_Project.Data
                 {
                     Title = "Week1",
                     Spartan = laura
+                },
+                new PersonalTracker
+                {
+                    Title = "Week1",
+                    Spartan = ruya
                 }
             ) ;
             context.TraineeProfile.AddRange(

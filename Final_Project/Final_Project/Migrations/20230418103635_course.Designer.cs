@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Final_Project.Migrations
 {
     [DbContext(typeof(SpartaDbContext))]
-    [Migration("20230418094145_Added course to Spartan")]
-    partial class AddedcoursetoSpartan
+    [Migration("20230418103635_course")]
+    partial class course
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
