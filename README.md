@@ -17,7 +17,7 @@ The API was built for the use of an internal adminstrator to manage all users an
 When the application runs the URL will begin with `https://localhost:7141/` followed by the endpoint:
 
 #### Spartans
-  ```json
+  ```js
   // request body, SpartanDTO
      {
         "userName": string,
@@ -36,7 +36,7 @@ When the application runs the URL will begin with `https://localhost:7141/` foll
 - DELETE: `api/Suppliers/{id}` - deletes Spartan with id = `id`
 
 #### TraineeProfiles
-```json
+```js
   // request body, TraineeProfileDTO
      {
         "id": int,
@@ -56,7 +56,7 @@ When the application runs the URL will begin with `https://localhost:7141/` foll
 - DELETE: `api/Profiles/{id}` - deletes the TraineeProfile with id = `id`
 
 #### PersonalTrackers
-```json
+```js
   // request body, PersonalTrackerDTO
      {
         "id": int,
