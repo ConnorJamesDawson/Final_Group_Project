@@ -16,13 +16,13 @@
         {
             <h4 class="lead text-white fw-bold">Role: Trainer</h4>
         }
-        <p class="lead text-white">The place for Sparta Trainees to manage their profiles as well as monitor their performance using the provided Personal Tracker.</p>
         @if (User.IsInRole("Admin") || (User.IsInRole("Trainee") || (User.IsInRole("Trainer"))))
         {
             //do nothing
         }
         else
         {
+            <p class="lead text-white">The place for Sparta Trainees to manage their profiles as well as monitor their performance throughout the training programme.</p>
             <a asp-area="Identity" asp-page="/Account/Login" role="button" class="btn index-btn bg-white btn-lg px-4 me-md-2" style="color: #e23565">Login</a>
         }
     </div>
