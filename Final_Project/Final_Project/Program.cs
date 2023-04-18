@@ -41,12 +41,12 @@ namespace Final_Project
            
 
             builder.Services.AddScoped(
-                typeof(ISpartanApiRepository<Spartan>),
-                typeof(SpartanApiRepository));
+                typeof(ISpartanApiRepository<>),
+                typeof(SpartanApiRepository<>));
 
             builder.Services.AddScoped(
-                typeof(ISpartanApiService<Spartan>),
-                typeof(SpartanApiService));
+                typeof(ISpartanApiService<>),
+                typeof(SpartanApiService<>));
 
 
             builder.Services.AddScoped(

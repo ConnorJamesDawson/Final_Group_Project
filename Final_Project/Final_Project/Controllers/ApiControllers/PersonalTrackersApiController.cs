@@ -46,7 +46,7 @@ namespace Final_Project.Controllers.ApiControllers
         }
 
         // GET: api/PersonalTrackersApi/5
-        [HttpGet("{id}"), Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("{id}", Name = nameof(GetPersonalTracker)), Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<PersonalTrackerDTO>> GetPersonalTracker(int id)
         {
             if (_service.GetAllAsync() == null)
