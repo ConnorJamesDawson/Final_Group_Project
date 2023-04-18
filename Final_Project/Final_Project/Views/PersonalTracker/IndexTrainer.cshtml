@@ -42,6 +42,9 @@
                 @Html.DisplayNameFor(model => model.Trackers[0].Spartan)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Trackers[0].Spartan!.Course)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Trackers[0].Title)
             </th>
             <th>
@@ -55,6 +58,9 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Spartan!.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Spartan!.Course)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
