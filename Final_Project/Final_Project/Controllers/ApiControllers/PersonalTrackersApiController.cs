@@ -15,7 +15,7 @@ using Final_Project.Models.DTO;
 namespace Final_Project.Controllers.ApiControllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/personaltrackers")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class PersonalTrackersApiController : ControllerBase
     {

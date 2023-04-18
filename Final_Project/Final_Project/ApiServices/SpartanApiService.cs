@@ -1,6 +1,9 @@
-﻿using Final_Project.Data.ApiRepositories;
+﻿using Final_Project.Data;
+using Final_Project.Data.ApiRepositories;
 using Final_Project.Data.Repositories;
 using Final_Project.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using System.Text.RegularExpressions;
@@ -99,4 +102,5 @@ public class SpartanApiService<T> : ISpartanApiService<T> where T : class
         }
         return true;
     }
+
 }

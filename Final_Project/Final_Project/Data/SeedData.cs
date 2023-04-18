@@ -54,25 +54,30 @@ namespace Final_Project.Data
             {
                 UserName = "connor@spartaglobal.com",
                 Email = "connor@spartaglobal.com",
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                Role = "Admin"
+          
             };
             var phil = new Spartan
             {
                 UserName = "phil@spartaglobal.com",
                 Email = "phil@spartaglobal.com",
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                Role = "Trainee"
             };
             var laura = new Spartan
             {
                 UserName = "laura@spartaglobal.com",
                 Email = "laura@spartaglobal.com",
                 EmailConfirmed = true,
+                Role = "Trainee"
             };
             var cathy = new Spartan
             {
                 UserName = "cathy@spartaglobal.com",
                 Email = "cathy@spartaglobal.com",
                 EmailConfirmed = true,
+                Role = "Trainer"
             };
             userManager
                 .CreateAsync(connor, "Password1!")
@@ -122,34 +127,54 @@ namespace Final_Project.Data
             context.Personal_Tracker.AddRange(
                 new PersonalTracker
                 {
-                    Title = "Week1",
-
-                    StopSelfFeedback = "Stop",
-                    StartSelfFeedback = "Start",
-                    Spartan = phil
-                },            
-                new PersonalTracker
-                {
-                    Title = "Week2",
-                    StopSelfFeedback = "Stop",
-                    StartSelfFeedback = "Start",
+                    Title = "Week 1",
+                    StopSelfFeedback = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean maximus nisi id tortor ultrices vulputate. Aliquam commodo tempus semper.",
+                    StartSelfFeedback = "Nulla sed ornare nisi. Fusce non rhoncus massa. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+                    ContinueSelfFeedback = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean maximus nisi id tortor ultrices vulputate.",
+                    CommentsSelfFeedback = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                     Spartan = phil
                 },
                 new PersonalTracker
                 {
-                    Title = "Week1",
+                    Title = "Week 2",
+                    StopSelfFeedback = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean maximus nisi id tortor ultrices vulputate. Aliquam commodo tempus semper.",
+                    StartSelfFeedback = "Nulla sed ornare nisi. Fusce non rhoncus massa. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+                    ContinueSelfFeedback = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean maximus nisi id tortor ultrices vulputate.",
+                    CommentsSelfFeedback = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                    Spartan = phil
+                },
+                new PersonalTracker
+                {
+                    Title = "Week 1",
+                    StopSelfFeedback = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean maximus nisi id tortor ultrices vulputate. Aliquam commodo tempus semper.",
+                    StartSelfFeedback = "Nulla sed ornare nisi. Fusce non rhoncus massa. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+                    ContinueSelfFeedback = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean maximus nisi id tortor ultrices vulputate.",
+                    CommentsSelfFeedback = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+                    Spartan = laura
+                },
+                new PersonalTracker
+                {
+                    Title = "Week 2",
+                    StopSelfFeedback = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean maximus nisi id tortor ultrices vulputate. Aliquam commodo tempus semper.",
+                    StartSelfFeedback = "Nulla sed ornare nisi. Fusce non rhoncus massa. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.",
+                    ContinueSelfFeedback = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean maximus nisi id tortor ultrices vulputate.",
+                    CommentsSelfFeedback = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
                     Spartan = laura
                 }
-            ) ;
+            ); ;
             context.TraineeProfile.AddRange(
                 new TraineeProfile
                 {
                     Title = "About me: Phil!",
+                    AboutMe = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis odio nunc. Vestibulum vulputate porttitor rutrum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse iaculis sed neque laoreet convallis. Duis sit amet aliquet neque. Phasellus cursus, ligula vitae euismod iaculis, tellus nulla vulputate nibh, ut tincidunt nunc ipsum ut dui. Nam viverra diam eu mi facilisis aliquam. Aliquam vitae nisi tellus.",
+                    WorkExperience = "Nulla sed ornare nisi. Fusce non rhoncus massa. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent eleifend est in lorem auctor ultrices. Ut sed efficitur nunc. Vivamus vitae ipsum ligula. Sed ut sapien interdum, ultrices odio id, sodales magna.",
                     Spartan = phil
                 },
                 new TraineeProfile
                 {
                     Title = "About me: Laura!",
+                    AboutMe = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam quis odio nunc. Vestibulum vulputate porttitor rutrum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse iaculis sed neque laoreet convallis. Duis sit amet aliquet neque. Phasellus cursus, ligula vitae euismod iaculis, tellus nulla vulputate nibh, ut tincidunt nunc ipsum ut dui. Nam viverra diam eu mi facilisis aliquam. Aliquam vitae nisi tellus.",
+                    WorkExperience = "Nulla sed ornare nisi. Fusce non rhoncus massa. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent eleifend est in lorem auctor ultrices. Ut sed efficitur nunc. Vivamus vitae ipsum ligula. Sed ut sapien interdum, ultrices odio id, sodales magna.",
                     Spartan = laura
                 }
             );

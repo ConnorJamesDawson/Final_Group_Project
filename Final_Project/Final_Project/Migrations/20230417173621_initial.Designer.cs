@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Final_Project.Data.Migrations
+namespace Final_Project.Migrations
 {
     [DbContext(typeof(SpartaDbContext))]
-    [Migration("20230414141404_AddedSpartanFirstAndLastName")]
-    partial class AddedSpartanFirstAndLastName
+    [Migration("20230417173621_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -329,6 +329,9 @@ namespace Final_Project.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("Spartan");

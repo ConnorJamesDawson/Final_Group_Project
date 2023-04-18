@@ -35,7 +35,8 @@ body {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
-.details-container {
+.details-container,
+.login-container {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
@@ -79,4 +80,33 @@ body {
     background-color: #e23565!important;
     border-color: #e23565!important;
     outline: none!important;
+}
+
+.details-container {
+    white-space: pre-line;
+}
+
+.about-me-p {
+    white-space: pre-line;
+}
+
+.index-anchors {
+    text-decoration: none!important;
+    color: #e23565!important;
+}
+
+.index-anchors:hover {
+    color: white!important;
+}
+
+.p3 {
+    font-family: "Lucida Console", "Courier New", monospace;
+}
+
+.title {
+    font-family: Papyrus, fantasy;
+}
+
+h1 {
+    letter-spacing: 1.5px;
 }

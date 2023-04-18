@@ -10,6 +10,7 @@ using Final_Project.Data.Repositories;
 using Final_Project.Data.ApiRepositories;
 using Final_Project.ApiServices;
 using NorthwindAPI_MiniProject.Data.Repository;
+using Final_Project.MVCService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.IdentityModel.Tokens;
@@ -28,7 +29,7 @@ namespace Final_Project
             builder.Services.AddDbContext<SpartaDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
-            builder.Services.AddAuthentication(x => { x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;}).AddJwtBearer();
+            builder.Services.AddAuthentication().AddJwtBearer();
 
             builder.Services.AddScoped(
                  typeof(ISpartaApiRepository<>),
@@ -37,6 +38,7 @@ namespace Final_Project
             builder.Services.AddScoped(
                  typeof(ISpartaApiService<>),
                  typeof(SpartaApiService<>));
+           
 
             builder.Services.AddScoped(
                 typeof(ISpartanApiRepository<>),
@@ -46,10 +48,19 @@ namespace Final_Project
                 typeof(ISpartanApiService<>),
                 typeof(SpartanApiService<>));
 
-            builder.Services.AddScoped<ISpartaApiRepository<TraineeProfile>, 
+
+            builder.Services.AddScoped(
+            typeof(TraineeProfilesService),
+            typeof(TraineeProfilesService));
+
+            builder.Services.AddScoped(
+                typeof(PersonalTrackerService),
+                typeof(PersonalTrackerService));
+
+            builder.Services.AddScoped<ISpartaApiRepository<TraineeProfile>,
                 SpartaApiRepository<TraineeProfile>>();
-            
-            builder.Services.AddScoped<ISpartaApiService<TraineeProfile>, 
+
+            builder.Services.AddScoped<ISpartaApiService<TraineeProfile>,
                 SpartaApiService<TraineeProfile>>();
 
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -57,7 +68,10 @@ namespace Final_Project
             builder.Services.AddDefaultIdentity<Spartan>
                 (options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<SpartaDbContext>();
+                .AddEntityFrameworkStores<SpartaDbContext>()
+                .AddSignInManager<SignInManager<Spartan>>();
+
+
 
             builder.Services.AddControllers()
                 .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);

@@ -1,7 +1,7 @@
 ﻿@model Final_Project.Models.Spartan
 
 @{
-    ViewData["Title"] = "Create a Trainer";
+    ViewData["Title"] = "Create a Admin";
 }
 @if (!User.IsInRole("Admin"))
 {
@@ -10,14 +10,14 @@
 
 <div class="container-xxl page-header page-header-trainee-profile" style="background-color: #e23565; margin-bottom: 1em!important;">
     <div class="container text-center">
-        <h1 class="text-white animated zoomIn mb-3">Create Trainer</h1>
-        <p class="lead text-white">Create a new trainer for the academy</p>
+        <h1 class="text-white animated zoomIn mb-3">Create Admin</h1>
+        <p class="lead text-white">Create a new admin for the academy</p>
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="CreateTrainer">
+        <form asp-action="CreateAdmin">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group mb-3">
                 <label asp-for="UserName" class="control-label fw-bold">Username</label>

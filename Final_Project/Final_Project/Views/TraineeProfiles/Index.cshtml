@@ -27,8 +27,7 @@
         <div class="row g-0">
             <div class="col-md-4 gradient-custom text-center text-white d-flex align-items-center justify-content-center flex-column"
                  style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                     alt="Avatar" class="img-fluid my-5" style="width: 80px;" />
+                <img src="~/phil.jpeg" alt="Phil Windridge" class="img-fluid my-5" style="width: 80px;" />
 @foreach (var item in Model){
                 <h3>@Html.DisplayFor(modelItem => item.Title)</h3>
                 <h5>@Html.DisplayFor(modelItem => item.Spartan.Email)</h5>
@@ -43,7 +42,7 @@
                     <div class="row pt-1">
                         <div class="col-12 mb-3">
 @foreach (var item in Model){
-                            <p class="text-muted">
+                            <p class="text-muted about-me-p">
                                 @Html.DisplayFor(modelItem => item.AboutMe)
                             </p>
                             }
@@ -54,7 +53,7 @@
                     <div class="row pt-1">
                         <div class="col-12 mb-3">
 @foreach (var item in Model){
-                            <p class="text-muted">
+                                <p class="text-muted about-me-p">
                                 @Html.DisplayFor(modelItem => item.WorkExperience)
                             </p>
 }

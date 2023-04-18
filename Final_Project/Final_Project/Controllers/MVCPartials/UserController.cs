@@ -36,13 +36,9 @@ namespace Final_Project.Controllers.MVCPartials
 
         public async Task<IActionResult> Delete(string? id)
         {
-            if (id == null || _context.Spartans == null)
-            {
-                return NotFound();
-            }
 
-            var deleteUser = await _context.Spartans
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var deleteUser = await _spartaService.GetAsync(id);
+
             if (deleteUser == null)
             {
                 return NotFound();
@@ -55,17 +51,15 @@ namespace Final_Project.Controllers.MVCPartials
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            if (_context.Spartans == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Spartans'  is null.");
-            }
-            var deleteUser = await _context.Spartans.FindAsync(id);
+
+            var deleteUser = await _spartaService.GetAsync(id);
+
             if (deleteUser != null)
             {
-                _context.Spartans.Remove(deleteUser);
+                await _spartaService.DeleteAsync(id);
             }
 
-            await _context.SaveChangesAsync();
+            await _spartaService.SaveAsync();
             return RedirectToAction(nameof(Index));
         }
 
@@ -83,8 +77,10 @@ namespace Final_Project.Controllers.MVCPartials
 
             if (ModelState.IsValid)
             {
+                spartan.Email = spartan.UserName;
                 spartan.EmailConfirmed = true;
-                
+                spartan.Role = "Trainee";
+
                 _userManager
                     .CreateAsync(spartan, "Password1!")
                     .GetAwaiter()
@@ -123,7 +119,9 @@ namespace Final_Project.Controllers.MVCPartials
 
             if (ModelState.IsValid)
             {
+                spartan.Email = spartan.UserName;
                 spartan.EmailConfirmed = true;
+                spartan.Role = "Trainer";
 
                 _userManager
                     .CreateAsync(spartan, "Password1!")
@@ -134,6 +132,41 @@ namespace Final_Project.Controllers.MVCPartials
                 {
                     UserId = _userManager.GetUserIdAsync(spartan).Result,
                     RoleId = roleStore.GetRoleIdAsync(await _context.Roles.FirstOrDefaultAsync(r => r.Name == "Trainer")!).Result
+                });
+
+                await _spartaService.SaveAsync();
+
+                return RedirectToAction(nameof(Index));
+            }
+            return View(spartan);
+        }
+        // GET: Personal_Tracker/Create
+        public IActionResult CreateAdmin()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateAdmin(Spartan spartan)
+        {
+            var currentUser = await _userManager.GetUserAsync(HttpContext.User);
+            var roleStore = new RoleStore<IdentityRole>(_context);
+
+            if (ModelState.IsValid)
+            {
+                spartan.Email = spartan.UserName;
+                spartan.EmailConfirmed = true;
+                spartan.Role = "Admin";
+
+                _userManager
+                    .CreateAsync(spartan, "Password1!")
+                    .GetAwaiter()
+                    .GetResult();
+
+                _context.UserRoles.Add(new IdentityUserRole<string>
+                {
+                    UserId = _userManager.GetUserIdAsync(spartan).Result,
+                    RoleId = roleStore.GetRoleIdAsync(await _context.Roles.FirstOrDefaultAsync(r => r.Name == "Admin")!).Result
                 });
 
                 await _spartaService.SaveAsync();
