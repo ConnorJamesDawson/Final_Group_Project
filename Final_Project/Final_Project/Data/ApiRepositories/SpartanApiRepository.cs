@@ -7,14 +7,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace NorthwindAPI_MiniProject.Data.Repository
 {
-    public class SpartanApiRepository : SpartaApiRepository<Spartan>, ISpartanApiRepository<Spartan>
+    public class SpartanApiRepository<T> : SpartaApiRepository<T>, ISpartanApiRepository<T> where T : class
     {
         public SpartanApiRepository(SpartaDbContext context) : base(context)
         {
 
         }
 
-        public async Task<Spartan?> FindAsync(string id)
+        public async Task<T?> FindAsync(string id)
         {
             return await _dbSet.FindAsync(id);
         }

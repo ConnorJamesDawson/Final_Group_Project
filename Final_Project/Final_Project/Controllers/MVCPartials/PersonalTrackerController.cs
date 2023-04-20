@@ -9,44 +9,30 @@ namespace Final_Project.Controllers
 {
     public partial class PersonalTrackerController : Controller
     {
-        public async Task<IActionResult> IndexTrainer(string search = null, string titleSearch= null)
+        public async Task<IActionResult> IndexTrainer(string search = null, string titleSearch= null, string courseSearch = null)
         {
-            IQueryable<string> titleQuery = from t in _context.Personal_Tracker
-                                            orderby t.Title
-                                            select t.Title;
-            var tracker = _context.Personal_Tracker.Include(t => t.Spartan).AsQueryable();
+            var response = _personalTrackerService.GetListTrainer(search, titleSearch, courseSearch).Result;
 
-            if(!string.IsNullOrEmpty(search))
-                tracker = tracker.Where(s => s.Spartan.UserName.Contains(search));
-
-            if(!string.IsNullOrEmpty(titleSearch))
-                tracker = tracker.Where(x => x.Title ==  titleSearch);
-
-            var titleVM = new TitleViewModel
+            if(response.Success == false)
             {
-                Titles = new SelectList(await titleQuery.Distinct().ToListAsync()),
-                Trackers = await tracker.ToListAsync()
-            };
+                return Problem(response.Message);
+            }
 
-            return View(titleVM);
-
+            return View(response.Data);
 
         }
 
         //GET
         public async Task<IActionResult> EditTrainer(int? id)
         {
-            if (id == null || _context.Personal_Tracker == null)
-            {
-                return NotFound();
-            }
 
-            var personal_Tracker = await _context.Personal_Tracker.FindAsync(id);
+            var personal_Tracker = await _personalTrackerService.FindAsync(id);
+
             if (personal_Tracker == null)
             {
-                return NotFound();
+                return NotFound("Could not find tracker");
             }
-            ViewData["SpartanId"] = new SelectList(_context.Set<Spartan>(), "Id", "Id", personal_Tracker.SpartanId);
+
             return View(_mapper.Map<PersonalTrackerVM>(personal_Tracker));
         }
 
@@ -55,30 +41,15 @@ namespace Final_Project.Controllers
         [Authorize(Roles = "Trainer")]
         public async Task<IActionResult> EditTrainer(int id, [Bind("TrainerComments", "Id")] PersonalTrackerVM personalTrackerVM)
         {
-            if (id != personalTrackerVM.Id)
-            {
-                return NotFound();
-            }
-
-            var originalTracker = await _context.Personal_Tracker
-                .AsNoTracking()
-                .FirstOrDefaultAsync(pt => pt.Id == id);
-
-            personalTrackerVM.Title = originalTracker!.Title;
-
-            var personalTracker = _mapper.Map<PersonalTracker>(personalTrackerVM);
-            personalTracker.SpartanId = originalTracker!.SpartanId;
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(personalTracker);
-                    await _context.SaveChangesAsync();
+                    await _personalTrackerService.EditTrainer(id, personalTrackerVM);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!Personal_TrackerExists(personalTrackerVM.Id))
+                    if (!_personalTrackerService.Personal_TrackerExists(personalTrackerVM.Id))
                     {
                         return NotFound();
                     }
@@ -89,7 +60,6 @@ namespace Final_Project.Controllers
                 }
                 return RedirectToAction(nameof(IndexTrainer));
             }
-            //ViewData["SpartanId"] = new SelectList(_context.Set<Spartan>(), "Id", "Id", personalTracker.SpartanId);
             return View(personalTrackerVM);
         }
     }

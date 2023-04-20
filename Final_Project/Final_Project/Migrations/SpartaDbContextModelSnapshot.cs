@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Final_Project.Data.Migrations
+namespace Final_Project.Migrations
 {
     [DbContext(typeof(SpartaDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    partial class SpartaDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -321,6 +321,18 @@ namespace Final_Project.Data.Migrations
             modelBuilder.Entity("Final_Project.Models.Spartan", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<string>("Course")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("Spartan");
                 });

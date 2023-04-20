@@ -1,4 +1,6 @@
-﻿namespace Final_Project.ApiServices;
+﻿using Final_Project.Models;
+
+namespace Final_Project.ApiServices;
 
 public interface ISpartaApiService<T>
 {

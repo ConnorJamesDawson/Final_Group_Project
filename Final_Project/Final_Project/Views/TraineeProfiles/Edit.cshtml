@@ -4,32 +4,42 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<div class="container-xxl page-header page-header-trainee-profile" style="background-color: #e23565; margin-bottom: 1em;">
+    <div class="container text-center">
+        <h1 class="text-white animated zoomIn mb-3">Edit Your Profile</h1>
+    </div>
+</div>
+@if (!User.Identity.IsAuthenticated)
+{
+    Context.Response.Redirect("/");
+}
 
-<h4>TraineeProfile</h4>
-<hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" class="mb-3">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group d-flex flex-column mb-1">
+                    <label asp-for="Title" class="control-label fw-bold">Title</label>
+                    <input asp-for="Title" class="form-control" />
+                </div>
+                <div class="mb-3">
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+            <div class="form-group mb-3">
+                <div class="form-outline">
+                    <label asp-for="AboutMe" class="control-label fw-bold"></label>
+                    <textarea asp-for="AboutMe" class="form-control" rows="5"></textarea>
+                    <span asp-validation-for="AboutMe" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="AboutMe" class="control-label"></label>
-                <input asp-for="AboutMe" class="form-control" />
-                <span asp-validation-for="AboutMe" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="WorkExperience" class="control-label"></label>
-                <input asp-for="WorkExperience" class="form-control" />
+            <div class="form-group mb-3">
+                <label asp-for="WorkExperience" class="control-label fw-bold"></label>
+                <textarea asp-for="WorkExperience" class="form-control" rows="5"></textarea>
                 <span asp-validation-for="WorkExperience" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
+            <div class="form-group form-check mb-3">
+                <label class="form-check-label fw-bold">
                     <input class="form-check-input" asp-for="Complete" /> @Html.DisplayNameFor(model => model.Complete)
                 </label>
             </div>
@@ -49,15 +59,13 @@
             </div>
             }
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn bg-main" />
+                <a asp-action="Index" role="button" class="btn btn-dark">Back to List</a>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

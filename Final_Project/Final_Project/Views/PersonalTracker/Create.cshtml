@@ -3,84 +3,70 @@
 @{
     ViewData["Title"] = "Create";
 }
+@if(!User.Identity.IsAuthenticated)
+{
+    Context.Response.Redirect("/");
+}
 
-<h1>Create</h1>
-
-<h4>Personal Tracker</h4>
-<hr />
+<div class="container-xxl page-header page-header-trainee-profile" style="background-color: #e23565">
+    <div class="container text-center">
+        <h1 class="text-white animated zoomIn mb-3">Create New Tracker</h1>
+        <p class="lead text-white">Create a new tracker entry for trainee progress.</p>
+    </div>
+</div>
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
+            <div class="form-group mb-3 mb-3">
+                <label asp-for="Title" class="control-label fw-bold"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="StopSelfFeedback" class="control-label"></label>
-                <input asp-for="StopSelfFeedback" class="form-control" />
+            <div class="form-group mb-3 mb-3">
+                <label asp-for="StopSelfFeedback" class="control-label fw-bold"></label>
+                <textarea asp-for="StopSelfFeedback" class="form-control"></textarea>
                 <span asp-validation-for="StopSelfFeedback" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="StartSelfFeedback" class="control-label"></label>
-                <input asp-for="StartSelfFeedback" class="form-control" />
+            <div class="form-group mb-3">
+                <label asp-for="StartSelfFeedback" class="control-label fw-bold"></label>
+                <textarea asp-for="StartSelfFeedback" class="form-control"></textarea>
                 <span asp-validation-for="StartSelfFeedback" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ContinueSelfFeedback" class="control-label"></label>
-                <input asp-for="ContinueSelfFeedback" class="form-control" />
+            <div class="form-group mb-3">
+                <label asp-for="ContinueSelfFeedback" class="control-label fw-bold"></label>
+                <textarea asp-for="ContinueSelfFeedback" class="form-control"></textarea>
                 <span asp-validation-for="ContinueSelfFeedback" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="CommentsSelfFeedback" class="control-label"></label>
-                <input asp-for="CommentsSelfFeedback" class="form-control" />
+            <div class="form-group mb-3">
+                <label asp-for="CommentsSelfFeedback" class="control-label fw-bold"></label>
+                <textarea asp-for="CommentsSelfFeedback" class="form-control"></textarea>
                 <span asp-validation-for="CommentsSelfFeedback" class="text-danger"></span>
             </div>
-           @* @Html.DropDownListFor(m => item.TechnicalSkills, new SelectList(item.SkillLevelOptions))*@
-
-
-            <div class="form-group">
-                <label asp-for="TechnicalSkills" class="control-label"></label>
+            <div class="form-group mb-3">
+                <label asp-for="TechnicalSkills" class="control-label fw-bold"></label>
                 <select asp-for="TechnicalSkills">
                     <option value="Unskilled">Unskilled</option>
                     <option value="Low Skilled">Low Skilled</option>
                     <option value="Partially Skilled">Partially Skilled</option>
                     <option value="Skilled">Skilled</option>
                 </select>
-            
-            <div class="form-group">
-            <label asp-for="ConsultantSkills" class="control-label"></label>
-            <select asp-for="ConsultantSkills">
-            <option value="Unskilled">Unskilled</option>
-            <option value="Low Skilled">Low Skilled</option>
-            <option value="Partially Skilled">Partially Skilled</option>
-            <option value="Skilled">Skilled</option>
-            </select>
-
-            @if (User.IsInRole("Admin")){
-            <div class="form-group">
-                <label asp-for="SpartanId" class="control-label"></label>
-                <select asp-for="SpartanId" class ="form-control" asp-items="ViewBag.SpartanId"></select>
             </div>
-            }
-
-             @if (User.IsInRole("Trainee")){
-                <div class="form-group" style="display:none">>
-                <label asp-for="SpartanId" class="control-label"></label>
-                <select asp-for="SpartanId" class ="form-control" asp-items="ViewBag.SpartanId"></select>
-            </div>
-
-            }
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <div class="form-group mb-3">
+                    <label asp-for="ConsultantSkills" class="control-label fw-bold"></label>
+                <select asp-for="ConsultantSkills">
+                <option value="Unskilled">Unskilled</option>
+                <option value="Low Skilled">Low Skilled</option>
+                <option value="Partially Skilled">Partially Skilled</option>
+                <option value="Skilled">Skilled</option>
+                </select>
+                </div>
+            <div class="form-group mb-3">
+                <input type="submit" value="Create" class="btn bg-main" />
+                <a asp-action="Index" role="button" class="btn btn-dark">Back to List</a>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
